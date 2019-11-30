@@ -1,0 +1,96 @@
+\documentclass[12pt, letterpaper]{article}
+
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage[gen]{eurosym}
+\usepackage{amsmath}
+\usepackage{amssymb}
+ 
+\title{Example}
+\author{Amigo, Cea, Feijoo}
+\date{April 2019}
+
+\begin{document}
+\maketitle
+
+Example 3.3.1 from paper de Maere et. al. 2018 (working paper)
+
+\section{The problem}
+In this example, there is one producer that can invest in one technology. 
+The plant annual capital expenditure is $I= 90 \ \euro{} / kW$ and an operating cost of $60 \ \euro{} / MWh$.
+The year is represented in a single segment of $\tau=8760$ hours. The producer is risk neutral.
+
+The equation to minimize the producer cost of operation and initial investment is 
+\[ \min_{x,Y}  Ix + \tau \mathbb{E}_{\Theta} [(C-P_{\omega}) Y_{\omega}]  \textrm{\  subject to \ }  0 \leq Y_{\omega} \leq x \]
+
+The consumer is a price-taker agent with  a quadratic utility function $U_\omega(Q_\omega) = A_\omega Q_\omega - \frac{B}{2} Q_\omega^2$ and solves
+\[ \min_{Q} \tau \mathbb{E}_\Theta \left[P_\omega Q_\omega - A_\omega Q_\omega + \frac{B}{2} Q_\omega^2 \right]\]
+
+The quadratic term B is constant across the scenarios, with $B=1 \euro{}/MWh^2$.
+The linear term $A_\omega$ is the only random parameter in the example. There are 5 scenarios ($K=5 \ , \ \mathcal{Z}=\mathbb{R}^5$), and an equal physical probability of $\Theta_\omega = 0.2$ for all $\omega$. The value of A is 
+
+\begin{center}
+\begin{tabular}{ c | c c c c c }
+ $\omega$             & scen1 & scen2 & scen3 & scen4 & scen5 \\ 
+ \hline
+  $A \ [ \euro{}/MWh ] $ & 300   & 350   & 400   & 450   & 500 \\  
+\end{tabular}
+\end{center}
+
+
+
+\section{Mixed complementarity problem}
+
+\subsection{The producer}
+The Lagrangian function for the producer problem is ($\lambda_1$ and $\lambda_2$ are Lagrange multipliers)
+
+\[ \mathcal{L}= Ix + \tau \mathbb{E}_\Theta [(C-P_\omega) Y_\omega ] + \sum_w \lambda_{1,w} (Y_\omega -x) + \sum_w \lambda_{2,\omega}(0-Y_\omega) \]
+
+The Karush-Kuhn-Tucker conditions  are:
+
+\[ \frac{\partial \mathcal{L}}{\partial x}= I- \sum_{\omega}\lambda_{1,w} = 0  \]
+
+\[\frac{\partial \mathcal{L}}{\partial Y_{\omega}} = \tau \Theta_\omega ( C - P_\omega ) + \lambda_{1, \omega} - \lambda_{2,\omega} =  0,\quad\omega\in\Omega \]
+
+\vspace{1cm}
+
+Primal feasibility :
+\[ Y_\omega - x \leq 0 \quad  \forall \omega  \]
+\[ 0 \leq Y_\omega \quad \forall \omega \]
+
+Complementarity slackness: 
+
+\[ (Y_\omega - x) \cdot \lambda_{1,\omega} = 0 \]
+\[ Y_\omega \cdot \lambda_{2,\omega} = 0\]
+
+Dual feasibility
+
+\[ \lambda_{1,\omega} \geq 0 \quad \forall \omega \]
+\[ \lambda_{2,\omega} \geq 0 \quad \forall \omega \]
+
+We can write the KKT conditions as MCP as follows
+
+\[ 0 \leq I- \sum_{\omega}\lambda_{1,w} \perp x \geq 0 \] 
+
+\[ 0 \leq \tau \Theta_\omega C - \tau \Theta_\omega P_\omega + \lambda_{1,\omega} - \lambda_{2,\omega} \perp Y_\omega \geq 0, \quad \forall \omega\]
+
+\[ 0 \leq x - Y_\omega \perp \lambda_{1,\omega} \geq 0 , \quad \forall \omega \]
+\[ 0 \leq Y_\omega \perp \lambda_{2,\omega} \geq 0, \quad \forall \omega \]
+
+\subsection{The consumer}
+
+The KKT conditions for the consumer are as follows:
+
+\[ 0 \leq \tau \Theta (P_\omega - A_\omega + B Q_\omega) \perp Q_\omega \geq 0\]
+
+
+
+
+\subsection{Market clearing conditions}
+ 
+ The market clearing constraint of the problem is 
+\[ Y_\omega = Q_\omega \quad (P_\omega \  \textrm{dual})\]
+
+
+
+\end{document}

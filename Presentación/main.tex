@@ -17,10 +17,10 @@
 \usepackage[english]{babel}
 \usepackage[utf8x]{inputenc}
 
-\title[Your Short Title]{Your Presentation}
-\author{You}
-\institute{Where You're From}
-\date{Date of Presentation}
+\title[Your Short Title]{Electric Markets and Restricted Participation}
+\author{Amigo, Cea, Feijoo}
+\institute{EII - PUCV}
+\date{2019}
 
 \begin{document}
 
@@ -33,34 +33,83 @@
 %  \tableofcontents
 %\end{frame}
 
-\section{Introduction}
+\section{Notation}
 
-\begin{frame}{Introduction}
+\begin{frame}{Notation}
+
 
 \begin{itemize}
-  \item Your introduction goes here!
-  \item Use \texttt{itemize} to organize your main points.
+    \item $x \in \mathbb{R}^n$
+    \item Uncertain outcomes (costs): $\mathcal{Z} := \mathbb{R}^K$
+    \begin{itemize}
+        \item[-]stochastic scenarios $\omega \in \Omega:= \{ 1, ..., K \}$
+        \item[-]member $Z$ of  $\mathcal{Z}$ is $Z_{\omega}$
+    \end{itemize}
+    \item Probability density $\Pi \in \mathbb{R}^n$
+    \begin{itemize}
+        \item[-] set of probability measures is $\mathcal{P}$
+    \end{itemize}
 \end{itemize}
 
-\vskip 1cm
 
-\begin{block}{Examples}
-Some examples of commonly used commands and features are included, to help you get started.
+
+\vskip 0.5cm
+
+\begin{block}{Risk Neutral case}
+Evaluate the cost of any $Z \in \mathcal{Z}$ as
+$\mathbb{E}[Z] := \Pi [Z] := \sum\limits_{\omega} \Pi_{\omega} Z_{\omega}$
+
+{\footnotesize In real cases, data is associated with a real world probability measure $\Theta$}
+\end{block}
+
+\begin{block}{Coherent risk measures}
+Each $r_i : \mathcal{Z} \rightarrow \mathbb{R}$ is a CRM with nonempty closed convex risk set $\mathcal{D}_i$ (agent i's risk set), i.e, $r_i(Z) = \max_{\Pi \in \mathcal{D}_i} \mathbb{E}_\Pi [Z]$ for each $Z \in \mathcal{Z}$. 
+
+
 \end{block}
 
 \end{frame}
 
-\section{Some \LaTeX{} Examples}
+\section{Two stage stochastic competitive capacity equilibrium problems}
 
-\subsection{Tables and Figures}
-
-\begin{frame}{Tables and Figures}
-
+\begin{frame}{Two stage stochastic competitive capacity equilibrium problems}
+Noncooperative Nash game of $N$ agents
 \begin{itemize}
-\item Use \texttt{tabular} for basic tables --- see Table~\ref{tab:widgets}, for example.
-\item You can upload a figure (JPEG, PNG or PDF) using the files menu. 
-\item To include it in your document, use the \texttt{includegraphics} command (see the comment below in the source code).
+    \item strategy set for agent $i$ $X_i \subset \mathbb{R}^{n_i}$. $n_i$: dimension of investment variables of agent $i$
+    \item vector of design variables $x_i$: agent $i$'s investment (capacity)  in a risky asset $\Xi_i$ (cost from production plant to operate in an uncertain market): $\Xi_i(x_i,x_{-i}):= (\Xi_{i\omega}(x_i, x_{-i})) \in \mathcal{Z}$ \textbf{(First stage)}
+    \item Each scenario cost $\Xi_{i\omega}(x_i, x_{-i})$ is the optimal value of a production optimization problem carried out by agent $i$
+    \item agent $i$ chooses its \textbf{second stage } production quantity $y_i$ given the plant capacity and operating costs parameters determined in first stage, i.e., $x_i$ and $x_{-i}$
 \end{itemize}
+    
+\end{frame}
+
+\begin{frame}{Two stage stochastic competitive capacity equilibrium problems}
+    \begin{itemize}
+        \item basket of financial products: vector $W_i \in \mathcal{W}$, where $\mathcal{W} \subset
+        \mathcal{Z}$
+        \item hedges the risk in the form $r_i(\Xi_i(x_i,x_{-i})-W_i)$
+        
+    \end{itemize}
+    
+    
+    \begin{block}{Agent $i$'s optimization}
+    
+    $$\min_{x_i,W_i}P^r$$
+    
+    \end{block}
+\end{frame}
+
+%\section{Some \LaTeX{} Examples}
+
+%\subsection{Tables and Figures}
+
+%\begin{frame}{Tables and Figures}
+
+%\begin{itemize}
+%\item Use \texttt{tabular} for basic tables --- see Table~\ref{tab:widgets}, for example.
+%\item You can upload a figure (JPEG, PNG or PDF) using the files menu. 
+%\item To include it in your document, use the \texttt{includegraphics} command (see the comment below in the source code).
+%\end{itemize}
 
 % Commands to include a figure:
 %\begin{figure}
@@ -68,27 +117,27 @@ Some examples of commonly used commands and features are included, to help you g
 %\caption{\label{fig:your-figure}Caption goes here.}
 %\end{figure}
 
-\begin{table}
-\centering
-\begin{tabular}{l|r}
-Item & Quantity \\\hline
-Widgets & 42 \\
-Gadgets & 13
-\end{tabular}
-\caption{\label{tab:widgets}An example table.}
-\end{table}
+%\begin{table}
+%\centering
+%\begin{tabular}{l|r}
+%Item & Quantity \\\hline
+%Widgets & 42 \\
+%Gadgets & 13
+%\end{tabular}
+%\caption{\label{tab:widgets}An example table.}
+%\end{table}
 
-\end{frame}
+%\end{frame}
 
-\subsection{Mathematics}
+%\subsection{Mathematics}
 
-\begin{frame}{Readable Mathematics}
+%\begin{frame}{Readable Mathematics}
 
-Let $X_1, X_2, \ldots, X_n$ be a sequence of independent and identically distributed random variables with $\text{E}[X_i] = \mu$ and $\text{Var}[X_i] = \sigma^2 < \infty$, and let
-$$S_n = \frac{X_1 + X_2 + \cdots + X_n}{n}
-      = \frac{1}{n}\sum_{i}^{n} X_i$$
-denote their mean. Then as $n$ approaches infinity, the random variables $\sqrt{n}(S_n - \mu)$ converge in distribution to a normal $\mathcal{N}(0, \sigma^2)$.
+%Let $X_1, X_2, \ldots, X_n$ be a sequence of independent and identically distributed random variables with $\text{E}[X_i] = \mu$ and $\text{Var}[X_i] = \sigma^2 < \infty$, and let
+%$$S_n = \frac{X_1 + X_2 + \cdots + X_n}{n}
+%      = \frac{1}{n}\sum_{i}^{n} X_i$$
+%denote their mean. Then as $n$ approaches infinity, the random variables $\sqrt{n}(S_n - \mu)$ converge in distribution to a normal $\mathcal{N}(0, \sigma^2)$.
 
-\end{frame}
+%\end{frame}
 
 \end{document}
