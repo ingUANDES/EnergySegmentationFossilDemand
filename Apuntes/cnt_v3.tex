@@ -14,11 +14,14 @@
 \usepackage{multirow}
 \usepackage{xcolor}
 \usepackage[margin=1.0in]{geometry}
+\usepackage{array}
 %\usepackage{hyperref}
 
 \usepackage{tablefootnote}
 \usepackage{lineno}
-
+\usepackage{pifont}% http://ctan.org/pkg/pifont
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
 
 \captionsetup{font=footnotesize}
 
@@ -352,14 +355,14 @@ In addition, other studies have predicted the level of energy generation and emi
 
 \begin{figure}[ht!]
 \begin{center}
-\includegraphics[width=\textwidth]{Apuntes/produccion_per_year_sin_cnt.png}
+\includegraphics[width=\textwidth]{Apuntes/Figures/produccion_per_year_sin_cnt.png}
 \caption{Energy production projected per technology by our model for the base year (2018) and the year range 2019-2050} \label{fig:modelbau}   
 \end{center}
 \end{figure}
 
 \begin{figure}[ht!]
 \begin{center}
-\includegraphics[width=13cm]{Apuntes/generadoras.png}
+\includegraphics[width=13cm]{Apuntes/Figures/generadoras.png}
 \caption{Projected energy production per technology made by Generadoras de Chile}
 \label{fig:gener}
 \end{center}
@@ -389,7 +392,7 @@ To determine the data, we take into account the fraction of emissions due to the
 
 
 \begin{figure}[ht!]
- \includegraphics[width=\textwidth]{Apuntes/cap.png}
+ \includegraphics[width=\textwidth]{Apuntes/Figures/cap.png}
  \caption{Maximum emissions allowed in the 2019-2030 period for the chilean electric market. }
   \label{fig:cap}
   \end{figure}
@@ -401,15 +404,15 @@ A variation of the cap and trade system is included in our model. Instead of a f
 \underline{Producer's problem}
 
 \begin{align}
-\min_{(x_i,Q_i,A_i,P_i,V_i)} &  C_i(0, \pi^d(0),Q_i(0))+\pia{A_i(0) \pi^{a}(0) }+ I_i x_i(0) \nonumber \\ &+\sum_{\omega} Pr(\omega)   \Bigg( \sum_{t>0} \frac{1}{(1+R)^t} \Big[ (TC_i(t,\omega)\cdot C_i(t,\pi^d(t),Q_i(t,\omega) )  \nonumber \\
+\min_{(x_i,Q_i,A_i,P_i,V_i)} &  C_i(0, \pi^d(0),Q_i(0))+ I_i x_i(0) \nonumber \\ &+\sum_{\omega} Pr(\omega)   \Bigg( \sum_{t>0} \frac{1}{(1+R)^t} \Big[ (TC_i(t,\omega)\cdot C_i(t,\pi^d(t),Q_i(t,\omega) )  \nonumber \\
  & + \sum_{t > 0} TCR_i(t,\omega) \cdot I_i\cdot x_i(t,\omega) \Big] + \pia{A_i(t,\omega)\pi^a(t,\omega)+\pi^v(t,\omega)\cdot \Big(P_i(t,\omega)-V_i(t,\omega)\Big)} \Bigg)  \\
      \textrm{s.t \ } \nonumber
 \end{align}
 \begin{align}
     \Big(CF_i \cdot\tau\Big)  \Bigg[\bar{Q_i} + \sum_{t^{\prime}<\bar{t}} x_i(t^\prime,\omega) + x_i(0)+ \bar{Q}_i(t) \Bigg] - Q_i(t,\omega) & \geq 0  & \forall  \quad \omega, t  > 0 & \quad (\alpha_{i,t,\omega}) \\
     \Big(CF_i\cdot\tau \Big)\bar{Q_i}-Q_{i}(0) & \geq 0  &  \quad & \quad (\kappa_i) \\
-\pia{ A_{i}(0)+A_i(t,\omega) - V_i(t,\omega) } & \geq  0  & \forall  \quad t,\omega & \quad (\beta_{i,t,\omega})\\
-  \pia{ A_{i}(0)+A_i(t,\omega) + \sum_{i}P_i(t,\omega) - V_i(t,\omega)-\sum_{t>0}Q_i(t, \omega)\cdot \varepsilon_{i}-Q_i(0)\varepsilon_{i}} & \geq  0  &\forall \quad t,\omega & \quad (\gamma_{i,t,\omega})\\
+\pia{A_i(t,\omega) - V_i(t,\omega) } & \geq  0  & \forall  \quad t,\omega & \quad (\beta_{i,t,\omega})\\
+  \pia{ A_i(t,\omega) + \sum_{-i}P_{-i}(t,\omega) - V_i(t,\omega)-Q_i(t, \omega)\cdot \varepsilon_{i}} & \geq  0  &\forall \quad t,\omega & \quad (\gamma_{i,t,\omega})\\
  Q_i(0) & \geq  0 & \quad & \quad (\lambda_i)\\
  Q_i(t, \omega & \geq  0   & \forall  \quad \omega, t >0 & \quad (\delta_{i,\omega})\\
   x_i(0) & \geq  0 & \quad & \quad (\xi_i)\\
@@ -420,10 +423,11 @@ A variation of the cap and trade system is included in our model. Instead of a f
 \underline{Auctioneer's problem}
 \pia{
 \begin{align}
-    \min_{\theta} & -\Big(\theta(0)\pi^a(0)+\theta(t,\omega) \pi^{a}(t,\omega)\Big) & &  &\\
-    \textrm{s.t \ } &  \phi^{-1}(M) \sigma^2 + \mu - \theta(0)- \theta(t,\omega) &  \geq & \quad 0  &\quad \quad  \forall  \quad t,\omega\\
-    &  \theta(0)  & \geq & \quad 0 & \quad \quad  \forall \quad t,\omega\\
-    &  \theta(t,\omega)  & \geq & \quad 0 & \quad \quad  \forall \quad t,\omega
+    \min_{\theta, \theta_2} & -\sum_{t,\omega} \theta(t,\omega) \pi^{a}(t,\omega) - \sum_{tau4,\omega} \theta_2 \pi_{ERNC}  & &  &\\
+    \textrm{s.t \ } &  \phi^{-1}(M) \sigma^2 + \mu(t) - \theta(t,\omega) &  \geq & \quad 0  &\quad \quad  \forall  \quad t,\omega\\
+    &  \theta(t,\omega)  & \geq & \quad 0 & \quad \quad  \forall \quad t,\omega\\
+    & \theta_2(t,\omega) & \geq & \quad  \alpha D(tau4,\omega) & \quad \forall t \in tau4,\omega \\
+    & \theta_2(t,\omega) & \geq & \quad 0 & \quad \forall t \in tau4,\omega 
 \end{align}
 }
 \vspace{0.5cm}
@@ -431,20 +435,20 @@ A variation of the cap and trade system is included in our model. Instead of a f
 \underline{Market clearing constraints:}
 
 \begin{align}
-\textrm{(available allowances)-- first stage}: &  \ \ \pia{  \sum_{i} A_{i}(0) = \theta(0) }  &  & \ \  (\pi^{a}(0))\\
+\textrm{(available allowances)-- second stage}: &  \ \ \pia{ \sum_{i \in ernc} Q_i(t,\omega) = \theta_2(t,\omega)}    &   \forall \ t\in tau4, \ \ \omega & \ \ (\pi^{ernc}(t,\omega))\\
 \textrm{(available allowances)-- second stage}: &  \ \ \pia{  \sum_{i} A_{i}(t,\omega) = \theta(t,\omega) }  &   \forall \ t,\omega & \ \ (\pi^{a}(t,\omega))\\
 \textrm{(equilibrium in trading market)}: &   \ \  \sum_{i} P_i(t,\omega) = \sum_{i} V_i(t,\omega) & \forall \ t,\omega & \ \ (\pi^{v}) \\
 \textrm{(fulfillment of the demand --first stage)}:  &   \ \  \sum_{i} Q_i(0) = D(0) &  & \ \ (\pi^d(0))\\
-\textrm{(fulfillment of the demand --second stage)}:  &   \ \  \sum_{i} Q_I(t,\omega) = D(t,\omega), & \forall \ t,\omega & \ \ (\pi^{d,t}_\omega)
+\textrm{(fulfillment of the demand --second stage)}:  &   \ \  \sum_{i} Q_i(t,\omega) = D(t,\omega), & \forall \ t,\omega & \ \ (\pi^{d,t}_\omega)
 \end{align}
 
 
 \begin{align}
-    \mathcal{L}_i(x,Q,A,P,V) = &  C_i(0, \pi^d(0),Q_i(0))+ \pia{A_i(0) \pi^{a}(0)} + I_i x_i(0)  \nonumber \\ & +\sum_{\omega} Pr(\omega) \Bigg( \sum_{t>0} \frac{1}{(1+R)^t} \Big[ (TC_i(t,\omega)\cdot C_i(t,\pi^d(t),Q_i(t,\omega) )  \nonumber \\
+    \mathcal{L}_i(x,Q,A,P,V) = &  C_i(0, \pi^d(0),Q_i(0))+  I_i x_i(0)  \nonumber \\ & +\sum_{\omega} Pr(\omega) \Bigg( \sum_{t>0} \frac{1}{(1+R)^t} \Big[ (TC_i(t,\omega)\cdot C_i(t,\pi^d(t),Q_i(t,\omega) )  \nonumber \\
  & + \sum_{t > 0} TCR_i(t,\omega) \cdot I_i\cdot x_i(t,\omega) \Big] + \pia{A_i(t,\omega)\pi^a(t,\omega)+\pi^v(t,\omega)\cdot \left(P_i(t,\omega)-V_i(t,\omega)\right) }\Bigg) \nonumber \\
  & +\sum_{\omega,t>0} \alpha_{i,\omega,t}\Bigg[  Q_i(t,\omega) - \Big(CF_i \cdot\tau\Big)  \Big(\bar{Q_i} + \sum_{t^{\prime}<\bar{t}} x_i(t^\prime,\omega) + x_i(0)+ \bar{Q}_i(t) \Big) \Bigg] \nonumber \\
- & +  \kappa_{i}\Big[Q_{i}(0)-\Big(CF_i\cdot\tau \Big)\bar{Q_i}\Big]  + \pia{\sum_{t>0,\omega}\beta_{i,t,\omega}\Big[  V_i(t,\omega)- A_{i}(0) -A_i(t,\omega) \Big] }\nonumber \\
- & + \pia{\sum_{t>0,\omega}\gamma_{i,t,\omega} \Big[ -A_{i}(0)-A_i(t,\omega) - \sum_{i}P_i(t,\omega) + V_i(t,\omega)+\sum_{t>0}Q_i(t, \omega)\cdot \varepsilon_{i}+Q_i(0)\varepsilon_{i}\Big]} \nonumber\\
+ & +  \kappa_{i}\Big[Q_{i}(0)-\Big(CF_i\cdot\tau \Big)\bar{Q_i}\Big]  + \pia{\sum_{t>0,\omega}\beta_{i,t,\omega}\Big[  V_i(t,\omega)- A_i(t,\omega) \Big] }\nonumber \\
+ & + \pia{\sum_{t>0,\omega}\gamma_{i,t,\omega} \Big[A_i(t,\omega) - \sum_{-i}P_{-i}(t,\omega) + V_i(t,\omega)+Q_i(t, \omega)\cdot \varepsilon_{i}\Big]} \nonumber\\
      & - \sum_{\omega, t>1}\delta_{i,\omega,t} Q_i(t,\omega) - \lambda_{i}\Big[Q_i(0)\Big] - \sum_{\omega, t>0}\varphi_{i,\omega,t} x_i(t,\omega) - \xi_i x_i(0) \nonumber \\
      & + \sum_{\omega}\psi_{i,\omega} \Big[  \bar{Q}_i+\bar{Q}_i(t) + x_i(0)  + \sum_{t > 0} x_i(t,\omega) - RP_i \Big]
 \end{align}
@@ -455,9 +459,8 @@ The new KKT conditions to solve the equilibrium are:
 \begin{align}
     I_i + \sum_{\omega}\psi_{i,\omega} -\sum_{\omega,\tau>1} \alpha_{i,\omega,\tau} -\xi_i & = 0 & \forall i {\color{blue}}&  \qquad (x_i(0))\\
     Pr(\omega) \Bigg[\frac{1}{(1+R)^t}TCR_i(t,\omega) \cdot I_i -  \varphi_{i,\omega,t}\Bigg] - \sum_{t> t\prime}\alpha_{i,\omega,t} ( CF_i \cdot \tau)  + \psi_{i,\omega}& = 0 & \forall i, \omega, t> 0  &  \qquad (x_i(t,\omega))\\
-    (a_{i}+b_iQ^{1}_{i})-\pi^d(0) + \kappa_i - \lambda_{i} + \sum_{t>0,\omega} \gamma_{i,\omega}\varepsilon_i & = 0 & \forall i  &  \qquad (Q_i(0))\\
+    (a_{i}+b_i Q_i(0))-\pi^d(0) + \kappa_i - \lambda_{i}  & = 0 & \forall i  &  \qquad (Q_i(0))\\
  Pr(\omega) \Bigg( \frac{1}{(1+R)^t}\Bigg) \bigg( (TC_i(t,\omega) \cdot a_{i}+b_i Q_i(t,\omega)-\pi^d(t,\omega) \bigg) + \alpha_{i,\omega,\tau} + \pia{\gamma_{i,t,\omega} \varepsilon_{i}} -\delta_{i,\omega,t} & =0 & \forall i, \omega, t>0 &  \qquad (Q_i(t,\omega)\\
-   \pia{ \pi^{a}(0) - \sum_{t>0,\omega}\beta_{i,t,\omega} - \sum_{t>0,\omega}\gamma_{i,t,\omega}} & =0 & \forall i & \qquad (A_{i}(0)) \\
   \pia{  Pr(\omega)\pi^a(t,\omega) - \sum_{t,\omega}\beta_{i,t,\omega} - \sum_{t,\omega}\gamma_{i,t,\omega} } & =0 & \forall i,t,\omega & \qquad (A_{i}(t,\omega)) \\
   \pia{  -Pr(\omega) \pi^v_{t,\omega} + \beta_{i,t,\omega}  + \gamma_{i,t,\omega}} & =0 & \forall i,t,\omega & \qquad (V_i(t,\omega)) \\
 \pia{    Pr(\omega) \pi^v_{t,\omega} -\gamma_{t,\omega}} & = 0 & \forall i, t,\omega & \qquad (P_i(t,\omega))
@@ -470,8 +473,8 @@ Primal feasibility
 \begin{align}
     \Big(CF_i \cdot\tau\Big)  \Bigg[\bar{Q_i} + \sum_{t^{\prime}<\bar{t}} x_i(t^\prime,\omega) + x_i(0)+ \bar{Q}_i(t) \Bigg] - Q_i(t,\omega) & \geq 0  & \forall  \quad \omega, t  > 0 & \quad (\alpha_{i,t,\omega}) \\
     \Big(CF_i\cdot\tau \Big)\bar{Q_i}-Q_{i}(0) & \geq 0  &  \quad & \quad (\kappa_i) \\
-\pia{ A_{i}(0)+A_i(t,\omega) - V_i(t,\omega) } & \geq  0  & \forall  \quad t,\omega & \quad (\beta_{i,t,\omega})\\
-  \pia{ A_{i}(0)+A_i(t,\omega) + \sum_{i}P_i(t,\omega) - V_i(t,\omega)-\sum_{t>0}Q_i(t, \omega)\cdot \varepsilon_{i}-Q_i(0)\varepsilon_{i}} & \geq  0  &\forall \quad t,\omega & \quad (\gamma_{i,t,\omega})\\
+\pia{A_i(t,\omega) - V_i(t,\omega) } & \geq  0  & \forall  \quad t,\omega & \quad (\beta_{i,t,\omega})\\
+  \pia{ A_i(t,\omega) + \sum_{-i}P_{-i}(t,\omega) - V_i(t,\omega)-Q_i(t, \omega)\cdot \varepsilon_{i}} & \geq  0  &\forall \quad t,\omega & \quad (\gamma_{i,t,\omega})\\
  Q_i(0) & \geq  0 & \quad & \quad (\lambda_i)\\
  Q_i(t, \omega & \geq  0   & \forall  \quad \omega, t >0 & \quad (\delta_{i,\omega})\\
   x_i(0) & \geq  0 & \quad & \quad (\xi_i)\\
@@ -485,8 +488,8 @@ Complementary slackness
 \begin{align}
     \Bigg(\Big(CF_i \cdot\tau\Big)  \Bigg[\bar{Q_i} + \sum_{t^{\prime}<\bar{t}} x_i(t^\prime,\omega) + x_i(0)+ \bar{Q}_i(t) \Bigg] - Q_i(t,\omega)\Bigg) \cdot \alpha_{i,\omega,\tau} & = 0 & \forall  \quad \omega, t  > 0\\
     \Bigg(  \Big(CF_i\cdot\tau \Big)\bar{Q_i}-Q_{i}(0) \Bigg)\cdot \kappa_i & = 0  & \quad  \\
-    \Bigg( \pia{ A_{i}(0)+A_i(t,\omega) - V_i(t,\omega) } \Bigg) \cdot \beta_{i,t,\omega} & = 0 & \forall  \quad t>0 ,\omega\\
-    \Bigg(  \pia{ A_{i}(0)+A_i(t,\omega) + \sum_{i}P_i(t,\omega) - V_i(t,\omega)-\sum_{t>0}Q_i(t, \omega)\cdot \varepsilon_{i}-Q_i(0)\varepsilon_{i}} \Bigg)\cdot \gamma_{i,t,\omega} & = 0 & \forall \quad t>0, \omega \\
+    \Bigg( \pia{ A_i(t,\omega) - V_i(t,\omega) } \Bigg) \cdot \beta_{i,t,\omega} & = 0 & \forall  \quad t>0 ,\omega\\
+    \Bigg(  \pia{ A_i(t,\omega) + \sum_{-i}P_{-i}(t,\omega) - V_i(t,\omega)-Q_i(t, \omega)\cdot \varepsilon_{i}} \Bigg)\cdot \gamma_{i,t,\omega} & = 0 & \forall \quad t>0, \omega \\
     \Bigg( Q_i(0) \Bigg) \cdot \lambda_i & = 0 & \\
     \Bigg(Q_i(t,\omega)\Bigg ) \cdot \delta_{i,\omega} & = 0 & \forall  \quad \omega, t >0\\
     \Bigg( x_i(0) \Bigg) \cdot \xi_i & = 0 & \\
@@ -513,21 +516,40 @@ Dual Feasibility
 For the Auctioneer, the Lagrangian function is 
 
 \begin{equation}
-    \mathcal{L}(\theta)=  -\Big(\theta(0)\pi^a(0)+\theta(t,\omega) \pi^{a}(t,\omega)\Big) + \eta \big(-\phi^{-1}(M) \sigma^2 - \mu + \theta(0)+\theta(t,\omega)\big) - \epsilon \theta(0)-\zeta \theta(t,\omega)
+    \mathcal{L}(\theta)=  -\Big(\sum_{t,\omega} \theta(t,\omega) \pi^{a}(t,\omega)\Big) -\pia{\Big( \sum_{t \in tau4, \omega}\theta_2(t,\omega)\pi^{ernc}(t,\omega)\Big)} + \sum_{t,\omega} \eta(t,\omega) \big(-\phi^{-1}(M) \sigma^2 - \mu(t) +\theta(t,\omega)\big) +
+    \end{equation}
+    \begin{equation}
+    \pia{\sum_{t \in tau4, \omega} \eta_2(t,\omega)\Big(-\theta_2(t,\omega)+\alpha_t D(t,\omega)\Big)} -\zeta \theta(t,\omega) - \pia{\sum_{t \in tau4, \omega}\zeta_2(t,\omega)\theta_2(t,\omega)} \nonumber 
 \end{equation}
 
 The KKT equations for the auctioneer are:
 
 \begin{align}
-    -\pi^{a}(0) +\eta -\epsilon & = 0 & \quad \big(\theta(0)\big)\\
     -\pi^a(t,\omega)+\eta-\zeta & = 0 & \quad \big(\theta(t,\omega)\big)\\
+    -\pi^{ernc}(t,\omega)+\eta_2(t,\omega)-\zeta_2(t,\omega) & = 0 & \quad \big(\theta_2(t,\omega)\big)\\
     \theta(0) & \geq  0 \\
     \theta(t,\omega) & \geq  0 \\
-    \Big(\phi^{-1}(M) \sigma^2 + \mu - \theta(0)-\theta(t,\omega)\Big)\cdot \eta & =  0\\
+    \Big(\phi^{-1}(M) \sigma^2 + \mu(t) -\theta(t,\omega)\Big)\cdot \eta & =  0\\
     \eta & \geq  0\\
-    \epsilon & \geq 0 \\
     \zeta & \geq 0
 \end{align}
+
+
+
+\begin{figure}[h!]
+  \begin{subfigure}[b]{0.5\textwidth}
+    \includegraphics[width=\textwidth]{Apuntes/Figures/production_no_cnt_2030_annual.png}
+    \caption{Production per year for each technology (producer) for the base-case (no cap and trade system)}
+    \label{fig:2030nocnt_annual}
+  \end{subfigure}\quad
+  %
+  \begin{subfigure}[b]{0.5\textwidth}
+    \includegraphics[width=\textwidth]{Apuntes/Figures/production_cnt_2030_annual.png}
+    \caption{Production per year for each technology (producer) for the base-case (no cap and trade system)}
+    \label{fig:2030cnt_annual}
+  \end{subfigure}
+\end{figure}
+
 
 \section{Scenarios}
 In each case, we compare each case with the current tax implemented, that is 5 $\rm USD/tCO_2$, a cap-and-trade scheme, and a mixture of both. 
@@ -543,21 +565,26 @@ In each case, we compare each case with the current tax implemented, that is 5 $
 \end{itemize}
 
 
-%\begin{tabular}{ |p{3cm}||p{4cm}|p{4cm}|p{4cm}|  }
-% \hline
-% \multicolumn{4}{|c|}{Scenarios according to Chile's Pledge} \\
-% \hline
-%& CAP & Phase out Coal 2040 & 60\% NCRE \\
-% \hline
-% Afghanistan   & AF    &AFG&   004\\
-% Aland Islands&   AX  & ALA   &248\\
-% Albania &AL & ALB&  008\\
-% Algeria    &DZ & DZA&  012\\
-% American Samoa&   AS  & ASM&016\\
-% Andorra& AD  & AND   &020\\
-% Angola& AO  & AGO&024\\
-% \hline
-%\end{tabular}
+
+
+\begin{center}
+ \begin{tabular}{ |c|c|c|c|c|  }
+ \hline
+ & CAP 2030 & Phase out coal by 2040 & 60\% from NCRE by 2035 & something 2050 \\ [0.5ex] 
+ \hline\hline
+Scenario 1 &  &    & &\\ 
+ \hline
+Scenario 2 & \xmark  &  &  &\\
+ \hline
+ Scenario 3 &  & \xmark & \xmark&\\
+ \hline
+ Scenario 4 &\xmark  &  &\xmark &\xmark\\
+ \hline
+Scenario 5 &\xmark  & \xmark & \xmark&\xmark\\ [1ex] 
+ \hline
+\end{tabular}
+\end{center}
+
 
 
 \end{document}
