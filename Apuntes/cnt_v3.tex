@@ -48,11 +48,12 @@ Considerar un mercado de cap-and-trade como opción a incrementar el tax en chil
 
 \section{Model}\label{model}
 
-Let us consider a market of $N$ producers indexed by $i\in\{1,...,N\}$, each of them minimizing the cost of operation and investment. We will assume perfect competition among the producers. Our model will assume two basic stages: operation today and investment for the future in period $t=0$ and the uncertain future where there is a spot market and trade of emission allowances in periods $t\in T:=\{1,...\bar{t}\}$. Uncertainty is revealed in period $t=1$ and is represented by a state of nature $\omega\in\Omega:=\{1,..,K\}$. Thus, for a given state of nature $\omega\in\Omega$, the pair $(t,\omega)$ represents the future in period $t$ when the state $\omega$ is realized.
+Let us consider a market of $N$ producers indexed by $i\in\{1,...,N\}$, each of them minimizing the cost of operation and investment. We will assume perfect competition among the producers. Our model will assume two basic stages: operation today and investment for the future in period $t=0$ and the uncertain future where there is a spot market and trade of emission allowances in periods $t\in T:=\{1,...\bar{t}\}$. Uncertainty is revealed in period $t=1$ and is represented by a state of nature $\omega\in\Omega:=\{1,..,K\}$. Thus, for a given state of nature $\omega\in\Omega$, the pair $(t,\omega)$ represents the future in period $t$ when the state $\omega$ is achieved.
 
 \smallskip
 
-At first stage, we consider the current operating plant of the producer $i$, the cost of the operation $C_i$, and the quantity produced $Q_i(t)$ with $t=0$. The selling price (that satisfies the demand) at this stage is $\pi^d(t)$ with $t=0$. The maximum quantity of production at current stage ($t=0$) per producer is $\bar{Q}_i$. Each producer buys a certain amount of carbon allowances $A_i\in\mathbb{R}_+$ at a price $\pi^{a}$ from an auctioneer or regulatory agent.  The auctioneer will try to maximize the revenue obtained from the sold allowances. At this stage when $t=0$, the producer $i$ decides the amount $x_i(t)$ of capacity expansion at a cost $I_i$ for the uncertain future.
+At first stage, we consider the present operating plant of the producer $i$, the cost of the operation $C_i$, and the quantity produced $Q_i(t)$ with $t=0$. The selling price (that satisfies the demand) at this stage is $\pi^d(t)$ with $t=0$. The maximum quantity of production at current stage ($t=0$) per producer is $\bar{Q}_i$. Each producer buys a certain amount of carbon allowances $A_i\in\mathbb{R}_+$ at a price $\pi^{a}$ from an auctioneer or regulatory agent.  The auctioneer will try to maximize the revenue obtained from the sold allowances. At this stage when $t=0$, the producer $i$ decides the amount $x_i(t)$ of capacity expansion at a cost $I_i$ for the uncertain future.
+
 \smallskip
 
 At the second stage for each $t\in T$ and given $\omega\in \Omega$, the producer wants to operate in the most efficient way at the spot market choosing production level $Q_i(t,\omega)\in\mathbb{R}_+$ with a cost  $TC_i(t,\omega)\cdot C_i$ where $TC_i(t,\omega)\in\mathbb{R}_+$ is the change of the cost. Also, the producer can invest in a capacity expansion $x_i(t,\omega)\in\mathbb{R}_+$ with an investment cost of $TCR_i(t,\omega)I_i$  where $TCR_i(t,\omega)\cdot C_i$ the change in the investment cost. In addition,  we will consider the existence of a permit trading system, where producers can purchase $P_i(t,\omega)\in\mathbb{R}_+$ permits from other producers if they need to surpass the emission allowances $A_i$, or sell $V_i(t,\omega)\in\mathbb{R}_+$ unused permits if their emissions are below allowances $A_i$. The price of transaction in this system is $\pi^v(t,\omega)$. The producer will evaluate the cost of the uncertain future as a risk neutral agent, i.e., expectated value with a probability obtained from real world data.
@@ -189,6 +190,7 @@ For this model, each producer corresponds to a different technology present in t
 
 \underline{Producer's problem} (each producer is a different technology):
 
+\small
 \begin{align}
 \min_{x,Q,A,P,V} & \underbrace{{\color{red}\Big(a_iQ_{1,i}+\frac{b}{2}Q_{1,i}^{2}\Big)-\pi^{d,1} Q_{1,i}}}_{\seba{\left(C_t^{comb}\cdot C^{esp}+CVnC\right)Q_{i,t}+\underbrace{FixedCost_{i,t}}_{\frac{\alpha\cdot I\cdot x}{algo}}}} + A_i \pi^{a} + I_i x_i^{1} + \sum_{\Omega} prob_\omega   \Bigg( \sum_{t>1} \frac{1}{(1+R)^t} \Big[ (TC_{i,\tau}\cdot {\color{red}(a_i Q_{i,t,\omega}+\frac{b}{2}Q_{i,t,\omega}^{2})}\nonumber \\
     & {\color{red}-\pi^{d,2}_{\omega} Q_{i,t,\omega}} + \sum_{t > 1} TCR_i \cdot I_ix^{t}_{i,w} \Big] - V_{i,\omega}\pi_{i,w}^v+\sum_{j\neq i}  P_{i,j,\omega}\pi_{j,w}^v\Bigg)  \\
@@ -205,7 +207,7 @@ For this model, each producer corresponds to a different technology present in t
   x_{i, \omega}^{t} & \geq  0   & \forall  \quad \omega, t >1 & \quad (\varphi_{i,\omega,t})\\
 {\color{blue} RP_i - \bar{Q}_i - \bar{Q}_{i,t} - x^{1}_i - \sum_{t > 1} x^{t}_{i,w} } & {\color{blue} \geq 0} & {\color{blue} \forall \quad i,\omega }&  {\color{blue} \quad (\psi_{i,\omega}) }
   \end{align}\\
-  
+\normalsize  
   
  
  (\textbf{FELIPE}: Note that $C_i\seba{(Q_i)}$ represents the \seba{marginal} cost function of producer $i$. We consider quadratic \seba{marginal} cost functions of the form $C_i\seba{(Q_i)}=a+\frac{b}{2}Q\seba{_i}$. Hence, I have rewritten the model formulation to account for this change)
