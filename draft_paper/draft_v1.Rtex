@@ -410,14 +410,25 @@ Price of allowances (USD per tCO$_2e$) & 174 & 45 &35 &23 \\
 
 Projections based on the analysis above show that the pledge regarding coal phase out is difficult to honor. Thus, it is necessary to investigate new mechanisms to accomplish the targets. 
 
-The cap and trade configuration establish a permits market and no additional trade-restrictions for producers. Unrestricted access to markets is not a realistic setting since market access is ruled by revenue, capacity, caps or quotas among many other regulatory or institutional considerations. For instance, at a general level we analyzed caps that determine the size of the permits market. At an individual level, restricted access can take sophisticated shapes: options, collateral requirements, margin calls, personalized caps and many other financial instruments.  
+The cap and trade configuration establish a permits market and no additional trade-restrictions for producers. Unrestricted access to markets is not a realistic setting since market access is ruled by revenue, capacity, caps or quotas among many other regulatory or institutional considerations. For instance, at a general level we analyzed caps that determine the size of the permits market. At an individual level, restricted access can take sophisticated (financial) shapes: options, collateral requirements, margin calls, personalized caps and many other financial instruments.  
 
 In a competitive setting, (exogenous) restrictions as the one given by a quota were introduced by \cite{Cass1984,Cass2006}. Endogenous restrictions are analyzed in \cite{Cassetal2001,Carosietal2009} among others. Nevertheless, the case of endogenous investment restrictions was not included until \cite{cea-echenique_general_2018}.
 
 We analize the impact of an endogenous limit for the long position in the permits market. The cap is defined by a proportion of the permits bought in the first stage. The endogenous cap can be targeted to a specific technologies (segmentation).
 
-The application of a targeted policy to segment the Coal-based technology implies in the elimination of the technology by 2035 if the proportion is 70\%. 
+The application of a targeted policy to segment the Coal-based technology implies in the elimination of the technology by 2035 if the proportion is 70\%. The effect of this targeted policy on prices induce a reduction in the price of allowances provided a proportion greater than 30\% (see Figure \ref{fig:priceproportions}). This is an interesting effect, because the price changes when all the allowances are bought by Coal. On the one hand, Coal needs more allowances to maintain operation for greater proportion. On the other hand, once all the allowances are bought by Coal, other technologies take benefits of a lower price of permits in the second stage.
 
+
+<<priceproportions,fig.pos="h", fig.height=3.3, fig.width=5, out.width='.8\\textwidth', fig.align='center', fig.cap="Allowance Price with respect to Allowance Proportion sold by Coal.", echo=FALSE, message=FALSE, include=TRUE>>=
+
+PriceProportions <- read.csv("PriceProportions.csv")
+
+require(ggplot2)
+
+ggplot(PriceProportions, aes(x = Proportion, y = Price)) +
+      geom_line(color="blue") +
+      labs(x="Allowance Proportion sold", y = expression(paste("Price of Allowances  ",(pi^a),sep="")))
+@
 
 \subsection{Impact of demand uncertainty on the Chilean pledges}\label{sec:scenarios}
 We now consider the case where there is demand uncertainty in future periods. The stochastic demand creates uncertainty with respect to how many allowances generators should get during the first stage, hence, creating different carbon price patterns. We consider five demand scenarios, based on projections from Chile's roadmap towards 2050
