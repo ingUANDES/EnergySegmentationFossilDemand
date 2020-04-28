@@ -47,7 +47,7 @@
 \maketitle
 
 \begin{abstract}
-In the context of the Paris Agreement, Chile has pledged to reduce Greenhouse Gases (GHG) intensity by at least 30\% below 2007 levels by 2030, and to phase out coal as a energy source by 2040, among other strategies. In pursue of these goals, Chile has implemented a \$5 per tonne of CO$_2$ emission tax, first of its kind in Latin America. However, such a low price has proven to be insufficient. In our work, we study an alternative approach for capping and pricing carbon emissions in the Chilean electric sector; the cap and trade paradigm. We model the Chilean electric market (generators and emissions auctioneer) as a two stage capacity expansion equilibrium problem, where we allow future investment and trading of emission permits among generator agents. The model allows to study generation and future investments in the Chilean electric sector in two regimes of demand: deterministic and stochastic. We show that the current Chilean Greenhouse Gases (GHG) intensity pledge does not drive an important shift in the future Chilean electric matrix. To encourage a shift to greener technologies, a more stringent carbon budget must be considered, resulting in a carbon price approximately ten times higher than the present one. We also show that achieving the emissions reduction goal does not necessarily results in further reductions of carbon generation, or phasing out coal in the longer term. Finally, we demonstrate that under technology change costs reductions, higher demand scenarios will relax the need for stringent carbon budgets to achieve new renewable energy investments and hence meet the Chilean pledges. These results suggest that some aspects of the Chilean pledge require further analysis, of the economic impact, particularly with the recent announcement of achieving carbon neutrality towards 2050. 
+In the context of the Paris Agreement, Chile has pledged to reduce Greenhouse Gases (GHG) intensity by at least 30\% below 2007 levels by 2030, and to phase out coal as a energy source by 2040, among other strategies. In pursue of these goals, Chile has implemented a \$5 per tonne of CO$_2$ emission tax, first of its kind in Latin America. However, such a low price has proven to be insufficient. In our work, we study an alternative approach for capping and pricing carbon emissions in the Chilean electric sector; the cap and trade paradigm. We model the Chilean electric market (generators and emissions auctioneer) as a two stage capacity expansion equilibrium problem, where we allow future investment and trading of emission permits among generator agents. The model studies generation and future investments in the Chilean electric sector in two regimes of demand: deterministic and stochastic. We show that the current Chilean Greenhouse Gases (GHG) intensity pledge does not drive an important shift in the future Chilean electric matrix. To encourage a shift to greener technologies, a more stringent carbon budget must be considered, resulting in a carbon price approximately ten times higher than the present one. We also show that achieving the emissions reduction goal does not necessarily results in further reductions of carbon generation, or phasing out coal in the longer term. Finally, we demonstrate that under technology change costs reductions, higher demand scenarios will relax the need for stringent carbon budgets to achieve new renewable energy investments and hence meet the Chilean pledges. These results suggest that some aspects of the Chilean pledge require further analysis, of the economic impact, particularly with the recent announcement of achieving carbon neutrality towards 2050. 
 \end{abstract}
 
 
@@ -110,7 +110,7 @@ In the first stage, $t=0$, each producer $i$ chooses the generation quantity $Q_
 In the second stage, for each pair $(t,\omega)$, producer $i$ maximizes its profit by choosing the generation level $Q_i(t,\omega)\in\mathbb{R}_+$ at a price $\pi^d(t,\omega)\in\mathbb{R}_+$. We consider a technology change $TC_i(t) \in\mathbb{R}_+$ that adjusts the marginal cost of different technologies. Similarly, each producer $i$ chooses additional capacity $x_i(t,\omega)\in\mathbb{R}_+$ with an investment cost of $TCR_i(t)\cdot I_i$, where $TCR_i(t)\in\mathbb{R}_+$ is the change in the investment cost or capital expenditure over time. Additionally, we consider a permit trading system in $t=1$, where producers can purchase $P_i(\omega)\in\mathbb{R}_+$ permits from other producers if they need to surpass the initial allowances allocation $A_i$, or sell $V_i(\omega)\in\mathbb{R}_+$ unused permits. The price of the net transaction in this trading system is given by $\pi^v(\omega)\in\mathbb{R}_+$.
 
 \smallskip
-The complete nomenclature of sets, parameters and variables are summarized in Table~\ref{tab:nom}. In the following paragraphs we describe the optimization problems for each agent in this market, and we define the equilibrium concept for the configuration.
+The complete nomenclature of sets, parameters and variables are summarized in Table~\ref{tab:nom}. In the following paragraphs we describe the optimization problems for each agent in this market, and we define the equilibrium concept.
 
 \smallskip
 \begin{table}
@@ -343,8 +343,8 @@ Using the emissions from the electricity sector in 2016 and the Chilean pledge f
 We explore possible scenarios that can lead to a change in the environmental policies in the country. We perform a sensitivity analysis of the carbon budget and compare the results with the planned policies and pledges that Chile has already committed in the Paris Agreement and other instances. Such analysis is needed to better estimate the necessary budget and carbon prices that Chile requires, as current implemented policies are not sufficient. These pledges are:
 
 \begin{itemize}
+    \item By 2024: retirement of the eight oldest coal-fired power plants (20\% of current coal electricity capacity). 
     \item By 2030: 30\% below 2007 GHG intensity of GDP (uncondicional target). This translates in 151\% above 1990 emissions excl. LULUCF by 2030. 
-    \item By 2024: close eight of the oldest coal-fired power plants (20\% of current coal electricity capacity) 
     \item By 2035: 60\% electricity production from renewable energy 
     \item By 2040: phase-out coal 
     \item By 2050: 70\% electricity production from renewable energy
@@ -374,7 +374,7 @@ Figure~\ref{fig:prod_cap} shows production levels per technology towards 2050, f
 The net capacity addition in the base case over the period 2019-2050 accounts to 17.38 GW, of which solar and wind account for most of it (98\%). In the case of a lax carbon budget (1000 MtCO$_2e$), total capacity additions increase to 25.58 GW, an increment of 47\% compared to the base case. New solar capacity accounts to 14.41 GW (48\% increase) whereas wind energy investment was of 9.91 GW (32\% increase). However, when an extreme (low) carbon budget is considered (100 MtCO$_2e$), solar and wind investments account to 24.67 GW and 14.94 GW (154\% and 99\% increase), respectively. We also observed that new investment does not vary significantly for carbon budgets values between 100 MtCO$_2e$ and 500 MtCO$_2e$. In fact, total new investments increase by 7\% for a budget of 100 MtCO$_2e$ when compared to 500 MtCO$_2e$. However, the allowance price in these two cases is significantly different. For a carbon budget of 500 MtCO$_2e$ the allowance price is $\$45/tCO_2e$, almost four times lower than the allowance price for 100 MtCO$_2e$ ($\$174/tCO_2e$).
 \smallskip
 
-Results also show that allowance prices lower than $\$45/tCO_2e$ are not sufficient to phase out coal towards 2040 (nor 2050), as one of the objectives that Chile has pledged. Neither is clear if the Chilean government is working towards this goal. In 2019, the biggest coal power plant (Mejillones) with a total capacity of 375 MW started operation. However, to date, only 2 plants have been closed, both of them accounting to 170 MW of capacity. In this sense, as the CAT website notes in their country's profile, Chile has given mixed signals about coal-fueled plants and their plan to remove them from the production matrix. It is clear from Figure~\ref{fig:prod_cap} that coal can be phased out when a carbon budget between 300-400 MtCO$_2e$  is considered, with allowance prices of $\$56/tCO_2e$ and above (as the carbon budget becomes more stringent). Still, a carbon budget of 700 MtCO$_2e$ is more restrictive than the current pledge, without imposing complete shutdown of some generation plants, which has economic implications, particularly for developing countries \cite{Binsted2019}.
+Results also show that allowance prices lower than $\$45/tCO_2e$ are not sufficient to phase out coal towards 2040 (nor 2050), as one of the objectives that Chile has pledged. Also, it is not clear if the Chilean government is working towards this goal. In 2019, the biggest coal power plant (Mejillones) with a total capacity of 375 MW started operation. However, to date, only 2 plants have been closed, both of them accounting to 170 MW of capacity. In this sense, as the CAT website notes in their country's profile, Chile has given mixed signals about coal-fueled plants and their plan to remove them from the production matrix. It is clear from Figure~\ref{fig:prod_cap} that coal can be phased out when a carbon budget between 300-400 MtCO$_2e$  is considered, with allowance prices of $\$56/tCO_2e$ and above (as the carbon budget becomes more stringent). Still, a carbon budget of 700 MtCO$_2e$ is more restrictive than the current pledge, without imposing complete shutdown of some generation plants, which has economic implications, particularly for developing countries \cite{Binsted2019}.
 
 \smallskip
 
@@ -406,8 +406,6 @@ Price of allowances (USD per tCO$_2e$) & 174 & 45 &35 &23 \\
     \label{tab:resultsTable}
 \end{table}
 
-\subsection{Targeted Technology Segmentation}
-
 Projections based on the analysis above show that the pledge regarding coal phase out is difficult to honor. Thus, it is necessary to investigate new mechanisms to accomplish the targets. 
 
 The cap and trade configuration establish a permits market and no additional trade-restrictions for producers. Unrestricted access to markets is not a realistic setting since market access is ruled by revenue, capacity, caps or quotas among many other regulatory or institutional considerations. For instance, at a general level we analyzed caps that determine the size of the permits market. At an individual level, restricted access can take sophisticated (financial) shapes: options, collateral requirements, margin calls, personalized caps and many other financial instruments.  
@@ -426,8 +424,8 @@ PriceProportions <- read.csv("PriceProportions.csv")
 require(ggplot2)
 
 ggplot(PriceProportions, aes(x = Proportion, y = Price)) +
-      geom_line(color="blue") +
-      labs(x="Allowance Proportion sold", y = expression(paste("Price of Allowances  ",(pi^a),sep="")))
+      geom_line(color="blue") + theme_bw()+
+      labs(x="Allowance Proportion sold", y = expression(paste("USD per tCO2e ",(pi^a),sep="")))
 @
 
 \subsection{Impact of demand uncertainty on the Chilean pledges}\label{sec:scenarios}
