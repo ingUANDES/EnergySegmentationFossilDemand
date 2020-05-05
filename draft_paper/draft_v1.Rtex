@@ -31,8 +31,8 @@
 \captionsetup{font=footnotesize}
 
 \newcommand\boldred[1]{\textcolor{red}{\textbf{#1}}}
-\newcommand{\seba}{\textcolor[rgb]{0,1,1}}
-\newcommand{\fel}[1]{{\color{red}({\bf FF:}#1)}}
+\newcommand{\seba}[1]{{\textcolor[rgb]{0.19, 0.55, 0.91}({\bf sebacea: }#1)}}
+\newcommand{\fel}[1]{{\color{red}({\bf FF: }#1)}}
 \newcommand{\pia}[1]{{\color{magenta}({\bf Pia: }#1)}}
 %\newcommand{\pia}{\textcolor[rgb]{0,0,1}}
 
@@ -320,7 +320,7 @@ Figure ~\ref{fig:bc}(b) shows the calibrated production level per technology ove
 
 \subsection{Determination of the carbon budget}\label{sec:cap}
 
-The Nationally Determined Contribution (NDC) proposed by Chile states that the total GHG intensity by 2030 must be 30\% below 2007 GHG intensity of GDP, or, in absolute terms of CO$_2e$, by 2030 the emission level must be 131 MtCO$_2e$. Based on this claim, we computed the remaining emission budget (or cap) for our study period of interest (2019 - 2050). 
+The Nationally Determined Contribution (NDC) proposed by Chile states that the total GHG intensity by 2030 must be 30\% below 2007 GHG intensity of GDP, or, in absolute terms of CO$_2e$, by 2030 the emission level must be 131 MtCO$_2e$. Based on this claim, we computed the remaining emission budget (or cap) for our study period (2019 - 2050). 
 \smallskip
 
 Based on Chile's pledge in the Paris Agreement, the projected total emissions, excluding land use, land-use change and  forestry (LULUCF), up until the year 2030 are as shown in Figure~\ref{fig:cap}, based on the most recent data about Chile's NDCs found in the Climate Action Tracker (CAT) (2 Dec 2019) webpage.\footnote{https://climateactiontracker.org/countries/chile/} It should be noted that these emissions consider the main GHG, i.e, $CO_2$, $CH_4$ and $N_2O$.  In the Chilean case, the total emissions are dominated by $CO_2$ (78\%), followed by $CH_4$ with 12.5\% and $N_2O$  with 6\% \cite{ChileInformeBienal2016}. The remaining emissions are due to fluoride gases, which we will neglect in the following analysis. To account for all the GHGs, we used emission factors $\epsilon_i$ in units of carbon equivalent tCO$_2e$ taken from \cite{IPCC2014}.
@@ -413,12 +413,12 @@ The cap and trade configuration establish a permits market and no additional tra
 
 In a competitive setting, (exogenous) restrictions as the one given by a quota were introduced by \cite{Cass1984,Cass2006}. Endogenous restrictions are analyzed in \cite{Cassetal2001,Carosietal2009} among others. Nevertheless, the case of endogenous investment restrictions was not included until \cite{cea-echenique_general_2018}.
 
-We analize the impact of an endogenous limit for the long position in the permits market. The cap is defined by a proportion of the permits bought in the first stage. The endogenous cap can be targeted to a specific technologies (segmentation).
+We analize the impact of an endogenous limit for the long position in the permits market. The cap is defined by a proportion of the permits bought in the first stage. The endogenous cap can be targeted to a specific technology (segmentation).
 
-The application of a targeted policy to segment the Coal-based technology implies in the elimination of the technology by 2035 if the proportion is 70\%. The effect of this targeted policy on prices induce a reduction in the price of allowances provided a proportion greater than 30\% (see Figure \ref{fig:priceproportions}). This is an interesting effect, because the price changes when all the allowances are bought by Coal. On the one hand, Coal needs more allowances to maintain operation for greater proportion. On the other hand, once all the allowances are bought by Coal, other technologies take benefits of a lower price of permits in the second stage.
+The application of a targeted policy to segment the Coal-based technology implies in the elimination of the technology by 2035 if the proportion is 70\%. The effect of this targeted policy on prices induce a reduction in the price of allowances provided a proportion greater than 30\% (see Figure \ref{fig:priceproportions}). This is an interesting effect and beyond the scope of this work. Briefly, the price changes when all the allowances are bought by Coal. On the one hand, Coal needs more allowances to maintain operation when a greater proportion is required. On the other hand, once all the allowances are bought by Coal, other technologies seem to have benefits of a lower price of permits in the second stage.
 
 
-<<priceproportions,fig.pos="h", fig.height=3.3, fig.width=5, out.width='.8\\textwidth', fig.align='center', fig.cap="Allowance Price with respect to Allowance Proportion sold by Coal.", echo=FALSE, message=FALSE, include=TRUE>>=
+<<priceproportions,fig.pos="h", fig.height=3.3, fig.width=5, out.width='.8\\textwidth', fig.align='center', fig.cap="Allowance Price with respect to Allowance Proportion sold by Coal in $t=1$.", echo=FALSE, message=FALSE, include=TRUE>>=
 PriceProportions <- read.csv("PriceProportions.csv")
 require(ggplot2)
 ggplot(PriceProportions, aes(x = Proportion, y = Price)) +
@@ -505,11 +505,16 @@ Finally, Figure \ref{fig:ernc_percent_shadows} shows, for a set of carbon budget
 \section{Conclusions}\label{sec:concl}
 
 
-This paper explores the capacity investment needs of the Chilean electric sector required to comply with its national and international energy and climate commitments. We impose a cap-and-trade systems that allows to price carbon and to measure what is the actual remaining carbon budget. Each electric sector technology is independently modeled as a two stage stochastic capacity expansion and production problem. The market equilibrium is obtained by solving a mixed complementarity problem that correspond to the optimality condition of each electric technology and the cap-and-trade auctioneer. Results show that, under a deterministic demand base projection, if the commitment of phasing out coal-based power plants is met, then such solution leads to meet NCRE targets in the near and long term. However, the opposite is not true. Meeting the required percentage of production of electricity from green energy sources does not necessarily mean that coal plants are removed from the electricity mix. Similar result is observed when considering an uncertain future demand. 
+This paper explores the capacity investment needs of the Chilean electric sector required to comply with its national and international energy and climate commitments. We impose a cap-and-trade system that allows to price carbon and to measure what is the actual remaining carbon budget. Each electric sector technology is independently modeled as a two stage stochastic capacity expansion and production problem. The market equilibrium is obtained by solving a mixed complementarity problem that correspond to the optimality condition of each electric technology and the cap-and-trade auctioneer. Results show that, under a deterministic demand base projection, if the commitment of phasing out coal-based power plants is met, then such solution leads to meet NCRE targets in the near and long term. However, the opposite is not true. Meeting the required percentage of production of electricity from green energy sources does not necessarily mean that coal plants are removed from the electricity mix. A similar result is observed when considering an uncertain future demand. 
 
 Particularly, we find that in order to phase out coal by 2040 and to achieve 70\% of NCRE by 2050, the remaining carbon budget (as used in the cap-and-trade policy) is close to 500 MtCO$_2e$, almost half of the current Chilean estimates (slightly lower than 1000 MtCO$_2e$, see Section \ref{sec:cap}). Hence, it is necessary to focus in carbon budget targets that are more stringent than the current one pledge by Chile. Also, our estimates suggest that carbon prices that are aligned with the energy targets are close to 50 USD per tCO$_2e$ or above, far from the current tax policy implemented in Chile. 
 
-\fel{Seba, aqui creo que queda perfecto hablar de como sacamos a coal del mercado... Luego el parrafo habla de los costos asociados a stranded assests, o plantas que dejan de funcionar antes de cumplir su vida util... creo que fluiria bien.}
+%\fel{Seba, aqui creo que queda perfecto hablar de como sacamos a coal del mercado... Luego el parrafo habla de los costos asociados a stranded assests, o plantas que dejan de funcionar antes de cumplir su vida util... creo que fluiria bien.}
+
+%\seba{Ok. Acá mi propuesta}
+
+Market segmentation may help in the achievement of promises. Precisely, by defining endogenous caps on trading permits when the allowances are already distributed, coal phase out could be attained in 2035. Nevertheless, there is still the need of a more stringent carbon budget. There are relations of the endogenous caps with other variables that need further analysis, e.g., as the impact on prices, the role of inter-temporal substitution or the cost of stranded assets.
+
 Finally, we note that short and mid term decommission of coal power plants can create a significant financial burden. These stranded plants are particularly significant in economies such as Chile or Latin America, where the cost the stranded assets has been estimated to be between 37-90 billion USD over the next 30 years \cite{feijoo2019Stranded}. Hence, it becomes extremely important to address the implications of policies and to improve the planning for the future. Some authors (e.g., \cite{Johnson2015} and \cite{Clark2014}, and references therein) have shown that to reduce the impact of stranded assets, an effective strategy is the inclusion of Carbon Capture and Storage (CCS) technologies. Although this technology has still a high capital cost, CCS help to mitigate the costs of stranded capacity, when more serious carbon policies are enacted.
 
 %Green sources are expected to rise in number in future years, particularly as a result of the decline in the capital and operation costs for these technologies, while the costs for conventional sources depend on fuel prices, which are known to be variable, without a declining trend. Thus, this fact incentivizes the present and future investment in green sources, causing a natural decline of conventional sources, mainly coal plants in the case of Chile. CCS technology is critical to achieve the global goal to limit the temperature increase no further that 1.5 $^{\circ}$C
