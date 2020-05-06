@@ -38,7 +38,7 @@
 
 \input{resources.tex}
 
-\title{Financial markets for reaching ``green" targets: Cap-and-trade strategies in the Chilean electricity sector}
+\title{An Emissions Trading System to reach NDC targets in the Chilean electric sector}
 \author{P\'ia Amigo, Sebasti{\'a}n Cea, Felipe Feijoo}
 \date{\today}
 
@@ -254,7 +254,7 @@ In this section we present operation of the Chilean electric sector. Section~\re
 
 \begin{figure}[ht!]
  \includegraphics[width=\textwidth]{Figures/Figure1_comp.png}
- \caption{\color{red}Panel (a): The outer ring shows the production percentage over the total electricity production in 2018 for each technology  obtained from the calibration of our model. The inner ring shows the real operation data for that year. Panel (b): Production levels per technology in the period 2019-2050 for our base-case scenario in our model, that is, business-as-usual, no green policies planned or implemented. }
+ \caption{Panel (a): The outer ring shows the production percentage over the total electricity production in 2018 for each technology  obtained from the calibration of our model. The inner ring shows the real operation data for that year. Panel (b): Production levels per technology in the period 2019-2050 for our base-case scenario in our model, that is, business-as-usual, no green policies planned or implemented. }
   \label{fig:bc}
   \end{figure}
 
@@ -409,13 +409,9 @@ Price of allowances (USD per tCO$_2e$) & 174 & 45 &35 &23 \\
 
 Projections based on the analysis above show that the pledge regarding coal phase out is difficult to honor. Thus, it is necessary to investigate new mechanisms to accomplish the targets. 
 
-The cap and trade configuration establish a permits market and no additional trade-restrictions for producers. Unrestricted access to markets is not a realistic setting since market access is ruled by revenue, capacity, caps or quotas among many other regulatory or institutional considerations. For instance, at a general level we analyzed caps that determine the size of the permits market. At an individual level, restricted access can take sophisticated (financial) shapes: options, collateral requirements, margin calls, personalized caps and many other financial instruments.  
+The cap and trade configuration establish a permits market and no additional trade-restrictions for producers. Unrestricted access to markets is not a realistic setting since market access is ruled by revenue, capacity, caps or quotas among many other regulatory or institutional considerations. For instance, at a general level we analyzed caps that determine the size of the permits market. At an individual level, restricted access can take sophisticated (financial) shapes: options, collateral requirements, margin calls, personalized caps and many other financial instruments. In a competitive setting, (exogenous) restrictions as the one given by a quota were introduced by \cite{Cass1984,Cass2006}. Endogenous restrictions are analyzed in \cite{Cassetal2001,Carosietal2009} among others. Nevertheless, the case of endogenous investment restrictions was not included until \cite{cea-echenique_general_2018}.
 
-In a competitive setting, (exogenous) restrictions as the one given by a quota were introduced by \cite{Cass1984,Cass2006}. Endogenous restrictions are analyzed in \cite{Cassetal2001,Carosietal2009} among others. Nevertheless, the case of endogenous investment restrictions was not included until \cite{cea-echenique_general_2018}.
-
-We analize the impact of an endogenous limit for the long position in the permits market. The cap is defined by a proportion of the permits bought in the first stage. The endogenous cap can be targeted to a specific technology (segmentation).
-
-The application of a targeted policy to segment the Coal-based technology implies in the elimination of the technology by 2035 if the proportion is 70\%. The effect of this targeted policy on prices induce a reduction in the price of allowances provided a proportion greater than 30\% (see Figure \ref{fig:priceproportions}). This is an interesting effect and beyond the scope of this work. Briefly, the price changes when all the allowances are bought by Coal. On the one hand, Coal needs more allowances to maintain operation when a greater proportion is required. On the other hand, once all the allowances are bought by Coal, other technologies seem to have benefits of a lower price of permits in the second stage.
+We analyze the impact of an endogenous limit for the long position in the permits market. For a generator, the cap size (allowed emissions) is defined by a proportion of the permits bought in the first stage. The endogenous cap can be targeted to a specific technology (segmentation). The application of a targeted policy to segment the Coal-based technology implies in the elimination of the technology by 2035 if the proportion is 70\%. The effect of this targeted policy on prices induce a reduction in the price of allowances provided a proportion greater than 30\% (see Figure \ref{fig:priceproportions}). This is an interesting effect and beyond the scope of this work. Briefly, the price changes when all the allowances are bought by Coal. On the one hand, Coal needs more allowances to maintain operation when a greater proportion is required. On the other hand, once all the allowances are bought by Coal, other technologies seem to have benefits of a lower price of permits in the second stage.
 
 
 <<priceproportions,fig.pos="h", fig.height=3.3, fig.width=5, out.width='.8\\textwidth', fig.align='center', fig.cap="Allowance Price with respect to Allowance Proportion sold by Coal in $t=1$.", echo=FALSE, message=FALSE, include=TRUE>>=
@@ -423,7 +419,8 @@ PriceProportions <- read.csv("PriceProportions.csv")
 require(ggplot2)
 ggplot(PriceProportions, aes(x = Proportion, y = Price)) +
       geom_line(color="blue") + theme_bw()+
-      labs(x="Allowance Proportion sold", y = expression(paste("USD per tCO2e ",(pi^a),sep="")))
+      labs(x="Allowance Proportion sold", y = expression(paste("USD per tCO2e ",(pi^a),sep="")))+theme(axis.text=element_text(size=10),
+        axis.title=element_text(size=10))
 @
 
 \subsection{Impact of demand uncertainty on the Chilean pledges}\label{sec:scenarios}
@@ -513,9 +510,7 @@ Particularly, we find that in order to phase out coal by 2040 and to achieve 70\
 
 %\seba{Ok. Acá mi propuesta}
 
-Market segmentation may help in the achievement of promises. Precisely, by defining endogenous caps on trading permits when the allowances are already distributed, coal phase out could be attained in 2035. Nevertheless, there is still the need of a more stringent carbon budget. There are relations of the endogenous caps with other variables that need further analysis, e.g., as the impact on prices, the role of inter-temporal substitution or the cost of stranded assets.
-
-Finally, we note that short and mid term decommission of coal power plants can create a significant financial burden. These stranded plants are particularly significant in economies such as Chile or Latin America, where the cost the stranded assets has been estimated to be between 37-90 billion USD over the next 30 years \cite{feijoo2019Stranded}. Hence, it becomes extremely important to address the implications of policies and to improve the planning for the future. Some authors (e.g., \cite{Johnson2015} and \cite{Clark2014}, and references therein) have shown that to reduce the impact of stranded assets, an effective strategy is the inclusion of Carbon Capture and Storage (CCS) technologies. Although this technology has still a high capital cost, CCS help to mitigate the costs of stranded capacity, when more serious carbon policies are enacted.
+Market segmentation may help in the achievement of promises. Precisely, by defining endogenous caps on trading permits when the allowances are already distributed, coal phase out could be attained in 2035. Nevertheless, there is still the need of a more stringent carbon budget. There are relations of the endogenous caps with other variables that need further analysis, e.g., as the impact on prices, the role of inter-temporal substitution or the cost of stranded assets. In this context, it is important to account for possible financial burden. Generally, the cost of stranded power plants are significant for developing economies, such as Chile or Latin America. Such a cost has been estimated to be between 37-90 billion USD over the next 30 years in the Southern American region \cite{feijoo2019Stranded}. Hence, it becomes extremely important to address the implications of policies and to improve the mitigation strategies. Some authors (e.g., \cite{Johnson2015} and \cite{Clark2014}, and references therein) have shown that the inclusion of Carbon Capture and Storage (CCS) technologies can be an effective strategy to reduce the economic impact of stranded assets, particularly, when more serious carbon policies are enacted.
 
 %Green sources are expected to rise in number in future years, particularly as a result of the decline in the capital and operation costs for these technologies, while the costs for conventional sources depend on fuel prices, which are known to be variable, without a declining trend. Thus, this fact incentivizes the present and future investment in green sources, causing a natural decline of conventional sources, mainly coal plants in the case of Chile. CCS technology is critical to achieve the global goal to limit the temperature increase no further that 1.5 $^{\circ}$C
 
@@ -526,23 +521,41 @@ Finally, we note that short and mid term decommission of coal power plants can c
 \setcounter{equation}{0}
 \numberwithin{equation}{section}
 The Producer problem is 
+
+%\begin{align}
+%\min_{(x_i,Q_i,A_i,P_i,V_i)\in \mathbb{X}} &  f_i \big( \pi^d(0),Q_i(0)\big)+ A_i \pi^{a} + I_i x_i(0) \nonumber \\ 
+%& + \sum_{\omega} Pr(\omega)   \Bigg[ \sum_{t>0} \frac{1}{(1+R)^t} \Big[ TC_i(t,\omega)\cdot f_i \big( \pi^d(t,\omega),Q_i(t,\omega) \big)  \nonumber \\
+% & + TCR_i(t,\omega) \cdot I_i\cdot x_i(t,\omega) \Big] + \pi^v(\omega)\cdot \big(P_i(\omega)-V_i(\omega)\big) \Bigg]  \\
+%     \textrm{s.t \ } \nonumber
+%\end{align}
+%\begin{align}
+%    \Big(CF_i \cdot\tau\Big)  \Bigg[\bar{Q}_i + \sum_{t^{\prime}<\bar{t}} x_i(t^\prime,\omega) + x_i(0)+ \bar{Q}_i(t) \Bigg] - Q_i(t,\omega) & \geq 0  & \forall  \quad \omega, t  > 0 & \quad (\alpha_{i,\omega,t}\\
+%    \Big(CF_i\cdot\tau \Big)\bar{Q_i}-Q_{i}(0) & \geq 0  &  \quad & \quad (\kappa_i) \\
+%     RP_i - \bar{Q}_i - \bar{Q}_i(t) - x_i(0) - \sum_{t > 0} x_i(t,\omega) & \geq 0 &  \forall \quad i,\omega &   \quad (\psi_{i,\omega}) \\
+% A_{i} -V_i(\omega) & \geq  0  & \forall  \quad \omega & \quad (\beta_{i,\omega}) \\
+% A_{i} + (P_i(\omega) - V_i(\omega))-\sum_{t>0}Q_i(t, \omega)\cdot \varepsilon_{i}-Q_i(0)\varepsilon_{i} & \geq  0  &\forall \quad \omega & \quad (\gamma_{i,\omega})\\
+% Q_i(0) & \geq  0 & \quad & \quad (\lambda_i)\\
+% Q_i(t, \omega) & \geq  0   & \forall  \quad \omega, t >0 & \quad (\delta_{i,\omega,t})\\
+%  x_i(0) & \geq  0 & \quad & \quad (\xi_i)\\
+%  x_i(t, \omega) & \geq  0   & \forall  \quad \omega, t >0 & \quad (\varphi_{i,\omega,t})
+%  \end{align}
+  
+  
+\small
 \begin{align}
-\min_{(x_i,Q_i,A_i,P_i,V_i)\in \mathbb{X}} &  f_i \big( \pi^d(0),Q_i(0)\big)+ A_i \pi^{a} + I_i x_i(0) \nonumber \\ 
-& + \sum_{\omega} Pr(\omega)   \Bigg[ \sum_{t>0} \frac{1}{(1+R)^t} \Big[ TC_i(t,\omega)\cdot f_i \big( \pi^d(t,\omega),Q_i(t,\omega) \big)  \nonumber \\
- & + TCR_i(t,\omega) \cdot I_i\cdot x_i(t,\omega) \Big] + \pi^v(\omega)\cdot \big(P_i(\omega)-V_i(\omega)\big) \Bigg]  \\
-     \textrm{s.t \ } \nonumber
+\min_{(x_i,Q_i,A_i,P_i,V_i)\in \mathbb{X}}  & f_i \big( \pi^d(0),Q_i(0)\big)+ A_i \pi^{a} + I_i x_i(0) \nonumber \\ 
+& + \sum_{\omega} Pr(\omega)   \Bigg[ \sum_{t>0} \frac{1}{(1+R)^t} \Big[ TC_i(t)\cdot f_i \big( \pi^d(t,\omega),Q_i(t,\omega) \big) \nonumber\\
+&  + TCR_i(t) \cdot I_i\cdot x_i(t,\omega) \Big] + \pi^v(\omega)\cdot \big(P_i(\omega)-V_i(\omega)\big) \Bigg]   \label{eq:prodA}
 \end{align}
 \begin{align}
-    \Big(CF_i \cdot\tau\Big)  \Bigg[\bar{Q}_i + \sum_{t^{\prime}<\bar{t}} x_i(t^\prime,\omega) + x_i(0)+ \bar{Q}_i(t) \Bigg] - Q_i(t,\omega) & \geq 0  & \forall  \quad \omega, t  > 0 & \quad (\alpha_{i,\omega,t}\\
-    \Big(CF_i\cdot\tau \Big)\bar{Q_i}-Q_{i}(0) & \geq 0  &  \quad & \quad (\kappa_i) \\
-     RP_i - \bar{Q}_i - \bar{Q}_i(t) - x_i(0) - \sum_{t > 0} x_i(t,\omega) & \geq 0 &  \forall \quad i,\omega &   \quad (\psi_{i,\omega}) \\
- A_{i} -V_i(\omega) & \geq  0  & \forall  \quad \omega & \quad (\beta_{i,\omega}) \\
- A_{i} + (P_i(\omega) - V_i(\omega))-\sum_{t>0}Q_i(t, \omega)\cdot \varepsilon_{i}-Q_i(0)\varepsilon_{i} & \geq  0  &\forall \quad \omega & \quad (\gamma_{i,\omega})\\
- Q_i(0) & \geq  0 & \quad & \quad (\lambda_i)\\
- Q_i(t, \omega) & \geq  0   & \forall  \quad \omega, t >0 & \quad (\delta_{i,\omega,t})\\
-  x_i(0) & \geq  0 & \quad & \quad (\xi_i)\\
-  x_i(t, \omega) & \geq  0   & \forall  \quad \omega, t >0 & \quad (\varphi_{i,\omega,t})
+&\textrm{subject to \ } \nonumber\\
+    &\Big(CF_i \cdot\tau\Big)  \Bigg[\bar{Q}_i + x_i(0)+\sum_{t^{\prime}<t-lag_i} x_i(t^\prime,\omega) \Bigg] - Q_i(t,\omega) & \geq 0  & \qquad \forall \quad i,\omega, t  > 0   & \quad (\alpha_{i,\omega,t})      \label{eq:c1A}\\
+    &\Big(CF_i\cdot\tau \Big)\bar{Q_i}-Q_{i}(0)                                                                                 & \geq 0  & \qquad \forall \quad i                  &  \quad (\kappa_i) \label{eq:c2A} \\
+    &RP_i - \bar{Q}_i - x_i(0) - \sum_{t > 0} x_i(t,\omega)                                                                     & \geq 0  & \qquad \forall \quad i,\omega           &   \quad (\psi_{i,\omega})\label{eq:c3A} \\
+    &A_{i} -V_i(\omega)                                                                                                         & \geq  0 & \qquad \forall \quad i,\omega           & \quad (\beta_{i,\omega}) \label{eq:c4A}\\
+    &A_{i} + (P_i(\omega) - V_i(\omega))-\sum_{t>0}Q_i(t, \omega)\cdot \varepsilon_{i}-Q_i(0)\varepsilon_{i}           & \geq  0 & \qquad \forall \quad i, \omega          & \quad (\gamma_{i,\omega}) \label{eq:c5A}
   \end{align}
+\normalsize
   
 Using this problem definition and nomenclature defined in Section~\ref{sec:model}, we can write the Lagrangian function for the producer's problem of each $i \in \{ 1,...,N\}$ as follows:
 \small{
