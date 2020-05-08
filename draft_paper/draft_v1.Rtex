@@ -39,7 +39,7 @@
 \input{resources.tex}
 
 \title{An Emissions Trading System to reach NDC targets in the Chilean electric sector}
-\author{P\'ia Amigo, Sebasti{\'a}n Cea, Felipe Feijoo}
+\author{P\'ia Amigo, Sebasti{\'a}n Cea-Echenique, Felipe Feijoo}
 \date{\today}
 
 \begin{document}
@@ -59,7 +59,7 @@ Over 150 years ago, Eunice Foote, in her paper ``\textit{Circumstances affecting
 The Paris Agreement, signed by 169 parties in 2015 in the COP21 conference, was aimed to ``keep a global temperature rise this century well below 2 $^{\circ}$C above pre-industrial levels and to pursue efforts to limit the temperature increase even further to 1.5 $^{\circ}$C''.\footnote{ https://unfccc.int/process-and-meetings/the-paris-agreement/the-paris-agreement} Participant countries submitted voluntarily their National Determined Contribution (NDC) with goals according to each economic reality\footnote{ To keep track of NDCs per country and their updated data, see https://climateactiontracker.org/ }. More than half of this NDC involved some kind of carbon pricing. In spite of the effort, it has been shown that the NDCs together are insufficient, implying a median warming of $2.6-3.1$ $^{\circ}$C by the end of the century \cite{rogelj2016paris}. This urges for stricter actions; in fact, there needs to be a massive adjustment in how the world produces its energy in order to meet climate change goals \cite{UNreport}. In this sense, experts agree that carbon pricing is one of the most economically efficient policy to reduce GHG emissions \cite{schmalensee2015lessons}.
 
 \smallskip
-There are two main types of carbon pricing, through a carbon tax and a cap-and trade system. In both cases, the main goal is to create incentives to change the investment in favor of ``green" technologies as opposed to the polluting carbon-fueled generators \cite{Chen2011}. A carbon tax puts a price on carbon, and the expected output is that emission levels will adjust accordingly; whereas a cap and trade system limits the emissions by selling allowances in a permits trading market, and the prices comes naturally from this market. Currently, the World Bank counts 46 countries which have implemented either a carbon tax or a emission trading system (ETS). In any case, there is not a clear agreement among researchers of which of the two is a more suitable climate policy option and the decision depends other aspects such as political support and administrative costs \cite{goulder2013carbon}.  One advantage for the cap-and-trade system is that it allows to set a cap (or carbon budget, as used in this paper), which can be linked to specific temperature targets \cite{feijoo2019climate,Binsted2019}. 
+There are two main types of carbon pricing, through a carbon tax and a cap-and trade system. In both cases, the main goal is to create incentives to change the investment in favor of ``green" technologies as opposed to the polluting carbon-fueled generators \cite{Chen2011}. A carbon tax puts a price on carbon, and the expected output is that emission levels will adjust accordingly; whereas a cap and trade system limits the emissions by selling allowances in a permits trading market, and the prices comes naturally from this market. Currently, the World Bank counts 46 countries which have implemented either a carbon tax or a emission trading system (ETS). In any case, there is not a clear agreement among researchers of which of the two is a more suitable climate policy option and the decision depends other aspects such as political support and administrative costs \cite{goulder2013carbon}.  One advantage for the cap-and-trade system is that it allows to set a cap (or carbon budget, as used in this paper), which can be linked to specific temperature targets \cite{feijoo2020,feijoo2019climate,Binsted2019}. 
 
 %The IMF reported in 2019 that by 2030 there should be a global carbon tax of \$ 75 in order to reduce emissions and maintain a target that will keep the raising temperature below 2 $^{\circ}$C {\color{magenta} (Kramer 2019 Physics today, see https://www.imf.org/external/pubs/ft/fandd/2019/12/the-case-for-carbon-taxation-and-putting-a-price-on-pollution-parry.htm) }. 
 
@@ -419,8 +419,9 @@ PriceProportions <- read.csv("PriceProportions.csv")
 require(ggplot2)
 ggplot(PriceProportions, aes(x = Proportion, y = Price)) +
       geom_line(color="blue") + theme_bw()+
-      labs(x="Allowance Proportion sold", y = expression(paste("USD per tCO2e ",(pi^a),sep="")))+theme(axis.text=element_text(size=10),
-        axis.title=element_text(size=10))
+      labs(x="Allowance Proportion sold", y = expression(paste("USD per tCO2e ",(pi^a),sep="")))+
+      theme(axis.text=element_text(size=9),
+        axis.title=element_text(size=9))
 @
 
 \subsection{Impact of demand uncertainty on the Chilean pledges}\label{sec:scenarios}
@@ -553,18 +554,20 @@ The Producer problem is
     &\Big(CF_i\cdot\tau \Big)\bar{Q_i}-Q_{i}(0)                                                                                 & \geq 0  & \qquad \forall \quad i                  &  \quad (\kappa_i) \label{eq:c2A} \\
     &RP_i - \bar{Q}_i - x_i(0) - \sum_{t > 0} x_i(t,\omega)                                                                     & \geq 0  & \qquad \forall \quad i,\omega           &   \quad (\psi_{i,\omega})\label{eq:c3A} \\
     &A_{i} -V_i(\omega)                                                                                                         & \geq  0 & \qquad \forall \quad i,\omega           & \quad (\beta_{i,\omega}) \label{eq:c4A}\\
-    &A_{i} + (P_i(\omega) - V_i(\omega))-\sum_{t>0}Q_i(t, \omega)\cdot \varepsilon_{i}-Q_i(0)\varepsilon_{i}           & \geq  0 & \qquad \forall \quad i, \omega          & \quad (\gamma_{i,\omega}) \label{eq:c5A}
+    &A_{i} + (P_i(\omega) - V_i(\omega))-\sum_{t>0}Q_i(t, \omega)\cdot \varepsilon_{i}-Q_i(0)\varepsilon_{i}           & \geq  0 & \qquad \forall \quad i, \omega          & \quad (\gamma_{i,\omega}) \label{eq:c5A} \\
+    &Q_i(0) & \geq  0 & \quad & \quad (\lambda_i)\\
+    &Q_i(t, \omega) & \geq  0   & \qquad \forall  \quad \omega, t >0 & \quad (\delta_{i,\omega,t})\\
+    &x_i(0) & \geq  0 & \quad & \quad (\xi_i)\\
+    &x_i(t, \omega) & \geq  0   & \qquad \forall  \quad \omega, t >0 & \quad (\varphi_{i,\omega,t})
   \end{align}
 \normalsize
   
 Using this problem definition and nomenclature defined in Section~\ref{sec:model}, we can write the Lagrangian function for the producer's problem of each $i \in \{ 1,...,N\}$ as follows:
 \small{
 \begin{align}
-    \mathcal{L}_i(x_i,Q_i,A_i,P_i,V_i) = & C_i \big( \pi^d(0),Q_i(0)\big)+ A_i \pi^{a} + I_i x_i(0)  + \sum_{\omega} Pr(\omega)   \Bigg[ \sum_{t>0} \frac{1}{(1+R)^t} \Big[ TC_i(t,\omega)\cdot C_i \big( \pi^d(t,\omega),Q_i(t,\omega) \big)  \nonumber \\
- & + TCR_i(t,\omega) \cdot I_i\cdot x_i(t,\omega) \Big] + \pi^v(\omega)\cdot \big(P_i(\omega)-V_i(\omega)\big) \Bigg]   + \kappa_{i}\Big[Q_i(0) -  \big(CF_i\cdot\tau \big)\bar{Q}_i \Big] \nonumber \\ 
- &  +\sum_{\omega,t>0} \alpha_{i,\omega,t}\Bigg[Q_i(t,\omega) - \big(CF_i \cdot\tau\big) \big(\bar{Q}_i +\bar{Q}_i(t)+ \sum_{t^{\prime} \leq t } x_i(t,\omega) + x_i(0) \big)\Bigg] + \sum_{\omega}\beta_{i,\omega}\Big[V_i(\omega)-A_i \Big] \nonumber \\ 
- &   + \sum_{\omega}\gamma_{i,\omega} \Big[-A_{i} - P_{i}(\omega) + V_i(\omega) +\sum_{t>0} Q_i(t,\omega) \varepsilon_{i} + Q_i(0)\varepsilon_{i}\Big] - \sum_{\omega, t>0}\delta_{i,\omega,t} Q_i(t,\omega) - \lambda_{i}\Big[Q_{i}(0)\Big] \nonumber\\
-     &  - \sum_{\omega, t>0}\varphi_{i,\omega,t} x_i(t,\omega) - \xi_i x_i(0) + \sum_{\omega}\psi_{i,\omega} \Big[  \bar{Q}_i+\bar{Q}_i(t) + x_i(0) + \sum_{t > 0} x_i(t,\omega) - RP_i \Big] \label{eq:lagrange}
+&\mathcal{L}_i(x_i,Q_i,A_i,P_i,V_i) = f_i \big( \pi^d(0),Q_i(0)\big)+ A_i \pi^{a} + I_i x_i(0)  +& \nonumber \\ 
+&\sum_{\omega} Pr(\omega)\Bigg[ \sum_{t>0} \frac{1}{(1+R)^t} \Big[ TC_i(t)\cdot f_i \big( \pi^d(t,\omega),Q_i(t,\omega) \big) + TCR_i(t) \cdot I_i\cdot x_i(t,\omega) \Big] + \pi^v(\omega)\cdot \big(P_i(\omega)-V_i(\omega)\big) \Bigg]   + &\nonumber \\
+&\kappa_{i}\Big[Q_i(0) -  \big(CF_i\cdot\tau \big)\bar{Q}_i \Big] +\sum_{\omega,t>0} \alpha_{i,\omega,t}\Bigg[Q_i(t,\omega) - \big(CF_i \cdot\tau\big) \big(\bar{Q}_i + \sum_{t^{\prime} \leq t } x_i(t,\omega) + x_i(0) \big)\Bigg] + & \nonumber \\ &\sum_{\omega}\beta_{i,\omega}\Big[V_i(\omega)-A_i \Big] + \sum_{\omega}\gamma_{i,\omega} \Big[-A_{i} - P_{i}(\omega) + V_i(\omega) +\sum_{t>0} Q_i(t,\omega) \varepsilon_{i} + Q_i(0)\varepsilon_{i}\Big] - \sum_{\omega, t>0}\delta_{i,\omega,t} Q_i(t,\omega) + & \nonumber \\ &\sum_{\omega}\psi_{i,\omega} \Big[  \bar{Q}_i+ x_i(0) + \sum_{t > 0} x_i(t,\omega) - RP_i \Big] - \lambda_{i}\Big[Q_{i}(0)\Big] - \sum_{\omega, t>0}\varphi_{i,\omega,t} x_i(t,\omega) - \xi_i x_i(0)& \label{eq:lagrange}
 \end{align}
 }
 
@@ -579,12 +582,12 @@ The KKT conditions of the producer's problem are:
 \footnotesize{
 \begin{align}
     & 0 \leq I_i  + \sum_{\omega}\psi_{i,\omega} -\sum_{\omega, t>0} \alpha_{i,\omega,t} \perp  x_i(0) \geq 0  \qquad \forall \  i \\
-    & 0 \leq Prob_\omega \Bigg[\frac{1}{(1+R)^t}TCR_i(t,\omega) \cdot I_i \Bigg] - \sum_{t> t\prime}\alpha_{i,\omega,t} ( CF_i \cdot \tau)+ \psi_{i,\omega} \perp x_i(t,\omega) \geq 0  \qquad  \forall \  i, \omega, t> 0\\
+    & 0 \leq Pr(\omega) \Bigg[\frac{1}{(1+R)^t}TCR_i(t) \cdot I_i \Bigg] - \sum_{t> t\prime}\alpha_{i,\omega,t} ( CF_i \cdot \tau)+ \psi_{i,\omega} \perp x_i(t,\omega) \geq 0  \qquad  \forall \  i, \omega, t> 0\\
     &  0 \leq  \big(a_{i}+b_i Q_{i}(0)\big)-\pi^d(0) + \kappa_i  + \sum_{\omega} \gamma_{i,\omega}\varepsilon_i \perp  Q_{i}(0) \geq 0 \qquad \forall \  i  \\
-    &  0 \leq  Prob_\omega  \frac{1}{(1+R)^t} \bigg( TC_i(t,\omega) \big(a_{i}+b_i Q_i(t,\omega)\big ) -\pi^d(t,\omega) \bigg) + \alpha_{i,\omega,\tau} + \gamma_{i,\omega} \varepsilon_{i} \perp Q_i(t,\omega) \geq 0 \qquad  \forall \ i, \omega, t > 0\\
+    &  0 \leq  Pr(\omega)  \frac{1}{(1+R)^t} \bigg( TC_i(t) \big(a_{i}+b_i Q_i(t,\omega)\big ) -\pi^d(t,\omega) \bigg) + \alpha_{i,\omega,\tau} + \gamma_{i,\omega} \varepsilon_{i} \perp Q_i(t,\omega) \geq 0 \qquad  \forall \ i, \omega, t > 0\\
     & 0 \leq \pi^{a} - \sum_{\omega}\beta_{i,\omega} - \sum_{\omega}\gamma_{i,\omega} \perp A_i \geq 0 \qquad \forall \  i  \label{eq:pi_a_appendix}\\
-    & 0 \leq -Prob_\omega \pi^v(\omega) + \beta_{i,\omega}  + \gamma_{i,\omega} \perp V_i(\omega) \geq 0 \qquad \forall \  i, \omega \\
-    &  0 \leq Prob_\omega \pi^v(\omega) -\gamma_{i,\omega} \perp P_{-i}(\omega) \geq 0 \qquad \forall  \ -i,\omega \\
+    & 0 \leq -Pr(\omega) \pi^v(\omega) + \beta_{i,\omega}  + \gamma_{i,\omega} \perp V_i(\omega) \geq 0 \qquad \forall \  i, \omega \\
+    &  0 \leq Pr(\omega) \pi^v(\omega) -\gamma_{i,\omega} \perp P_{-i}(\omega) \geq 0 \qquad \forall  \ -i,\omega \\
     & 0 \leq \big(CF_i \cdot \tau \big) \Bigg[\bar{Q}_i + \sum_{t\leq t^{\prime}} x_i(t,\omega) + x_i(0) \Bigg] - Q_i(t,\omega)  \perp \alpha_{i,\omega,\tau} \geq 0 \qquad \forall \ i, \omega, t  > 0\\
     & 0 \leq \Big(CF_i\cdot\tau \Big)\bar{Q}_i(0)-Q_{i}(0) \perp \kappa_i \geq 0 \qquad \forall \ i \\
     & 0 \leq  A_{i} - V_i(\omega) \perp \beta_{i,\omega} \geq 0 \qquad \forall  \ \omega \\
