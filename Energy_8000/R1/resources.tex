@@ -1,0 +1,125 @@
+%##################PACKAGE DECLARATIONS##################
+
+\makeatletter
+\newcommand*{\inlineequation}[2][]{%
+  \begingroup
+    % Put \refstepcounter at the beginning, because
+    % package `hyperref' sets the anchor here.
+    \refstepcounter{equation}%
+    \ifx\\#1\\%
+    \else
+      \label{#1}%
+    \fi
+    % prevent line breaks inside equation
+    \relpenalty=10000 %
+    \binoppenalty=10000 %
+    \ensuremath{%
+      % \displaystyle % larger fractions, ...
+      #2%
+    }%
+    ~\@eqnnum
+  \endgroup
+}
+\makeatother
+
+\let\proof\relax
+\let\endproof\relax
+\usepackage{amssymb,amsthm,color,enumerate,graphicx,mathrsfs,xspace,algorithm,algorithmicx,algpseudocode,booktabs,adjustbox,soul,threeparttable,pdflscape,afterpage,longtable,comment,multirow,etoolbox,subcaption}
+%\usepackage[usenames,dvipsnames]{xcolor}
+%\usepackage[noblocks,auth-sc]{authblk}
+%\usepackage[sort&compress,comma, numbers]{natbib}
+%\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+\usepackage[nameinlink]{cleveref}
+%\usepackage[inline]{showlabels}
+\usepackage[inline]{enumitem}
+%##################PACKAGE DECLARATIONS##################
+\newcommand{\repthanks}[1]{\textsuperscript{\ref{#1}}}
+\renewcommand{\qedsymbol}{$\blacksquare$}
+\renewcommand{\bar}{\overline}
+\renewcommand{\tilde}{\widetilde}
+\renewcommand{\hat}{\widehat}
+\renewcommand{\algorithmicrequire}{\textbf{Input:}}
+\renewcommand{\algorithmicensure}{\textbf{Output:}}
+%COLORS
+\colorlet{rosso}{red!90!white}
+\definecolor{green}{RGB}{45, 204, 53}
+\definecolor{blue}{RGB}{59, 42, 247}
+\newcommand{\sri}[1]{\textbf{\textcolor{rosso}{[Sriram: #1]}}}
+\newcommand{\felipe}[1]{\textbf{\textcolor{green}{[Felipe: #1]}}}
+\newcommand{\gabri}[1]{\textbf{\textcolor{blue}{[Gabriele: #1]}}}
+\newcommand{\mc}[1]{\textbf{\textcolor{teal}{[Margarida: #1]}}}
+\newcommand{\andrea}[1]{\textbf{\textcolor{pink}{[Andrea #1]}}}
+\newtheorem{Ex}{Example}
+\newtheorem{Def}{Definition}
+\newtheorem{Cla}{Claim}
+\newtheorem{Corr}[Cla]{Corollary}
+\allowdisplaybreaks
+
+\newcommand{\SSI}{\texttt{SUBSET SUM INTERVAL}\xspace}
+\newcommand{\PNE}{\emph{PNE}\xspace}
+\newcommand{\PNEs}{\emph{PNE}s\xspace}
+\newcommand{\NE}{\emph{NE}\xspace}
+\newcommand{\NEs}{\emph{NE}s\xspace}
+\newcommand{\MNE}{\emph{MNE}\xspace}
+\newcommand{\MNEs}{\emph{MNE}s\xspace}
+\newcommand{\NASP}{\emph{NASP}\xspace}
+\newcommand{\NASPs}{\emph{NASP}s\xspace}
+\newcommand{\LCP}{\emph{LCP}\xspace}
+\newcommand{\LCPs}{\emph{LCP}s\xspace}
+\newcommand{\SPr}[1][x]{SPr($#1$)\xspace}
+\newcommand{\NPC}{$\mathcal{NP}$-complete\xspace}
+
+\newcommand{\q}		{\mathbf{\textcolor{blue}{q}}}
+\newcommand{\Cost}	{\mathbf{\textcolor{rosso}{C}}}
+\newcommand{\CostQ}	{\mathbf{\textcolor{rosso}{D}}}
+\newcommand{\ith} {$i^{th}$}
+\newcommand{\taxb}  {\textcolor{rosso}{b}}
+\newcommand{\Cemm}[1][p] {\Cost^{#1}_{\text{emmision}}}
+\newcommand{\qi}[1][p] 	{\q^{#1}}
+\newcommand{\qiCap}[1][p] 	{\overline{\mathbf{\textcolor{rosso}{q^{#1}}}}}
+\newcommand{\ti}[1][p] 	{\mathbf{\textcolor{blue}{t}}^{#1}}
+\newcommand{\tiCap}[1][p] 	{\overline{\mathbf{\textcolor{rosso}{t}}^{#1}}}
+\newcommand{\piFloor}[1][C] 	{\underline{\mathbf{\textcolor{rosso}{\pi}}^{#1}}}
+\newcommand{\DemInt}[1][C] {\textcolor{rosso}{\alpha^{#1}}}
+\newcommand{\DemSlope}[1][C] {\textcolor{rosso}{\beta^{#1}}}
+\newcommand{\qimp}[1][C] {\q^{#1}_{\text{imp}}}
+\newcommand{\qimpI}[1][I\to A] {\q^{#1}_{\text{imp}}}
+\newcommand{\qexp}[1][C] {\q^{#1}_{\text{exp}}}
+\newcommand{\Cilin}[1][p]	{\Cost_{#1}}
+\newcommand{\Ciquad}[1][p]	{\CostQ_{#1}}
+\newcommand{\qAimp} {\q^A_{\text{imp}}}
+\newcommand{\qAimpI}[1][I\to A] {\q^{#1}_{\text{imp}}}
+\newcommand{\qAexp} {\q^A_{\text{exp}}}
+\newcommand{\qAi}[1][i] 	{\q^A_{#1}}
+\newcommand{\piI}[1][I] {\mathbf{\textcolor{green}{\pi}}^{#1}}
+\newcommand{\tAi} 	{\mathbf{\textcolor{blue}{t}}^A_i}
+\newcommand{\CAilin}	{\Cost^{A}_i}
+\newcommand{\CAiquad}	{\CostQ^{A}_i}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\vecN}[1]{ \left(\begin{array}{c}#1\end{array}\right) }
+\newcommand{\vecNT}[1]{ \left(\begin{array}#1\end{array}\right) }
+
+% Operators that might be of use - Uncomment as needed
+\newcommand{\sol}{\operatorname{SOL}}
+\newcommand{\conv}{\operatorname{conv}}
+\newcommand{\intr}{\operatorname{int}}
+\newcommand{\relintr}{\operatorname{relint}}
+\newcommand{\relint}{\relintr}
+\newcommand{\rec}{\operatorname{rec}}
+\newcommand{\lin}{\operatorname{lin}}
+\newcommand{\bd}{\operatorname{bd}}
+\newcommand{\cl}{\operatorname{cl}}
+\newcommand{\proj}{\operatorname{proj}}
+\newcommand{\sgn}{\operatorname{sgn}}
+\newcommand{\cone}{\operatorname{cone}}
+
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\definecolor{mycolor}{RGB}{200,0,0}
+%\renewcommand{\showlabelfont}{\tiny\bf\color{mycolor}}
+
+\newtoggle{ExtendedVersion}  
+%##################COMMAND DECLARATIONS##################
+

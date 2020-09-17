@@ -1,0 +1,212 @@
+\documentclass[a4paper]{amsart}
+
+
+
+\usepackage[latin1]{inputenc}
+
+\usepackage{tikz}
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt  
+\usetikzlibrary{decorations.pathreplacing}
+\usetikzlibrary{timeline} %https://github.com/cfiandra/timeline
+
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{color}
+%\usepackage{hyperref}
+\newcommand{\seba}[1]{{\color{blue}({\bf sebacea: }#1)}}
+\newcommand{\fel}[1]{{\color{red}({\bf FF: }#1)}}
+\newcommand{\pia}[1]{{\color{magenta}({\bf Pia: }#1)}}
+
+\addtolength{\oddsidemargin}{-0.7in}
+\addtolength{\evensidemargin}{-0.7in}
+\addtolength{\textwidth}{1in} 
+%\linespread{1.5}
+
+
+
+%\usepackage{amssymb,latexsym}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}{Corollary}
+\newtheorem*{main}{Main~Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{claim}{Claim}
+\newtheorem{remark}{Remark}[section]
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+
+\theoremstyle{remark}
+\newtheorem*{notation}{Notation}
+
+\numberwithin{equation}{section}
+\DeclareMathOperator*{\argmax}{arg\,max}
+
+\begin{document}
+\title[Revision summary]
+      {Revision summary}
+
+\maketitle
+
+\date{\today}
+
+Concerns highlighted by the reviewers:\\
+
+
+
+
+%%%%%%%%%%%%%%%%   1   %%%%%%%%%%%%%%%%%%%%%%
+\section*{Reviewer 1}
+
+
+\begin{enumerate}
+
+\item \emph{There is overall 59 references in this manuscript, which is good for a review paper but may be very difficult to research paper}\\
+
+{\color{blue}{details.}}\\
+
+\item \emph{The introduction part need to be rewritten and try to define what has to be considered with crisp update}\\
+
+{\color{blue}{details.}}\\
+
+\item \emph{The first stage of the model talks the allowance acquisition for generators from an auctioneer and second stage considers the re-trading of allowances among emitters in a secondary market should be understandable to the readers, here there is lot of things combined. The flow need to be improved.} \seba{$<-$ responsable}\\
+
+{\color{blue}{We include a diagram to make explicit the timing of the model. Furthermore, we improve the description of the model.}}\\
+
+\begin{figure}[h]
+\centering
+
+\begin{tikzpicture}[scale=0.5,timespan={}]
+% timespan={Day} -> now we have days as reference
+% timespan={}    -> no label is displayed for the timespan
+% default timespan is 'Week'
+
+%\timeline[custom interval=true]{January, March, May, July, September, November}
+\timeline[custom interval=true]{0,1,2,$\overline{t}$} 
+%-> i.e., from Day 3 to Day 9
+%\timeline{2} -> i.e., from Week 1 to Week 3
+
+% put here the phases
+\begin{phases}
+%\initialphase{involvement degree=1.75cm,phase color=black}
+\phase{between week=0 and 1 in 1,involvement degree=1.5cm}
+\phase{between week=0 and 2 in 1,involvement degree=1.5cm}
+\phase{between week=0 and 3 in 1.5,involvement degree=0cm}
+%\phase{between week=1 and 2 in 0.5,involvement degree=2.125cm}
+%\phase{between week=3 and 4 in 0.7,phase color=blue!80!cyan}
+\end{phases}
+
+% put here the milestones
+%\addmilestone{at=phase-0.90,direction=90:1cm,text={Initial meeting},text options={above}}
+%\addmilestone{at=phase-0.270,direction=270:1cm,text={Initial meeting},text options={below}}
+
+\addmilestone{at=phase-2.50,direction=30:3cm,text={Allowance re-trade, $\left(P_i(\omega)-V_i(\omega)\right)_{\omega\in\Omega}$},text options={above}}
+\addmilestone{at=phase-1.120,direction=170:3cm,text={Allowance acquisition, $P_i$ },text options={above}}
+%\addmilestone{at=phase-3.10,direction=20:2.5cm,text={Allowance use},text options={above}}
+
+\draw [decorate, green!80!black, decoration = {brace, amplitude = 20pt, mirror, raise = 0pt}]
+    ([yshift = -3.8cm]phase-1.180) -- ([yshift = -3.8cm]phase-3.180)
+    node [black, midway, yshift = -1.2cm, align = center] {Allowance use and capacity investment};
+\draw [decorate, blue!80!black, decoration = {brace, amplitude = 20pt, mirror, raise = 0pt}]
+    ([yshift = -1cm]phase-1.180) -- ([yshift = -1cm]phase-2.180)
+    node [black, midway, yshift = -1.7cm, align = center] {Demand uncertainty\\ over $t\in{1,...,\overline{t}}$};
+\end{tikzpicture}
+
+\caption{Timeline of the model.}
+
+\end{figure}
+
+\item \emph{Some where the contents are very much relevant and available for government planning, however it is suggested to please convey very precise work in result comparison.}\\
+
+{\color{blue}{details.}}\\
+
+
+
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%   2   %%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Reviewer 2}
+
+
+\begin{enumerate}
+
+\item \emph{The results and discussion obtained through the methods seems to be just a ``technical report".}\\
+
+{\color{blue}{details.}}\\
+
+
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%   3   %%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Reviewer 3}
+
+
+\begin{enumerate}
+
+\item \emph{The title of the manuscript appears to be amorphous and incomplete in relation to the text. I would like to suggest that it be modified to read something as:}
+
+\emph{'A two-stage cap and trade model with allowance re-trading for capacity investment for pricing carbon emissions in electric power generator markets: The case of Chile.'}\\
+
+{\color{blue}{details.}}\\
+
+\item \emph{Abstract [...] if the title reads so, then one would immediately connect it to the first sentence on line 26 of the abstract and one would not be worried when reading the sentence starting on line 31 which reads: Our approach allows to assess the country's climate
+(e.g., NDCs) targets and determine the impact of the pledges and the possibility of reaching such
+goals.}\\
+
+{\color{blue}{details.}}\\
+
+
+\item \emph{The title would then be pointing to "pricing carbon emissions in electric markets" and the "country" in question without any qualification of the title in sentences in the text or abstract.}\\
+
+{\color{blue}{details.}}\\
+
+\item \emph{Put all abbreviations in a table just after the abstract. For example, Page 1 line 32: (e.g., NDCs) is not defined in the abstract, Carbon dioxide (CO2 ) and GtCO2 whereas Greenhouse gases (GHG) is defined, NDC is later defined in the introduction, page 2line 8. EU, NOx ? etc.}\\
+
+{\color{blue}{details.}}\\
+
+\item \emph{Conclusion: Under conclusion page 18, line 9. The word 'base' should be changed to 'based'}\\
+
+{\color{blue}{details.}}\\
+
+\item \emph{Re-write the whole conclusion section by stating what the work achieved. State what the results show and not stories.}\\
+
+{\color{blue}{details.}}\\
+
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%   4   %%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Reviewer 4}
+
+\begin{enumerate}
+
+\item \emph{Abbreviations must be explained at the first mention (see Abstract)}\\
+
+{\color{blue}{details.}}\\
+
+\item \emph{Most Highlights are longer than 85 characters. Maximum 85 characters, including spaces.}\\
+
+{\color{blue}{details.}}\\
+
+\item \emph{There are batch citations, and the references are only very briefly mentioned. Instead, each reference should be commented separately and its relevance to the present study should be explained. See Page 2, line 34-35.}\\
+
+{\color{blue}{details.}}\\
+
+\item \emph{Revise Conclusions. They should only be the conclusions of your work and not of other authors.}\\
+
+{\color{blue}{details.}}\\
+
+\item \emph{BAU needs explanation.}\\
+
+{\color{blue}{details.}}\\
+
+\item \emph{Revise English.}\\
+
+{\color{blue}{details.}}\\
+
+\end{enumerate}
+
+\end{document}
