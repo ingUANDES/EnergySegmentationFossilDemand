@@ -51,9 +51,11 @@
 
 \date{\today}
 
+Dear Editor,\\
+
+Please find here the response to each of the reviewer's comments. We want to thank the reviewers for their valuable comments. We have addressed each one of the comments diligently. The responses are colored in blue.\\
+
 Concerns highlighted by the reviewers:\\
-
-
 
 
 %%%%%%%%%%%%%%%%   1   %%%%%%%%%%%%%%%%%%%%%%
@@ -64,35 +66,38 @@ Concerns highlighted by the reviewers:\\
 
 \item \emph{There is overall 59 references in this manuscript, which is good for a review paper but may be very difficult to research paper}\\
 
-{\color{blue}{details.}}\\
+{\color{blue}{We thank the reviewer for this comment. We have revised and improved our references in the current version of the manuscript. We currently have 44 references, 15 references less than those included in the original submission. The references were carefully selected in order to represent our contributions and data the data used in the model.}}\\
 
 \item \emph{The introduction part need to be rewritten and try to define what has to be considered with crisp update}\\
 
-{\color{blue}{details.}}\\
+{\color{blue}{We have revised the introduction section, along the line of the revised literature review that has been suggested in the previous comment. We have now made changes that point to the main gaps on the literature and how our modeling approach and analysis contribute to the existing knowledge. 
 
-\item \emph{The first stage of the model talks the allowance acquisition for generators from an auctioneer and second stage considers the re-trading of allowances among emitters in a secondary market should be understandable to the readers, here there is lot of things combined. The flow need to be improved.} \seba{$<-$ responsable}\\
+In this context, we replaced some references to have an updated review that better motivates and justifies our study. We have also moved content, that was originally on section 3 and 4, to the introduction section as we think that they provide valuable context that motivate our study. }}\\
 
-{\color{blue}{We include a diagram to make explicit the timing of the model. Furthermore, we improve the description of the model.}}\\
+\item \emph{The first stage of the model talks the allowance acquisition for generators from an auctioneer and second stage considers the re-trading of allowances among emitters in a secondary market should be understandable to the readers, here there is lot of things combined. The flow need to be improved.}\\ 
+
+{\color{blue}{We agreed with the reviewer. Therefore, we  added a new figure (Figure 1 on the new manuscript, see also below) that depicts each of the two stages of the model. We also provide further explanation (Section 2, pages 3-4) to better represent the flow of the model and the decisions that are taken my market participants at different stages.}}\\
 
 \begin{figure}[h]
+
 \centering
 
-\begin{tikzpicture}[scale=0.5,timespan={}]
+\begin{tikzpicture}[scale=0.70,timespan={}]
 % timespan={Day} -> now we have days as reference
 % timespan={}    -> no label is displayed for the timespan
 % default timespan is 'Week'
 
 %\timeline[custom interval=true]{January, March, May, July, September, November}
-\timeline[custom interval=true]{0,1,2,$\overline{t}$} 
+\timeline[custom interval=true]{$\,$,$0$,$(1{,}\omega)$,$(2{,}\omega)$,$(\overline{t}{,}\omega)$,$\,$} 
 %-> i.e., from Day 3 to Day 9
 %\timeline{2} -> i.e., from Week 1 to Week 3
 
 % put here the phases
 \begin{phases}
 %\initialphase{involvement degree=1.75cm,phase color=black}
-\phase{between week=0 and 1 in 1,involvement degree=1.5cm}
-\phase{between week=0 and 2 in 1,involvement degree=1.5cm}
-\phase{between week=0 and 3 in 1.5,involvement degree=0cm}
+\phase{between week=1 and 2 in 1,involvement degree=1.5cm}
+\phase{between week=1 and 3 in 1,involvement degree=1.5cm}
+\phase{between week=1 and 4 in 1.5,involvement degree=0cm}
 %\phase{between week=1 and 2 in 0.5,involvement degree=2.125cm}
 %\phase{between week=3 and 4 in 0.7,phase color=blue!80!cyan}
 \end{phases}
@@ -110,16 +115,19 @@ Concerns highlighted by the reviewers:\\
     node [black, midway, yshift = -1.2cm, align = center] {Allowance use and capacity investment};
 \draw [decorate, blue!80!black, decoration = {brace, amplitude = 20pt, mirror, raise = 0pt}]
     ([yshift = -1cm]phase-1.180) -- ([yshift = -1cm]phase-2.180)
-    node [black, midway, yshift = -1.7cm, align = center] {Demand uncertainty\\ over $t\in{1,...,\overline{t}}$};
+    node [black, midway, yshift = -1.7cm, align = center] {Demand uncertainty\\ over all $(t,\omega)\in T\times \Omega$};
+    \draw [decorate, blue!80!black, decoration = {brace, amplitude = 20pt, mirror, raise = 0pt}]
+    ([yshift = -1cm]phase-2.180) -- ([yshift = -1cm]phase-3.180)
+    node [black, midway, yshift = -1.7cm, align = center] {Certainty given\\ $\omega\in\Omega$ over $t\in T$};
 \end{tikzpicture}
 
 \caption{Timeline of the model.}
-
+\label{fig:timing}
 \end{figure}
 
 \item \emph{Some where the contents are very much relevant and available for government planning, however it is suggested to please convey very precise work in result comparison.}\\
 
-{\color{blue}{details.}}\\
+{\color{blue}{We thank the reviewer for this comment. Indeed, the revised manuscript considers several updates, particularly, on the results section. We take this comment, as well as those from other reviewers, and centered the results and analysis on the main findings and the corresponding policy implications. We truly believe that the new version of the manuscript points now to a clear message and provides relevant policy impacts pertaining energy system transformation required to tackle climate change and to meet internationals energy and environmental agreements. These main points are also clearly stated in the Conclusion section.}}\\
 
 
 
@@ -134,7 +142,24 @@ Concerns highlighted by the reviewers:\\
 
 \item \emph{The results and discussion obtained through the methods seems to be just a ``technical report".}\\
 
-{\color{blue}{details.}}\\
+{\color{blue}{We thank the reviewer for this comment. We take it very seriously. In this context, the authors of this manuscript have dedicated significant time to re-think the way that results were presented. This comment is also aligned with one of the comments from Reviewer 1. As explained in that response, we have made several changes to the result and discussion section. In this context, we have,
+
+\begin{enumerate}
+	\item Modified (significantly) the line of arguments and how some results were presented.   
+	\item In order to provide more relevant policy implications, we have reduced the amount of explicit numerical results (e.g. tedious numerical comparisons among carbon budget scenarios) that could make the results look more like a technical report, and replaced them with major policy implications and insights that are relevant for decision making. Note that we have not performed new numerical studies, but rather we reformulated the approach in which our main results were presented.    
+	\item Enhanced the main messages on each of the result subsections (deterministic and stochastic results and analysis). To do so, we link our results and contributions to literature that was not present before, or with literature that was not being used at its full potential. Additionally, we have removed some Tables (Table 4 of the original manuscript) and added a new Figure that clearly (visually) shows relevant differences in terms of how the Chilean electric sector can evolve in order to be aligned with the Paris agreements and other energy and environmental pledges.  
+	\item The conclusions and discussions presented there are now fully based on the main policy implications that we have identified in our study. Some of this main points are:
+	\begin{enumerate}
+	    \item The actual Chilean carbon pledge (electric sector) is indeed highly insufficient, while pricing mechanisms in placed (carbon tax) is rather symbolic, as it is far from carbon prices that would induce significant changes in the electric generation matrix.   
+	    \item We show that phasing out coal in early years also yields the NCRE commitments. However, there exist strategies related to carbon budget that do yield NCRE goals but do not result in a full shutdown of fossil based generators. This, in fact, creates a significant policy debate regarding the cost (higher carbon prices and cost related to stranded assets, to say some) that countries must face on mitigation strategies. Therefore, we investigate a different approaches to phase out coal, named market (carbon market) segmentation.  
+	    \item We analyze the role that uncertainty has on carbon prices, particularly on the carbon price and the carbon trading price. This analysis is possible due to the proposed modeling approach presented on Section 3. As described in the manuscript, we explicitly model a carbon market (first stage) and a posterior market for carbon trading, which allow us to better represent the decision making process involved in cap-and-trade policies. However, we recognized that this is just one possible feature, and that several other aspects can be included in the model, such as permit banking or different strategies for allowance allocation. 
+	    \item Finally, interesting insights are obtained when generators face uncertainty and must decide their investments in capacity. Under stringent scenarios (low carbon budgets) coal is gradually phased out, and the remaining generation matrix becomes diverse, particularly based on the increased use of hydro sources (see new Figure 8 on the current version of the manuscript).  
+	\end{enumerate}
+\end{enumerate}
+
+We strongly believe that the modifications made to the manuscript have significantly improved its quality. Nonetheless, we also strongly believe that our modeling approach presents interesting features, which in fact allow us to perform the analysis that we have shown here. Particularly, the inclusion of a future market for carbon emissions permit trading. Therefore, we have a significant improved version of the manuscript for your review. We hope that the improvements are aligned with the standards that the reviewer expects to obtain from a manuscript submitted to Energy.   
+
+}}
 
 
 \end{enumerate}
@@ -150,30 +175,30 @@ Concerns highlighted by the reviewers:\\
 
 \emph{'A two-stage cap and trade model with allowance re-trading for capacity investment for pricing carbon emissions in electric power generator markets: The case of Chile.'}\\
 
-{\color{blue}{details.}}\\
+{\color{blue}{We thank the reviewer for the recommendation. We have accepted it and hence modified the title of the manuscript to a slightly different version of what has been recommended. Our proposed title is \textbf{\textit{A two stage cap-and-trade model with allowance re-trading and capacity investment: The case of the Chilean NDC targets}} }}\\
 
 \item \emph{Abstract [...] if the title reads so, then one would immediately connect it to the first sentence on line 26 of the abstract and one would not be worried when reading the sentence starting on line 31 which reads: Our approach allows to assess the country's climate
 (e.g., NDCs) targets and determine the impact of the pledges and the possibility of reaching such
 goals.}\\
 
-{\color{blue}{details.}}\\
+{\color{blue}{We agreed with the reviewer. We have modified the abstract accordingly to the new title of the manuscript.}}\\
 
 
 \item \emph{The title would then be pointing to "pricing carbon emissions in electric markets" and the "country" in question without any qualification of the title in sentences in the text or abstract.}\\
 
-{\color{blue}{details.}}\\
+{\color{blue}{We thank the reviewer for the suggestions to restructure the title and abstract. We have followed such recommendations.}}\\
 
 \item \emph{Put all abbreviations in a table just after the abstract. For example, Page 1 line 32: (e.g., NDCs) is not defined in the abstract, Carbon dioxide (CO2 ) and GtCO2 whereas Greenhouse gases (GHG) is defined, NDC is later defined in the introduction, page 2line 8. EU, NOx ? etc.}\\
 
-{\color{blue}{details.}}\\
+{\color{blue}{We thank the reviewer for this comment. In fact, we had missed some abbreviations in the original version, something that was also mentioned by another reviewer. We have defined all abbreviations/acronyms in two different manners: 1) we define the acronym the first time it is used in the text. 2) We added list of Acronyms at the end of the manuscript, which can easily be formatted into a table in case this is required by the editorial team.}}\\
 
 \item \emph{Conclusion: Under conclusion page 18, line 9. The word 'base' should be changed to 'based'}\\
 
-{\color{blue}{details.}}\\
+{\color{blue}{We have corrected the typo. We thank the reviewer for noticing this. In fact, we have made several improvements to the grammar and fixed other minor typos found in the original version of the manuscript.}}\\
 
 \item \emph{Re-write the whole conclusion section by stating what the work achieved. State what the results show and not stories.}\\
 
-{\color{blue}{details.}}\\
+{\color{blue}{We agreed with the reviewer. We have rewritten the conclusion section accordingly with the main ideas (policy implications) and findings that we have identified based on the numerical study presented on Section 4.}}\\
 
 \end{enumerate}
 
@@ -185,27 +210,27 @@ goals.}\\
 
 \item \emph{Abbreviations must be explained at the first mention (see Abstract)}\\
 
-{\color{blue}{details.}}\\
+{\color{blue}{We thank the reviewer for noticing this issue. The comment was also pointed out by Reviewer 3. Hence, following its advice, we have added a list with all important abbreviations used throughout the manuscript. We have made sure that all abbreviations are explained and defined on this table as well as when they are first mentioned in the text.}}\\
 
 \item \emph{Most Highlights are longer than 85 characters. Maximum 85 characters, including spaces.}\\
 
-{\color{blue}{details.}}\\
+{\color{blue}{We have revised all highlights. They are aligned with the requirements of the journals and they also match the main insights that we present on this manuscript.}}\\
 
 \item \emph{There are batch citations, and the references are only very briefly mentioned. Instead, each reference should be commented separately and its relevance to the present study should be explained. See Page 2, line 34-35.}\\
 
-{\color{blue}{details.}}\\
+{\color{blue}{We now present a revised literature review. We have made a better selection of the papers that we wish to discuss, rather than presenting a set of papers to justified a point.}}\\
 
 \item \emph{Revise Conclusions. They should only be the conclusions of your work and not of other authors.}\\
 
-{\color{blue}{details.}}\\
+{\color{blue}{We thank the reviewer for this comment. We agreed entirely. Hence, the revised manuscript presents a conclusion section that is focused on the main results and insights that we generated from the policy analysis shown in Section 4. We also mention some of the novelties that we present regarding the modeling of cap and trade policies with uncertainties and with re-trading of carbon allowances.}}\\
 
 \item \emph{BAU needs explanation.}\\
 
-{\color{blue}{details.}}\\
+{\color{blue}{We have added further information on on Section 3 regarding the BAU scenario. Section 4 (results) also provides a reinforcement of the definition of the BAU case.}}\\
 
 \item \emph{Revise English.}\\
 
-{\color{blue}{details.}}\\
+{\color{blue}{We have corrected several issues with the grammar as well as typos that were found in the original manuscript.}}\\
 
 \end{enumerate}
 
