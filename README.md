@@ -1,3 +1,3 @@
 # Energy Markets and Segmentation
 
-An effort to include incomplete markets in a general equilibrium model with restricted participation and incomplete markets
+Continuation of [Amigo et alii (2021)](https://doi.org/10.1016/j.energy.2021.120129) contribution.
