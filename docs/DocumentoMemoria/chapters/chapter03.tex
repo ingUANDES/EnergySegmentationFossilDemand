@@ -1,0 +1,60 @@
+% cap3.tex
+
+\chapter{Modelos matemáticos}
+\label{c3} % la etiqueta para referencias
+\section{Modelo $M2$: Modelo matemático equivalente}
+
+Aunque $M1$ es un modelo fácil de entender, es bastante difícil de manejar con solvers tradicionales, puesto que es un problema muy no lineal. Alternativamente, se puede definir fácilmente una ecuación de Bellman para $M1$, considerando que es un proceso de decisión secuencial [Nemhauser y Wolsey, 2014]. Aún así, esto podría ser dificultoso para resolver con instancias de gran tamaño (incluso de tamaño mediano), debido a la maldición de la dimensionalidad. No obstante, se propone una transformación preliminar de $M1$ a un modelo de Programación Lineal Entero Mixto (MILP) $M2$, el cual es matemáticamente equivalente y que mantiene los mismos parámetros y se agrega un nuevo grupo de variables binarias. Sea $x_{it} = 1$ si se concede el préstamo al consumidor $i \in I$ en el periodo $t \in \{1,...,T\}$, 0 en otro caso.  \\
+
+
+$$ \begin{array}{r l l}
+	\displaystyle\max_{\vb{x}, \tau, \vb{s}} & z(\vb{x}, \tau, \vb{s}) &   									\\
+	\text{s.t.}&  s_{t-1} - s_{t} + \gamma_{t} - \displaystyle\sum_{i \in I} a_{it} x_{it} = 0	& \forall t \in \{1,...,T\}		\\
+					&  s_{0} = B & 	                                                                                         	\\
+					& x_{it} \leq \dfrac{\tau_{t}}{Pod_{it}} & \forall i \in I , \text{  } \forall t \in \{1,...,T\}                 \\
+					& x_{it} \in \{0, 1\} & \forall i \in I , \text{  }  \forall t \in \{1,...,T\}                                    \\
+					& \tau_{t} \in \left[0,1 \right] , s_{t} \geq 0 & \forall t \in \{1,...,T\}                                            \\
+					
+\end{array} $$
+
+\newpage
+
+\[ z(\vb{x}, \tau, \vb{s}) = \begin{cases} z_1(\vb{x}, \tau, \vb{s}) = \sum_{t=1}^{T}\left(- \alpha\tau_t + \sum_{i \in I} a_{it} x_{it}\right) & \text{Si la IF es con fines de lucro} \\ z_2(\vb{x}, \tau, \vb{s}) = \sum_{t=1}^{T} \left(- \alpha\tau_t + \sum_{i \in I} x_{it}\right) & \text{Si la IF es sin fines de lucro} \end{cases} \] \\
+
+$M2$ es un MILP; por lo tanto, se espera que solvers como Gurobi, Cplex o SCIP (entre otros) puedan manejarlo para instancias grandes. En particular, se resolverá usando SCIP en combinación con Python. Para la solución de este problema, se utilizará el conjunto de datos de Bravo et al. [2013], que tiene miles de prestatarios que solicitan préstamos en un tiempo determinado. \\
+
+Sin embargo, $M2$ asume que la cantidad de clientes que llegan a solicitar un préstamo y la montos solicitados son conocidos, luego se propone un nuevo modelo con parámetros estocásticos.
+
+\section{Modelo $M3$: Modelo con el número de clientes como variable aleatoria}
+
+En $M1$ y $M2$ definimos la demanda como un parámetro, indicando el número de prestatarios $|I|$ y los montos solicitados $a_{it}$, pero ahora en este modelo $M3$ se definirán como esta cantidad de clientes como una variable aleatoria y los montos solicitados como un parámetro estocástico. \\
+
+Se asume que en un periodo $t \in \{1,...,T\}$, los escenarios $k \in \{1,...,K\}$ representan rangos de probabilidad de default en orden incremental. Por lo tanto, si $k_1, k_2 \in \{1,...,K\}$ son tales que $k_1 < k_2$, entonces $pod^{k_1}< pod^{k_2}$. El número de clientes que llegan a solicitar un préstamo es ahora $m_{t}^{k}$ y los montos solicitados por cada prestatario del rango $k$ es $a_{t}^{k}$. Notemos, una vez que un prestatario solicita un préstamo, la IF puede estimar sus probabilidades de default. Se pueden aplicar los procesos estándar de estimación de PD definidos por Baesens et al. [2017b] y Thomas [2009].
+
+Sea $x_{t}^{k} = 1$ si se concede préstamos a los consumidores que pertenecen al rango $k \in \{1,...,K\}$ en el periodo $t \in \{1,\cdots,T\}$, 0 en otro caso. 
+
+Luego notemos que $x_{t}^{k}$ y $\tau_t$ son variables de control, las variables de estado $s_t$ y $m_{t}^{t}$ es una variable aleatoria. Adicionalmente, definimos la función de beneficio $g_t(x_t,\tau_t, m_t)$ y de transición de estado $f_t(x_t, s_{t-1},m_{t})$ como:
+
+
+\[ g_t(x_t,\tau_t, m_t)  = \begin{cases} g_t^1(x_t,\tau_t,m_t) = \sum_{k=1}^{K}\left(- \frac{\alpha}{K}\tau_t +  \mathbb{E}\{a_{it}\} m_{t}^{k} x_{t}^{k}\right) & \text{Si la IF es con fines de lucro} \\ g_t^2(x_t,\tau_t, m_t) = \sum_{k=1}^{K}\left(- \frac{\alpha}{K}\tau_t +  m_{t}^{k} x_{t}^{k}\right) & \text{Si la IF es sin fines de lucro} \end{cases} \] 
+ 
+$$f_t(x_t,s_{t-1},m_t)= s_{t-1} + \gamma_t - \displaystyle\sum_{k=1}^{K}\mathbb{E}\{a_{it}\} m_{t}^{k} x_{t}^{k}$$
+
+Definiendo el problema en términos de maximización del beneficio esperado
+
+$$ \begin{array}{r l l}
+	\displaystyle\max_{\vb{x}, \tau} & \mathbb{E} \left\lbrace \displaystyle\sum_{t=1}^{T} g_t(x_t,\tau_t, m_t) \right\rbrace &   									\\
+	\text{s.t.}&  s_{t} = f_t(x_t,s_{t-1},m_t)	& \forall t \in \{1,...,T\}		\\
+					&  s_{0} = B &                                                                                   	\\
+					& \tau_{t} = \displaystyle\sum_{k=1}^{K} x_{t}^{k}({pod_{t}^k - pod_{t}^{k-1}}) & \forall k \in \{1,...,K\}                 \\
+					
+					& x_{t}^{k-1} \geq x_{t}^{k} & \forall t \in \{1,...,T\}  , \text{  } \forall k \in \{1,...,K\} \\
+					
+					& x_{t}^k \in \{0, 1\} & \forall t \in \{1,...,T\}  , \text{  } \forall k \in \{1,...,K\} \\                                      
+					& \tau_{t} \in \left[0,1 \right] , s_{t} \geq 0 & \forall t \in \{1,...,T\}                \\
+					
+\end{array} $$
+
+
+
+
