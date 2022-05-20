@@ -3,98 +3,73 @@
 \chapter{Introducción}
 \label{c1} % la etiqueta para referencias
 
-En la actualidad, se reconoce mundialmente que el planeta está experimentando un cambio climático potencialmente perjudicial para la vida en él. También, múltiples estudios científicos y gran parte de la sociedad concuerdan en que muchas de las actividades del humano son un acelerador significativo del cambio climático y su aumento de temperatura. Esto último debido a que varios estudios (DAR REEFERENCIAS??) apuntan a que el aumento global de temperatura se debe al efecto invernadero principalmente producido por $CO_2$ y este es un componente que es creado en alto volumen por actividades humanas tales como el transporte, la generación de energía, la ganadería, entre otros.
+En la actualidad, se reconoce a nivel mundial que el planeta está experimentando un cambio climático potencialmente perjudicial para la vida en él. También, múltiples estudios científicos y gran parte de la sociedad concuerdan en que muchas de las actividades del ser humano son un acelerador significativo de este cambio y el aumento de la temperatura. De acuerdo con diversos estudios, esto último apunta a que el aumento global de temperatura se debe al efecto invernadero, principalmente producido por $CO_2$. Este es un componente generado en un gran volumen por las actividades humanas tales como el transporte, la generación de energía, la ganadería, entre otros.
 \vspace{2.5mm}
 
-Esta situación a generado un incentivo en las personas para encontrar soluciones y reducir el factor humano en el cambio climático produciendo importantes innovaciones y cambios en las industrias mencionadas y también a impulsado la creación de sistemas que permitan que estas transiciones sean sustentables y realistas en el largo plazo. 
+Esta situación ha generado un incentivo en las personas para encontrar soluciones y reducir el factor humano en el cambio climático. Con esto, se han producido importantes innovaciones y cambios en las industrias mencionadas y también se ha impulsado la creación de sistemas que permitan que estas transiciones sean sustentables y realistas en el largo plazo. 
 \vspace{2.5mm}
 
-Específicamente en Chile, el ECLP  (Estrategia climática de largo plazo de Chile) presentado en el año 2021 por el ministerio del medio ambiente concluye que el sector energético representó un 77\% de los gases de efecto invernadero producidos  en el año 2018 y en ese sector la generación de energía representa el mayor aporte con un 30\% del total de emisiones. Para disminuir este porcentaje existen alternativas de generación más limpia que las que actualmente son en la mayor parte utilizadas pero su implementación y producción es aún, en la mayoría de los casos, menos rentable. Aún que la trayectoria de estas tecnologías muestran que potencialmente esto cambiará de forma positiva.
+Específicamente en Chile, la Estrategia climática de largo plazo de Chile (ECLP) presentada en el año 2021 por el Ministerio del Medio Ambiente concluye que el sector energético representó un 77\% de los gases de efecto invernadero producidos  en el año 2018 y, en ese sector, la generación de energía representa el mayor aporte con un 30\% del total de emisiones. Con el fin de disminuir este porcentaje, existen alternativas de generación más limpia que en la actualidad se emplean mayoritariamente. Sin embargo su implementación y producción es aún, en la mayoría de los casos, menos rentable, aunque la trayectoria de estas tecnologías muestra que, potencialmente, esto cambiará de forma positiva.
 \vspace{2.5mm}
 
-Pero el trabajo realzado por \cite{amigo_two_2021} demuestra que con el sistema actual de penalización de emisiones que la industria generadora de electricidad se ve regulado, no es suficiente para lograr un cambio significativo y reducción necesaria para lograr las metas prepuestas por Chile en el Acuerdo de París ni en el ECLP. Por lo que los autores del \textit{paper} citado proponen un sistema de \textit{cap and trade} de dos etapas con mercado de compra y venta de permisos de contaminación en el cual estas metas sí se logran cumplir estableciendo cómo es el efecto de este sistema con distintos presupuestos de contaminación. Pero este modelo propuesto presenta algunas limitaciones o posibilidades de mejora, de las cuales este trabajo busca aportar específicamente sobre el problema del subastador o \textit{auctioneer} de estos permisos de contaminación.
+No obstante el trabajo realizado por \citeB{amigo_two_2021} demuestra que, con el sistema actual de penalización de emisiones que regula la industria generadora de electricidad, no es suficiente para lograr un cambio significativo y la reducción necesaria para lograr las metas prepuestas por Chile en el Acuerdo de París ni en el ECLP. Por lo tanto, los autores proponen un sistema de \emph{cap and trade} de dos etapas con mercado de compra y venta de permisos de contaminación. En este, las metas sí se logran cumplir y demuestra cómo es el efecto de este sistema con distintos presupuestos de contaminación. Sin embargo, este modelo propuesto presenta algunas limitaciones y posibilidades de mejora, que este trabajo busca aportar, específicamente sobre el problema del \emph{auctioneer} (subastador en inglés) de estos permisos de contaminación.
 
 
 \section{Motivación}
-Encontrar un modelo óptimo y eficiente para implementar en la industria de energía parece ser una tarea difícil. Muchos países tienen la intención de rebajar su aporte de contaminante global para alcanzar el acuerdo de París, pero una iniciativa no es suficiente si no se respalda con continuo cambio y mejora. Cualquier tipo de modelo implementado a gran escala, como la fiscalización de la industria eléctrica, requiere de evaluación continua y estudio de implementaciones en otros países para encontrar cuál es la mejor solución al problema.
+Encontrar un modelo óptimo y eficiente para implementar en la industria de energía parece ser una tarea difícil. Muchos países tienen la intención de rebajar su aporte de contaminante global para alcanzar el acuerdo de París, pero una iniciativa no es suficiente, si no se respalda con continuo cambio y mejora. Cualquier tipo de modelo implementado a gran escala, como la fiscalización de la industria eléctrica, requiere de evaluación continua y estudio de implementaciones en otros países para encontrar cuál es la mejor solución al problema.
 \vspace{2.5mm}
 
-El ECLP antes mencionado dicta que se tiene como objetivo ser carbono neutral\footnote{Carbono neutral no significan 0 toneladas de dióxido de carbono emitidas, sino que las emisiones sean iguales a las absorciones por agentes como el sector forestal.} como fecha límite para el año 2050. A la fecha, Chile tiene como estrategia para disminuir las emisiones de la industria eléctrica al aplicar un “impuesto verde” descrito en la ley 20.780 promulgada en el año 2014. Varios estudios (mencionados en el marco teórico de este trabajo) argumentan que esto no es suficiente y su aplicabilidad no es sustentable y no incentiva el cambio a energías renovables. En efecto, en (Amigo, Cea-Echenique and Feijoo, 2021) se demuestra y concluye que, primero el objetivo de carbono neutralidad es lograble y , segundo, que el NDC\footnote{National Determined Contribution:Aporte del país en la propuesta del acuerdo de París}  propuesto para el acuerdo de París\footnote{En el acuerdo de París se estableció como objetivo no superar un aumento global de temperatura de 2 °C para finales de este siglo.}  , el cuál consiste en que para el año 2030 el nivel de $CO_2 e$ (dióxido de carbono emitido) no supere los 131 $MtCO_2 e$ en Chile es una meta muy fácil de lograr y por lo tanto muy ineficiente, ellos proponen que implementando una versión de su modelo de \textit{cap and trade}  se pueden lograr objetivos mucho más ambiciosos sobre la reducción de emisiones y sobre el cambio a generación de energía con fuentes sustentables.
+El ECLP dicta que Chile tiene como objetivo ser carbono neutral\footnote{Carbono neutral no significan 0 toneladas de dióxido de carbono emitidas, sino que las emisiones sean iguales a las absorciones por agentes como el sector forestal.} como fecha límite para el año 2050. A la fecha, el país tiene como estrategia para disminuir las emisiones de la industria eléctrica aplicar un ``impuesto verde'' descrito en la ley 20.780 promulgada en el año 2014. Diversos estudios (mencionados en el marco teórico de este trabajo) argumentan que esto no es suficiente y su aplicabilidad no es sustentable y no incentiva el cambio a energías renovables. En efecto, los autores \citeB{amigo_two_2021} demuestran y concluyen que, en primer lugar, el objetivo de carbono neutralidad es lograble y, en segundo lugar, que el \emph{National Determined Contribution}  (NDC por sus siglas en inglés)\footnote{National Determined Contribution: Aporte del país en la propuesta del acuerdo de París}  propuesto para el acuerdo de París\footnote{En el acuerdo de París se estableció como objetivo no superar un aumento global de temperatura de 2 °C para finales de este siglo.}, que consiste en que, para el año 2030, el nivel de $CO_2 e$ (dióxido de carbono emitido) no supere los 131 $MtCO_2 e$ en Chile, es una meta fácil de lograr y, por lo tanto, ineficiente. Ellos proponen la implementación de una versión de su modelo de \emph{cap and trade}, con la cuál se pueden alcanzar objetivos mucho más ambiciosos en la reducción de emisiones y sobre el cambio a una generación de energía con fuentes sustentables.
 \vspace{2.5mm}
 
-Es por esto que en este trabajo se busca aportar en la investigación, testeo y complementación del modelo para así demostrar que existe un sistema mejor al actualmente utilizado para combatir el problema del cambio climático donde las empresas generadoras puedan seguir funcionando, ser rentables e incluso aportar en el desarrollo de las nuevas tecnologías no convencionales.
-
-\section{Antecedentes y Problema de Investigación}
-
-El modelo desarrollado en \cite{amigo_two_2021} (de ahora en adelante se referencia a este \textit{paper} como "Amigo") se define como uno de dos etapas con recompra y venta de permisos e inversión en capacidad. En resumen, este modelo de \textit{cap and trade} propuesto por los autores del artículo consta de un mercado formado por productores (empresas generadoras de electricidad) y un subastador (ente regulador y cotizador de permisos de contaminación disponibles). En una primera etapa el subastador decide, a partir de un presupuesto de contaminación total determinado, los permisos totales a repartir entre los productores. Estos permisos son comprados por los productores según su estimación de generación y capacidad. Luego, en una segunda etapa, los productores tienen la posibilidad de ser parte de un mercado de estos permisos, donde las empresas pueden comprar permisos a otras empresas generadoras o vender los permisos que le sobraron según la demanda percibida. Esto les permite a las empresas adaptarse a la demanda y así lograr mejores utilidades, se incentiva aún más al cambio de tecnología y según los resultados del artículo, se pueden llegar a disminuir en gran medida las emisiones y muy fácilmente lograr el NDC chileno. 
-\vspace{2.5mm}
-
-Este sistema es en el cuál este trabajo se centra y busca mejorar o expandir. Para entender su funcionamiento y raíces se llevo a cabo un estudio de \cite{deMaered'Aertrycke2017}, trabajo clave en la realización de Amigo . Este estudia distintos modelos de equilibrio de capacidad. Particularmente el punto \textit{3.3 Two stage RN competitive capacity equilibrium} de este artículo estudia el modelo base con el cuál se desarrolló el modelo de dos etapas. Este es un modelo básico de equilibrio en capacidad, el cuál fue necesario para conocer una aplicación de un problema de equilibrio en capacidad, la teoría y realizar el computo de este tipo de problemas. Particularmente, este modelo de equilibrio en capacidad con riesgo neutral estudia un productor y su demandante donde el problema de optimización diseñado busca maximizar su utilidad dejando como variables la inversión inicial y la producción de electricidad, con restricciones de equilibrio en capacidad en donde la producción debe ser menor a la capacidad instalada. En \ref{Marco Teorico} se lleva a cabo una explicación más detallada de su estudio y resolución. 
-\vspace{2.5mm}
-Amigo cuenta con un problema más complejo, donde se consideran múltiples productores (cada uno representa solo una tecnología de generación), muchos más periodos y se consideran muchas otra variables. Esto se tradujo en dos problemas de optimización, uno para los productores con 5 restricciones para cada $i(productor), w(escenario)$ y $t(periodo)$ respectivamente y el problema del subastador \ref{eq:subastador} con 1 restricción \ref{res:subastador1}. Estos problemas se logran resolver en conjunto al cumplir otras 4 restricciones de compensación y aplicando los criterios KKT como un problema de complementario mixto (MCP). 
-
-\begin{equation}
-\begin{array}{rrclcl}
-    \displaystyle \min_{\theta} &-\theta \pi^a + F(\theta) \\\textrm{s.a.} \label{eq:subastador}\\
-\end{array}
-\end{equation}
-\begin{equation}
-\begin{array}{cl}
-    \varphi^-1 (\varepsilon )\sigma + \mu - \theta \geq 0 \label{res:subastador1}
-\end{array}
-\end{equation}
-
-Este problema de optimización considera como única variable la cantidad de permisos de contaminación $\theta$ los cuales están en unidades $tCO_2 e$ (toneladas de dióxido de carbono emitidas). Estos son los permisos comprados por las empresas generadoras en la primera etapa del modelo. Amigo define que el presupuesto de carbono denotado CAP, el cual establece el nivel de emisiones en la segunda etapa, sigue una distribución normal de varianza cero, donde $\theta$ no puede sobrepasar probabilística mente el el presupuesto de emisión, como se denota en \ref{res:subastador2} donde $\varepsilon$ representa el margen de permisos de emisión total. \ref{res:subastador1} nace de esta condición donde $\varphi^-1$ es la inversa comulativa de la distribución normal de CAP. Es acá donde surge la posibilidad de investigación para este trabajo. 
-
-\begin{equation}
-\begin{array}{cl}
-    Pr(\theta \geq CAP)\leq \varepsilon \label{res:subastador2}
-\end{array}
-\end{equation}
-
-Los autores de Amigo comentan que existe espacio para desarrollar y perfeccionar el problema del subastador. Por un lado el problema del productor está desarrollado de forma extensa con muchas restricciones que la definen, pero el subastador tiene un papel tan importante como el de los productores ya que este será el que tome las decisiones iniciales con las cuales la generación de energía se verá influenciado por mucho tiempo. Las decisiones del subastador deben ser consideradas tan especificas y desarrolladas que las de los generadores de electricidad. Es por esto que surge el problema de encontrar una forma más completa de representar a este agente, formular las restricciones y cambios en la función objetivo si es necesario y luego probar los nuevos resultados en un solver.
-
-
+Entonces, el propósito de este trabajo es aportar en la investigación, testeo y complementación del modelo para así demostrar que existe un sistema mejor al actualmente utilizado. La finalidad es combatir el problema del cambio climático y que las empresas generadoras puedan seguir funcionando, que sean rentables y que aporten en el desarrollo de las nuevas tecnologías no convencionales.
 
 
 \section{Objetivos}
 \subsection{Objetivo general}
-El objetivo general es replicar el modelo original de Amigo y apoyar junto a Sebastián Cea y Felipe Feijoo en formular una mejora en el problema del subastador que sea teóricamente fundamentado y luego encontrar las nuevas soluciones del problema con un solver y evaluar si es una mejora o perjudica el modelo original. 
+El objetivo general de este trabajo es mejorar la racionalidad del planificador social por medio de la incorporación de nuevos factores en su función objetivo. Por ejemplo, mediante restricciones que influencien el valor óptimo de permisos que este debe emitir con la finalidad de introducir incentivos para que este se convierta en un actor económico que busca cumplir criterios medioambientales asumiendo costos de investigación. En otras palabras, se busca formular penalizaciones en las utilidades del subastador que le incentiven producir una mejor emisión de permisos.
+
 \subsection{Objetivos específicos}
 Los objetivos específicos necesarios para lograr el objetivo general son:
 
 \begin{enumerate}
-\item Estudiar modelos de equilibrio y modelos de equilibrio en capacidad.
-\item Estudiar métodos de resolución de MCP tales como KKT y método del gran M.
-\item Estudiar programación y resolución de problemas MCP.
+\item Identificar modelos de equilibrio y modelos de equilibrio en capacidad.
+\item Identificar métodos de resolución de MCP.
+\item Programar problemas MCP en GAMS.
 \item Replicar modelo original de Amigo.
-\item Elaborar mejora en problema del subastador o \textit{autioneer}.
-\item Resolver nuevo problema de optimización en Solver.
+\item Implementar mejora en problema del subastador o \emph{auctioneer}.
+\item Simular el nuevo modelo y analizar resultados.
 \end{enumerate}
 
 
 \section{Alcances}
+Los alcances de este trabajo se circunscriben a resultados teóricos encontrados implementando el nuevo modelo en un \emph{solver}. Entonces, el alcance está definido según lo realizado para encontrar esos resultados en el \emph{solver}, que incluye la replicación del modelo original, la mejora del modelo y luego encontrar sus soluciones para finalmente evaluar estas soluciones.
+\vspace{2.5mm}
+
+Primero, se lleva a cabo la replicación del modelo original de Amigo. Para esto es necesario entender el modelo propuesto y saber como resolverlo. Uno de los métodos más eficientes para resolver un problema de esta complejidad y encontrar soluciones para sus variables es resolviendo el problema como un MCP. Pero primero es necesario definir el modelo acorde a lo que un MCP solicita para su realización. Por lo que fue necesario aplicar las condiciones de KKT que como resultado otorgan las condiciones necesarias para resolver el problema como MCP. Por lo que el alcance en esta etapa del proyecto es encontrar las mismas soluciones que el \textit{paper}.
+\vspace{2.5mm}
+
+Segundo, la mejora del problema del subastador representa un alcance de entregar una descripción más acertada de como un subastador en un modelo de \textit{cap and trade} debería funcionar y como sus decisiones pueden ser representadas en un problema de optimización.
+\vspace{2.5mm}
+
+REVISAR ESTO ANTES SI SERÁ FINALMENTE ASÍ Finalmente, programar el nuevo modelo y encontrar sus soluciones tienen como objetivo lograr que el modelo mejore o sea más certero a si este sistema se implementa en la realidad. No se espera necesariamente encontrar mejores resultados respecto a que se logre acotar aún más las emisiones de carbono o eliminar eliminar la producción con carbón antes de lo encontrado en el modelo original. Entonces el modelo nuevo tiene como objetivo mejorar la interpretación y predicción teórica de lo que se podría realizar en la realidad pero queda fuera de alcance la implementación real del sistema.  
 
 \section{Metodología}
+Este trabajo se divide en las siguientes etapas mencionadas anteriormente, pero se detallan con profundidad de la siguiente forma:
+
+\begin{enumerate}
+\item Identificar modelos de equilibrio y modelos de equilibrio en capacidad: con bibliografía recomendad por el profesor guía y bibliografía metódicamente filtrada según estándares descritos según publicador y otras características, se lleva a cabo un estudio de los modelos de equilibrio.
+\item Identificar métodos de resolución de MCP : para resolver los problemas de equilibrio es posible transformarlos en MCP al aplicar las condiciones de KKT. Se estudió principalmente de un curso realizado por Felipe Feijoo en el verano del año 2022 llamado "Computo de modelos de equilibrio", organizado por Sebastián Cea y la facultad de ingeniería de la Universidad de los Andes.   
+\item Programar problemas MCP: es necesario aprender sobre distintos solvers de MCP y softwares que lo soporten. Primero, se realizan ensayos de programación con problemas de similar naturaleza al de Amigo en \citeB{daertrycke_risk_2017}. Finalmente, se busca profundizar con el curso de Felipe Feijoo sobre MCP. 
+\item Replicar modelo original de Amigo: se desarrollan las condiciones de kkt y formulación de MCP para resolver el modelo original. Luego, se ejecuta el código original con los parámetros utilizados en el \textit{paper} para visualizar resultados y entender el funcionamiento.
+\item Implementar mejora en problema del subastador o \textit{autioneer}: se encuentra una reestructuración del problema del subastador por medio de estudio sobre costos asociados al incentivo de mejora en \textit{performance}.
+\item Evaluar nuevo modelo en \textit{solver} y analizar resultados: se evalúa el nuevo modelo al ejecutarlo en un \textit{solver} y se analizan las variables óptimas encontradas.
+\end{enumerate}
+
+
 \section{Estructura del documento}
 
 
-El objetivo principal es trabajar sobre \cite{amigo_two_2021} según la tabla \ref{tab:desc}. Usaremos el modelo de la ecuación \ref{eq:integra}.
 
-
-
-\begin{equation}
-    \int_A xdx=\log(x)\label{eq:integra}
-\end{equation}
-
-\begin{table}[h!]
-    \centering
-    \begin{tabular}{c|c}
-        A & B \\
-        C & D
-    \end{tabular}
-    \caption{Caption}
-    \label{tab:desc}
-\end{table}
 
 
