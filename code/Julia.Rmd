@@ -1,0 +1,83 @@
+---
+title: "Julia and Gurobi in RMarkdown"
+author: "Changcheng Li"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+## Use JuliaCall as Julia Engine in R Markdown
+
+To use `JuliaCall` package for julia engine in R Markdown document, just set the language of the code chunk to be `julia`.
+
+```{julia}
+## This is a julia language chunk.
+## In julia, the command without ending semicolon will trigger the display
+## so is JuliaCall package.
+## The julia display will follow immediately after the corresponding command
+## just as the R code in R Markdown.
+
+a = sqrt(2);
+a = sqrt(2)
+```
+
+
+### Support for `Plots.jl`
+
+`Plots.jl` is an easy to use and powerful julia package for plotting, see <https://github.com/JuliaPlots/Plots.jl> for more detail. Before the first time using `Plots.jl`, you first need to install the package like:
+
+```{julia eval=FALSE, include=FALSE}
+import Pkg; Pkg.add("Plots")
+```
+
+After installation of the package, you can use it like this:
+
+```{julia}
+using Plots
+gr()
+```
+
+```{julia}
+plot(Plots.fakedata(50,5),w=3)
+```
+
+## Gurobi
+
+Example from [link](https://gitlab.kuleuven.be/UCM/esim-code-examples/-/blob/master/MCP/MCP.ipynb)
+
+```{julia}
+using JuMP, Gurobi
+CAPEX = [8000, 7000];
+OPEX = [10, 100];
+d = [11000, 10000, 6000, 6000, 6000, 6000, 6000, 6000, 6000, 6000, 6000, 6000, 6000, 5000, 5000];
+NT = length(d);      # number timesteps
+NI = length(CAPEX);  # number technologies
+```
+
+
+```{julia}
+m = Model(Gurobi.Optimizer)
+
+# Variables
+@variable(m,g[i in 1:NI, t in 1:NT]    >= 0) # generation decision
+@variable(m,y[i in 1:NI]               >= 0) # investment decision
+
+# Constraints
+@constraint(m, mu_g[i in 1:NI, t in 1:NT], -g[i,t]                          <= 0.0)
+@constraint(m, mu_y[i in 1:NI],            -y[i]                            <= 0.0)
+@constraint(m, mu[i in 1:NI, t in 1:NT],    g[i,t] - y[i]                     <= 0.0)
+@constraint(m, dem[t in 1:NT],              
+    sum(g[i,t] for i in 1:NI) - d[t] == 0.0 # energy balance
+) 
+
+# minimize OPEX and CAPEX
+@objective(m,Min, sum(sum( g[i,t] * OPEX[i] for t in 1:NT) + y[i] * CAPEX[i] for i in 1:NI))
+
+optimize!(m)
+
+y_KM = value.(y)
+g_KM = value.(g)
+p_KM = dual.(dem)
+
+println("Done.")
+```
+
