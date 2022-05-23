@@ -269,17 +269,233 @@ Para aplicar lo explicado en la sección \ref{explisolvers}, se lleva a cabo la 
 \vspace{2.5mm}
 
 \subsubsection{Explicación Problema}
-En este ejemplo existe un productor, el cuál puede invertir únicamente en una tecnología de producción energética. La planta tiene un costo de capital anualizado $I=90 \frac{\textup{\euro}}{kW}$ y costo de operación $C=60 \frac{\textup{\euro}}{kW}$. El año se representa, para este caso, con duración en horas $\tau = 8760 horas$.
+En este ejemplo existe un productor, el cuál puede invertir únicamente en una tecnología de producción energética. La planta tiene un costo de capital anualizado $I=90 \frac{\textup{\euro}}{kW}$ y costo de operación $C=60 \frac{\textup{\euro}}{kW}$. El año se representa, para este caso, con duración en horas $\tau = 8760 horas$. 
 \vspace{2.5mm}
 
-Existen tres variables de decisión en el problema,
+$B = 1\frac{\textup{\euro}}{MWh^2}$ es un parámetro constante en todos lo escenarios $w \in W$ de la utilidad de abastecimiento de demanda $Q_w$: $U_w(Q_w) = A_wQ_w-\frac{B}{2}Q_w^2$.Mientras que el parámetro $A_w$ depende del escenario y tiene los siguientes valores para cada escenario $w$:
 
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|l|l|l|l|}
+\hline
+\textbf{w} & \textbf{1} & \textbf{2} & 3 & 4 & 5 \\ \hline
+A {[$\frac{\textup{\euro}}{MWh}$]} & 300 & 350 & 400 & 450 & 500 \\ \hline
+\end{tabular}
+\caption{Parámetro de costos}
+\end{table}
+
+\vspace{2.5mm}
+
+Este es un modelo de dos etapas:
+\begin{enumerate}
+    \item[1)] Etapa 0 : la planta toma la decisión de inversión en capacidad instalada para producir en etapa 1.
+    \item[2)] Etapa 1: se revela la demanda y se produce energía.
+\end{enumerate}
+
+Existen tres variables de decisión en el problema:
+\vspace{2.5mm}
+\begin{enumerate}
+    \item $Q_w: \text{demanda energética en escenario w de etapa 1}$
+    \item $Y_w: \text{producción energética en escenario w de etapa 1}$
+    \item $x: \text{inversión en capacidad en etapa 0}$
+\end{enumerate}
+
+Este problema se modela como una minimización del sistema de la siguiente forma:
+
+\begin{equation}
+\begin{array}{rrclcl}
+    \displaystyle \min_{Q,x,Y} & Ix+\tau E_{\Theta}[CY_w-A_wQ_w+\frac{B}{2}Q_w^2]  \\\textrm{s.a.} \label{eq:331}
+\end{array}
+\end{equation}
+\begin{equation}
+\begin{array}{cl}
+    Q_w=Y_w \label{res1:331}
+\end{array}
+\end{equation}
+\begin{equation}
+\begin{array}{cl}
+   0\leq Y_w \leq x\label{res2:331}
+\end{array}
+\end{equation}
+
+Donde, \ref{res1:331} restringe que la generación debe ser igual a la demanda y \ref{res2:331} acota la variable de generación entre 0 y la capacidad instalada en la etapa 0.
+
+\subsubsection{Resolución con GAMS}
+
+%Se definen los escenarios del problema:
+\begin{lstlisting}
+Sets
+w possible scenarios /1,2,3,4,5/;
+\end{lstlisting}
+
+%Se definen las variables:
+\begin{lstlisting}
+Positive Variables
+x initial investment
+*for the producer
+Y(w)   production decision
+*for the consumer
+Q(w) purchased electricity quantity
+lambda dual variable of the market clearing constraint;
+
+VARIABLE
+z OBJ VALUE;   
+\end{lstlisting}
+
+%Se definen parámetros
+\begin{lstlisting}
+Scalars
+I annualized capital expenditure in euro per kilowatt /90/
+C operating cost in euro per megawatt per hour /60/
+tau duration of single segment in hours /8760/
+
+;
+
+Parameters
+B quadratic term of the utility
+A(w) term of the utility
+Theta(w) physical probability
+;
+
+B = 1;
+*euro/MWh 
+
+*possible values of A
+A('1')=300;
+A('2')=350;
+A('3')=400;
+A('4')=450;
+A('5')=500;
+
+Theta('1')=0.2;
+Theta('2')=0.2;
+Theta('3')=0.2;
+Theta('4')=0.2;
+Theta('5')=0.2;
+\end{lstlisting}
+
+%Ecuaciones
+\begin{lstlisting}
+Equations
+eq1 objective function
+mcc(w) market clearing constraint
+cap(w)  capacity constraint
+;
+
+
+eq1.. z =e= I*1000*x + tau*sum(w, Theta(w)*(C*Y(w)-A(w)*Q(w)+(B/2)*Q(w)**2));
+*factor 1000 para poner las unidades en MW
+
+
+mcc(w).. Q(w)=e=Y(w);
+cap(w).. Y(w)=l=x;   
+\end{lstlisting}
+
+\begin{lstlisting}
+Model ejemploRN
+/eq1,mcc,cap/;
+
+solve ejemploRN using minlp minimizing z;    
+\end{lstlisting}
+
+
+\subsection{Resolución con pyscipopt}
+
+\begin{lstlisting}[language=Python]
+from pyscipopt import Model, quicksum
+
+def modeloRNcompetitivecapacityequilibrium(cant_esce,a,theta,
+B,tau,c,I):
+  m=Model()
+  
+  # Decision variables t, U, x, Y, Q
+  x=m.addVar('x', vtype='C') # Capacity x
+  Y={} # Production Y
+  Q={} # Demand Q
+  
+  ## Definition of Production and Demand for each state of
+  nature Y_omega, Q_omega
+  for i in range(cant_esce):
+    Y[i]=m.addVar(vtype="I",name="Y(%s)" % (i))
+    Q[i]=m.addVar(vtype="I",name="Q(%s)" % (i))
+  ## The next variable is set as the original objetive
+  function of the model, it is set as a variable because
+  this engine cant support non lineal FO
+  objvar = m.addVar(name="objvar", vtype= "C", lb=None,
+  ub=None)
+  m.setObjective(objvar, "minimize")
+  
+  # Constraints
+  ## Production equals demand    
+  for i in range(cant_esce):
+    m.addCons(Y[i]==Q[i])
+  
+  ## Production bounded by installed capacity  
+  for i in range(cant_esce):
+    m.addCons(Y[i]<=x)  
+  
+  ## Constraint to satisfy the objetive funtion of the
+  original model because of limit in the engine   
+  m.addCons(objvar>=(I*1000*x+tau*quicksum(theta[i]*(c*Y[i]-
+  a[i]*Q[i]+(B/2)*(Q[i]**2))for i in range(cant_esce)) ))
+  m.optimize()
+  P=[]
+  IM=[]
+  for i in range(cant_esce):
+    P.append(a[i]-B*m.getVal(Q[i]))
+    IM.append((tau*(P[i]-c)*m.getVal(Y[i])
+    -I*m.getVal(x))/m.getVal(x))
+  Qprom=0
+  Yprom=0
+  for i in range(cant_esce):
+    print ("Q(%s)="%(i+1) , m.getVal(Q[i]),"Y(%s)= "%(i+1) ,
+    m.getVal(Y[i]),"   P(%s)= "%(i+1), P[i],
+    "Investment Margin= ", IM[i] )
+    Qprom+=m.getVal(Q[i])
+  print ("QPromedio= " , Qprom/cant_esce)
+  print ("x= " , m.getVal(x))
+  print ("Valor funcion objetivo = ", m.getObjVal())
+
+  print (cant_esce,a,theta,B,tau,c,I)
+
+cant=5
+A=[300,350,400,450,500]
+Theta=[0.2,0.2,0.2,0.2,0.2]
+B=1  #$/MWh
+tau= 8760 #duracion por segmento por hora
+C=60 #costo de operacion en $/mWhora
+I=90 #capital para gasto anualizado en $/MWh
+
+modeloRNcompetitivecapacityequilibrium(cant,A,Theta,B,tau,C,I) 
+\end{lstlisting}
+
+\subsubsection{Comparación de resultados}
+Finalmente, se comparan los resultados del modelo en ambos \textit{solvers} junto con los resultados presentes en \citeB{daertrycke_risk_2017}.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|}
+\hline
+w & Q{[}MWh{]} & Q* & Q** & P{[\textup{\euro}]/MWh} & P* & P** & x{[}MW{]} & x* & x** \\ \hline
+1 & 240 & 240 & 240 & 60 & 60 & 60 & 389 & 389,31 & 388,99 \\ \hline
+2 & 290 & 290 & 290 & 60 & 60 & 60 &  &  &  \\ \hline
+3 & 340 & 340 & 340 & 60 & 60 & 60 &  &  &  \\ \hline
+4 & 389 & 389,32 & 388,99 & 60,7 & 60,68 & 61 &  &  &  \\ \hline
+5 & 389 & 389,31 & 388,99 & 110,7 & 110,69 & 111 &  &  &  \\ \hline
+Promedio & 329,6 & 331,52 & 329,596 & 70,3 & 70,3 & 70,4 &  &  &  \\ \hline
+\multicolumn{10}{l}{\footnotesize () valor  DÁertrycke et al. (2017) , (*) valor obtenido en \textit{GAMS}, (**) valor obtenido en \textit{pyscipopt}}\\
+\end{tabular}
+\caption{Resultados ejemplo}
+\label{tabla:ejemplos}
+\end{table}
+
+El cuadro \ref{tabla:ejemplos} muestra que el rendimiento de ambos programas entregó resultados similares a aquellos presentes en el trabajo original.
 
 
 
 \section{Amigo, Cea-Echenique \& Feijoo, 2021}
 
-Como se menciona en \ref{c22}, mecanismos de \textit{cap and trade}, por lo menos en teoría, pueden funcionar de forma efectiva cuando se aplica el método correcto al problema que se quiere solucionar. El modelo de \textit{cap and trade} de dos etapas propuesto por los autores Pía Amigo, Sebastián Cea-Echeñique y Felipe Feijoo en su trabajo titulado \textit{A two stage cap-and-trade model with allowance re-trading and capacity investment: The case of the Chilean NDC targets} busca disminuir las emisiones de $CO_2$ e incentivar el cambio de generación de energía a fuentes más sustentables al aplicar un modelo que reconoce que tanto los productores como el planificador social (subastador o regulador) buscan maximizar sus beneficios.
+Como se menciona en \ref{c22}, los mecanismos de \textit{cap and trade}, por lo menos en teoría, pueden funcionar de forma efectiva cuando se aplica el mecanismo correcto para el problema que se quiere solucionar. El modelo de \textit{cap and trade} de dos etapas propuesto por los autores Pía Amigo, Sebastián Cea-Echeñique y Felipe Feijoo, en su trabajo titulado \textit{A two stage cap-and-trade model with allowance re-trading and capacity investment: The case of the Chilean NDC targets}, busca disminuir las emisiones de $CO_2$ e incentivar el cambio de generación de energía a fuentes más sustentables al aplicar un modelo que reconoce que tanto los productores como el planificador social (subastador o regulador) buscan maximizar sus beneficios.
 \vspace{2.5mm}
 
 En él, el modelo propone un sistema de dos etapas involucrando a los generadores de electricidad y al subastador que proporciona los permisos de emisiones de dióxido de carbono ($CO_2 e$). En la primera etapa (periodo $t=0$), el subastador determina los permisos de contaminación que serán vendidos a los productores de electricidad. Estos permisos corresponden a la contaminación máxima que cada generador puede emitir. Por otro lado, en la misma etapa, las empresas generadoras deciden su inversión en capacidad, su generación y la asignación de sus permisos para satisfacer una demanda exógena. Ellos compran los permisos $A_i$ al subastador a un precio $\pi^a$ para poder hacer viable, en términos de permisos de emisión de contaminante, su producción. 
@@ -375,10 +591,335 @@ Finalmente \ref{rescom:4} restringe que la demanda sea igual a la producción en
 Evaluando de forma general este modelo, el sistema le permite a los generadores modificar sus sistemas en la segunda etapa para así poder obtener más utilidad al poder ajustar sus emisiones.
 \vspace{2.5mm}
 
-Esta oportunidad de reajuste le otorga interesantes oportunidades al mercado para, en especial gracias a que se permite el intercambio de permisos entre generadores. Con esta instancia de compra y venta, si se pronostica una demanda expansiva de electricidad en el futuro, los precios de los permisos subirán constantemente por lo que se les verá cada vez más difícil mantener una generación a carbón o medios de alta emisión por lo que el cambio a energías renovables será cada vez más necesario.
+Esta oportunidad de reajuste le otorga interesantes oportunidades tanto a las empresas generadoras como al gobierno que quiere disminuir las emisiones. Por un lado, esta instancia les permite a las empresas mejorar sus ganancias acorde a las proyecciones de demanda. Por otro lado, el gobierno o ente regulador tendrá la opción de forzar ventas de permisos a las empresas de carbón para así incentivarles el cambio a opciones más renovables. 
 \vspace{2.5mm}
 
 El trabajo finalmente concluye que con el actual impuesto al carbono utilizado en Chile, no se llegaría a los objetivos de eliminar el carbón como fuente de generación para 2030 ni para ser carbono neutral en el año 2050. Pero proponen que definir un presupuesto de carbono (\textit{CAP}) entre 500-600 $MtCO_2 e$ o menos eliminaría al carbón en 15 años. También que con un \textit{CAP} menos severo (mayor $MtCO_2 e$) aumentaría la producción por energía con fuentes no convencionales(sustentables) a un 60-70\% del total de empresas generadoras pero no eliminaría totalmente al carbón en el tiempo prometido. Y como tercer descubrimiento, se concluye que si se añaden restricciones adicionales a las empresas generadoras (como imponer que estas deben vender sus permisos al llegar al año 2035), los objetivos de eliminar el carbón puede ser obtenible.
+\vspace{2.5mm}
+
+En el análisis anterior se reconoce la importancia del subastador en este modelo y en el futuro de la generación eléctrica si se planea utilizar este sistema de \textit{cap and trade}. La cantidad de permisos emitidos según el \textit{CAP} deben estar de acuerdo a un criterio de optimalidad. Es decir, lo más cercanos a la realidad en cuanto al presupuesto determinado y la demanda futura. Es por esto que se decide profundizar en el problema del subastador para hacer más realista su rol en el sistema.
+\vspace{2.5mm}
+
+\section{Transformación del modelo original de Amigo et al. (2021) a un MCP}
+
+Una de las formas de resolver el modelo original de \citeB{amigo_two_2021}, gracias a su forma, es transformarlo en un MCP. Esto es posible por medio del teorema de Karush-Kuhn-Tucker \ref{descripcionkkt} y sus condiciones resultantes. 
+\vspace{2.5mm}
+
+Por lo tanto, para replicar el modelo original, primero se realiza esta transformación. Para esto, es necesario entender que el modelo creado consiste en dos modelos que optimizan las utilidades de dos grupos de agentes distintos. Por un lado, se optimizan las utilidades de los productores de electricidad \ref{fo:prod} y, por otro lado, está el modelo que optimiza al subastador o ente regulador de permisos de contaminación \ref{eq:sub}. Para resolver el modelo como un solo problema MCP es necesario juntar ambos en un único problema de tipo MCP. Para lograr esto, además de encontrar las ecuaciones de KKT de cada uno de los grupos de agentes, es necesario incorporar las 4 condiciones de mercado \ref{rescom:1}, \ref{rescom:2},\ref{res:3},\ref{rescom:4} que relacionan ambos grupos de agentes.
+
+\subsection{MCP problema del productor}
+
+Primero, es necesario aplicar el teorema de KKT en  el problema del productor \ref{fo:prod} para transformarlo en un MCP.
+\vspace{2.5mm}
+
+El lagrangeano del problema del productor queda: 
+
+\footnotesize{
+\begin{align}
+&\mathcal{L}_i(x_i,Q_i,A_i,P_i,V_i) = f_i \big( \pi^d(0),Q_i(0)\big)+ A_i \pi^{a} + I_i x_i(0)  +& \nonumber \\ 
+&\sum_{\omega} Pr(\omega)\Bigg[ \sum_{t>0} \frac{1}{(1+R)^t} \Big[ TC_i(t)\cdot f_i \big( \pi^d(t,\omega),Q_i(t,\omega) \big) + TCR_i(t) \cdot I_i\cdot x_i(t,\omega) \Big] + \pi^v(\omega)\cdot \big(P_i(\omega)-V_i(\omega)\big) \Bigg]   + &\nonumber \\
+&\kappa_{i}\Big[Q_i(0) -  \big(CF_i\cdot\tau \big)\bar{Q}_i \Big] +\sum_{\omega,t>0} \alpha_{i,\omega,t}\Bigg[Q_i(t,\omega) - \big(CF_i \cdot\tau\big) \big(\bar{Q}_i + \sum_{t^{\prime} \leq t } x_i(t,\omega) + x_i(0) \big)\Bigg] + & \nonumber \\ &\sum_{\omega}\beta_{i,\omega}\Big[V_i(\omega)-A_i \Big] + \sum_{\omega}\gamma_{i,\omega} \Big[-A_{i} - P_{i}(\omega) + V_i(\omega) +\sum_{t>0} Q_i(t,\omega) \varepsilon_{i} + Q_i(0)\varepsilon_{i}\Big] - \sum_{\omega, t>0}\delta_{i,\omega,t} Q_i(t,\omega) + & \nonumber \\ &\sum_{\omega}\psi_{i,\omega} \Big[  \bar{Q}_i+ x_i(0) + \sum_{t > 0} x_i(t,\omega) - RP_i \Big] - \lambda_{i}\Big[Q_{i}(0)\Big] - \sum_{\omega, t>0}\varphi_{i,\omega,t} x_i(t,\omega) - \xi_i x_i(0) & \label{eq:lagrange}
+\end{align}}
+
+Realizando las derivadas de primer orden se obtienen:
+
+\subsubsection{Derivada parcial respecto a $x_i(0)$}
+\footnotesize{
+\begin{align}
+    \frac{\partial \mathcal{L} }{\partial x_i(0)} = 0 = I_i  + \sum_{\omega}\psi_{i,\omega} -\sum_{\omega, t>0} \alpha_{i,\omega,t}(CF_i\cdot \tau) -\xi_i=0  \qquad \forall \  i \\
+    \Leftrightarrow I_i  + \sum_{\omega}\psi_{i,\omega} -\sum_{\omega, t>0} \alpha_{i,\omega,t}(CF_i\cdot \tau) = \xi_i  \qquad \forall \  i 
+\end{align}
+}
+
+Donde $\xi_i$ es la variable dual en \ref{res:capi0}. Por lo que esta kkt debe ser complementaria a $x_i(0)$, obteniendo la siguiente complementariedad:
+
+\footnotesize{
+\begin{align}
+    x_i(0)\geq 0 \qquad \forall \  i \\
+    I_i  + \sum_{\omega}\psi_{i,\omega} -\sum_{\omega, t>0} \alpha_{i,\omega,t}(CF_i\cdot \tau) \geq 0  \qquad \forall \  i\\
+    x_i(0)\cdot(I_i  + \sum_{\omega}\psi_{i,\omega} -\sum_{\omega, t>0} \alpha_{i,\omega,t}(CF_i\cdot \tau))=0 \qquad \forall \  i
+\end{align}
+}
+En el código GAMS , se escribió la kkt de esta complementariedad de la siguiente forma en la línea 654:
+\begin{verbatim}
+kkt_x_first_producer(i).. Inv(i)*(1+percent(i)) + sum(w, psi(i,w))- CF(i)*t_year
+*sum(w, sum( tau2,alpha(i,w,tau2))) - xi(i)=g=0;
+\end{verbatim}
+Siendo xi(i) la variable dual $\xi_i$ . Donde esta kkt se complementa con la variable respectiva $x_i(0)$ en la línea 724 del código.
+\begin{verbatim}
+kkt_x_first_producer.x_first
+\end{verbatim}
+
+\subsubsection{Derivada parcial respecto a $x_i(t,\omega)$}
+\footnotesize{
+\begin{align}
+    \frac{\partial \mathcal{L} }{\partial x_i(t,\omega)}= 0 = Pr(\omega) \Bigg[\frac{1}{(1+R)^t}TCR_i(t) \cdot I_i \Bigg] - \sum_{t> t\prime}\alpha_{i,\omega,t} ( CF_i \cdot \tau)+ \psi_{i,\omega}-\varphi_{i,\omega,t} \qquad  \forall \  i, \omega, t> 0\\
+    \leftrightarrow Pr(\omega) \Bigg[\frac{1}{(1+R)^t}TCR_i(t) \cdot I_i \Bigg] - \sum_{t> t\prime}\alpha_{i,\omega,t} ( CF_i \cdot \tau)+ \psi_{i,\omega}=\varphi_{i,\omega,t} \qquad  \forall \  i, \omega, t> 0
+\end{align}
+}
+
+Donde $\varphi$ es la variable dual en la restricción \ref{res:capt}, por lo que, para resolver como MCP se tiene la siguiente complementariedad:
+
+
+\footnotesize{
+\begin{align}
+    Pr(\omega) \Bigg[\frac{1}{(1+R)^t}TCR_i(t) \cdot I_i \Bigg] - \sum_{t> t\prime}\alpha_{i,\omega,t} ( CF_i \cdot \tau)+ \psi_{i,\omega} \geq 0 \qquad  \forall \  i, \omega, t> 0\\
+    x_i(t,\omega) \geq 0 \qquad  \forall \  i, \omega, t> 0\\
+    (Pr(\omega) \Bigg[\frac{1}{(1+R)^t}TCR_i(t) \cdot I_i \Bigg] - \sum_{t> t\prime}\alpha_{i,\omega,t} ( CF_i \cdot \tau)+ \psi_{i,\omega})*x_i(t,\omega)=0
+\end{align}
+}
+
+Al igual que en el caso anterior, el código mantiene la variable dual, se puede ver en la línea 657 del código el KKT respectivo:
+
+\begin{verbatim}
+kkt_x_second_producer(i,tau2,w).. ((1/(1+R))**(ord(tau2)))*Prob(w)*Inv(i)*
+(1+percent(i))*TCR(i,tau2)- CF(i)*t_year*sum(tau3$(tauAlpha_i(i,tau2,
+tau3)),alpha(i,w,tau3)) + psi(i,w) -varphi(i,w,tau2)  =g=0;
+\end{verbatim}
+
+Con varphi(i,w,tau2) como la variable dual mencionada $\varphi_{i,\omega,t}$. 
+
+
+\subsubsection{Derivada parcial respecto a $Q_i(0)$}
+\footnotesize{
+\begin{align}
+    \frac{\partial \mathcal{L} }{\partial Q_i(0)}= 0 =  \big(a_{i}+b_i Q_{i}(0)\big)-\pi^d(0) + \kappa_i  + \sum_{\omega} \gamma_{i,\omega}\varepsilon_i-\lambda_i \qquad \forall \  i  \\
+     \leftrightarrow \big(a_{i}+b_i Q_{i}(0)\big)-\pi^d(0) + \kappa_i  + \sum_{\omega} \gamma_{i,\omega}\varepsilon_i = \lambda_i \qquad \forall \  i
+\end{align}
+}
+$\lambda_i$ es la variable dual de la restricción \ref{res:q0}, por lo que, para resolver como MCP se tiene lo siguiente:
+\footnotesize{
+\begin{align}
+    \big(a_{i}+b_i Q_{i}(0)\big)-\pi^d(0) + \kappa_i  + \sum_{\omega} \gamma_{i,\omega}\varepsilon_i \geq 0 \qquad \forall \  i  \\
+    Q_i(0) \geq 0 \qquad \forall \  i  \\
+    Q_i(0)*( \big(a_{i}+b_i Q_{i}(0)\big)-\pi^d(0) + \kappa_i  + \sum_{\omega} \gamma_{i,\omega}\varepsilon_i)=0 
+\end{align}
+}
+Como en los anteriores, en el código no se despeja la variable dual $\lambda_i$, se mantiene y se programa el MCP respectivo con la variable $Q_i(0)$. Se puede ver en la línea 660 del código de la siguiente forma:
+
+\begin{verbatim}
+kkt_q1_producer(i,tau).. (int(i)+C(i)*Q_first(i,tau))-pi_d(tau) + kappa(i,tau) - 
+lambda(i,tau)+sum(w,gamma(i,w)*epsilon(i))=g= 0;
+\end{verbatim}
+
+Programando la complementariedad en la línea 728:
+
+\begin{verbatim}
+kkt_q1_producer.Q_first    
+\end{verbatim}
+
+
+\subsubsection{Derivada parcial respecto a $Q_i(t,\omega)$}
+\footnotesize{
+\begin{align}
+   \frac{\partial \mathcal{L} }{\partial Q_i(t,w)}= 
+   0= Pr(\omega)  \frac{1}{(1+R)^t} \bigg( TC_i(t) \big(a_{i}+b_i Q_i(t,\omega)\big ) -\pi^d(t,\omega) \bigg) + \alpha_{i,\omega,\tau} + \gamma_{i,\omega} \varepsilon_{i} -\delta_{i,\omega,t} \qquad  \forall \ i, \omega, t > 0\\
+   \leftrightarrow Pr(\omega)  \frac{1}{(1+R)^t} \bigg( TC_i(t) \big(a_{i}+b_i Q_i(t,\omega)\big ) -\pi^d(t,\omega) \bigg) + \alpha_{i,\omega,\tau} + \gamma_{i,\omega} \varepsilon_{i}= \delta_{i,\omega,t} \qquad \forall \ i, \omega, t > 0
+\end{align}
+}
+$\delta_{i,\omega,t}$ es la variable dual de la restricción \ref{res:qt}, al resolverlo como MCP se tiene la siguiente complementariedad:
+
+\footnotesize{
+\begin{align}
+    Pr(\omega)  \frac{1}{(1+R)^t} \bigg( TC_i(t) \big(a_{i}+b_i Q_i(t,\omega)\big ) -\pi^d(t,\omega) \bigg) + \alpha_{i,\omega,\tau} + \gamma_{i,\omega} \varepsilon_{i} \geq 0 \qquad \forall \ i, \omega, t > 0\\
+    Q_i(t,\omega) \geq 0 \qquad  \forall i, \omega, t > 0\\
+    (Pr(\omega)  \frac{1}{(1+R)^t} \bigg( TC_i(t) \big(a_{i}+b_i Q_i(t,\omega)\big ) -\pi^d(t,\omega) \bigg) + \alpha_{i,\omega,\tau} + \gamma_{i,\omega} \varepsilon_{i})\cdot  Q_i(t,\omega)= 0 \qquad \forall \ i, \omega, t > 0
+\end{align}
+}
+
+La línea 662 del código completa la kkt de la siguiente forma: 
+
+\begin{verbatim}
+kkt_qtau_producer(i,tau2,w).. 
+((1/(1+R))**(ord(tau2)))*Prob(w)*((TC(i,tau2)*(int(i)+C(i)*Q_second(i,tau2,w)))- 
+\end{verbatim}
+\begin{verbatim}
+pi2_d(tau2,w))+alpha(i,w,tau2)+gamma(i,w)*epsilon(i)-delta(i,tau2,w) =g= 0;
+\end{verbatim}
+
+Con la complementariedad escrita de la siguiente forma en la línea 729 del código:
+\begin{verbatim}
+kkt_qtau_producer.Q_second    
+\end{verbatim}
+
+\subsubsection{Derivada parcial respecto a $A_i(t)$}
+\footnotesize{
+\begin{align}
+   \frac{\partial \mathcal{L} }{\partial A_i}= 0
+   = \pi^{a} - \sum_{\omega}\beta_{i,\omega} - \sum_{\omega}\gamma_{i,\omega}  \qquad \forall \  i \\
+\end{align}
+}
+
+Para resolverlo como MCP se tiene la siguiente complementariedad:
+\footnotesize{
+\begin{align}
+    \pi^{a} - \sum_{\omega}\beta_{i,\omega} - \sum_{\omega}\gamma_{i,\omega} \geq 0 \qquad \forall  i\\
+    A_i \geq 0 \qquad \forall  i\\
+    (\pi^{a} - \sum_{\omega}\beta_{i,\omega} - \sum_{\omega}\gamma_{i,\omega}) \cdot A_i = 0 \qquad \forall  i
+\end{align}
+}
+
+En el código se tiene lo siguiente en la línea 664:
+\begin{verbatim}
+   kkt_A_producer(i).. pi_a - sum(w, beta(i,w)) - sum(w, gamma(i,w))=g= 0 
+\end{verbatim}
+
+Y efectuando la complementariedad en la línea 730:
+\begin{verbatim}
+    kkt_A_producer.A
+\end{verbatim}
+
+\subsubsection{Derivada parcial respecto a $V_i(w)$}
+\footnotesize{
+\begin{align}
+   \frac{\partial \mathcal{L} }{\partial V_i(w)}= 0
+   = -Pr(\omega) \pi^v(\omega) + \beta_{i,\omega}  + \gamma_{i,\omega}  \qquad \forall \  i, \omega \\
+\end{align}
+}
+
+Para resolverlo como MCP se tiene la siguiente complementariedad:
+\footnotesize{
+\begin{align}
+    -Pr(\omega) \pi^v(\omega) + \beta_{i,\omega}  + \gamma_{i,\omega} \geq 0 \qquad \forall \  i, \omega \\
+    V_i(w) \geq 0 \qquad \forall  i,\omega \\
+    (-Pr(\omega) \pi^v(\omega) + \beta_{i,\omega}  + \gamma_{i,\omega}) \cdot  V_i(w) = 0  \qquad \forall \  i, \omega 
+\end{align}
+}
+
+Programando la kkt en el código en la línea 667:
+\begin{verbatim}
+    kkt_V_producer(i,w)..  -Prob(w)*pi_v(i,w)+beta(i,w)+gamma(i,w)=g= 0
+\end{verbatim}
+
+Completando la complementariedad en la línea 731:
+\begin{verbatim}
+    kkt_V_producer.V
+\end{verbatim}
+
+\subsubsection{Derivada parcial respecto a $P_i(w)$}
+\footnotesize{
+\begin{align}
+   \frac{\partial \mathcal{L} }{\partial P_i(w)}= 0
+   = Pr(\omega) \pi^v(\omega) -\gamma_{i,\omega} \qquad \forall \  i, \omega \\
+\end{align}
+}
+
+Para resolverlo como MCP se tiene la siguiente complementariedad:
+\footnotesize{
+\begin{align}
+    Pr(\omega) \pi^v(\omega) -\gamma_{i,\omega} \geq 0 \qquad \forall \  i, \omega \\
+    P_i(w) \geq 0 \qquad \forall  i,\omega \\
+    (Pr(\omega) \pi^v(\omega) -\gamma_{i,\omega}) \cdot  P_i(w) = 0  \qquad \forall \  i, \omega 
+\end{align}
+}
+
+Programando la kkt en el código en la línea 670:
+\begin{verbatim}
+    kkt_P_producer(i,j,w)$(ord(j) <> ord(i))..      Prob(w)* pi_v(j,w)-gamma(i,w) =g= 0
+\end{verbatim}
+
+Completando la complementariedad en la línea 732:
+\begin{verbatim}
+    kkt_P_producer.P  
+\end{verbatim}
+
+\subsubsection{Completando el problema del productor}
+El resto de las complementariedades del problema del productor se producen al complementar las restricciones del modelo original con sus variables duales:
+
+\footnotesize{
+\begin{align}
+    & 0 \leq \big(CF_i \cdot \tau \big) \Bigg[\bar{Q}_i + \sum_{t\leq t^{\prime}} x_i(t,\omega) + x_i(0) \Bigg] - Q_i(t,\omega)  \perp \alpha_{i,\omega,\tau} \geq 0 \qquad \forall \ i, \omega, t  > 0\\
+    & 0 \leq \Big(CF_i\cdot\tau \Big)\bar{Q}_i(0)-Q_{i}(0) \perp \kappa_i \geq 0 \qquad \forall \ i \\
+    & 0 \leq  A_{i} - V_i(\omega) \perp \beta_{i,\omega} \geq 0 \qquad \forall  \ \omega \\
+    & 0 \leq  A_{i} + P_{i} (\omega) - V_i(\omega) - \sum_{t>0} Q_i(t,\omega) \varepsilon_{i} -Q_i(0)\varepsilon_{i} \perp \gamma_{i,\omega} \geq 0 \qquad \forall \ i, \omega\\
+    & 0 \leq  RP_i - \bar{Q}_i - x_i(0) - \sum_{t>0} x_i(t,\omega) \perp \psi_{i,\omega} \geq 0 \qquad \forall \ i,\omega 
+\end{align}
+}
+Las cuales se encuentran programadas entre las líneas 609 y 703 del código:
+
+\begin{verbatim}
+    capacity_stage_2_xnext(i,w,tau2).. CF(i)*t_year*(sum(tau3$(tau3_i(i,tau2,tau3)),
+    x_next(i,tau3,w))+x_first(i)+Q_barT2(i,tau2) +Q_bar(i))-Q_second(i,tau2,w) =g=0;
+\end{verbatim}
+\begin{verbatim}
+    capacity_stage_1(i,tau)..  CF(i)*t_year*Q_bar(i)- Q_first(i,tau) =g=0;
+\end{verbatim}
+\begin{verbatim}
+    trading_permits(i,w)..  A(i)-V(i,w) =g= 0;
+\end{verbatim}
+\begin{verbatim}
+    total_allowances(i,w)..  A(i) + sum(j$(ord(j) <> ord(i)),P(i,j,w))-V(i,w) - 
+    sum(tau2,Q_second(i,tau2,w)*epsilon(i)) - sum(tau,Q_first(i,tau)*epsilon(i))   =g= 0;
+\end{verbatim}
+\begin{verbatim}
+    resource_potential(i,w)..   -Q_bar(i) - x_first(i) - sum(tau3,x_next(i,tau3,w))+
+    sum(tau2,Q_barT2(i,tau2)) + RP(i) =g= 0;
+\end{verbatim}
+
+Existiendo sus complementariedades entre las líneas 734 y 744:
+
+\begin{verbatim}
+    capacity_stage_1.kappa
+    capacity_stage_2_xnext.alpha
+    resource_potential.psi
+    trading_permits.beta
+\end{verbatim}
+
+\subsection{MCP problema del subastador}
+
+Debido a que esta memoria se centra en la mejora e innovación de este modelo, este MCP se incluye en el siguiente capítulo \ref{MCP:subastador}. En el cuál, luego de encontrar las restricciones, se proporcionan una reestructuración de este. 
+
+\subsection{Condiciones de mercado}
+Para lograr unir los modelos del subastador y productor en un solo MCP es necesario incluir las restricciones de condiciones de mercado \ref{rescom:1}, \ref{rescom:2},\ref{res:3},\ref{rescom:4}. De estas se obtienen las siguientes complementariedades:
+
+\subsubsection{Restricción de permisos disponibles}
+\footnotesize{
+\begin{align}
+ \pi^a \geq 0 \\
+ \theta - \sum_{i}A_i = 0  
+\end{align}}
+En el código se encuentra la restricción y complementariedad en las líneas 708 y 751 respectivamente: 
+\begin{verbatim}
+    kkt_A_theta..    theta - sum(i,A(i))=e= 0;
+    kkt_A_theta.pi_a
+\end{verbatim}
+
+\subsubsection{Restricción de equilibrio en el mercado de compra y venta de permisos}
+\footnotesize{
+\begin{align}
+ \pi^v(\omega) \geq 0 \qquad \forall \omega\\
+ \sum_{i}P_{i,\omega} - \sum_{i}V_{i,\omega} = 0 \qquad \forall \omega  
+\end{align}}
+En el código se encuentra la restricción y complementariedad en las líneas 713 y 752 respectivamente: 
+\begin{verbatim}
+    kkt_P_V(i,w).. V(i,w)=e=sum(j$(ord(j) <> ord(i)),P(j,i,w));
+    kkt_P_V.pi_v 
+\end{verbatim}
+
+\subsubsection{Abastecimiento de demanda en la primera etapa}
+\footnotesize{
+\begin{align}
+ \pi^d(0) \geq 0 \\
+ \sum_{i}Q_i(0) - D(0) = 0   
+\end{align}}
+En el código se encuentra la restricción y complementariedad en las líneas 710 y 753 respectivamente: 
+\begin{verbatim}
+    kkt_Q_D_first(tau).. sum(i,Q_first(i,tau))=e=D1(tau);
+    kkt_Q_D_first.pi_d
+\end{verbatim}
+
+\subsubsection{Abastecimiento de demanda en la segunda etapa}
+footnotesize{
+\begin{align}
+ \pi^d(\omega,t) \geq 0 \qquad \forall \omega,t\\
+ \sum_{i}Q_i(t,\omega) - D(t,\omega) = 0 \qquad \forall \omega,t  
+\end{align}}
+En el código se encuentra la restricción y complementariedad en las líneas 711 y 754 respectivamente: 
+\begin{verbatim}
+    kkt_Q_D_second(tau2,w)..sum(i,Q_second(i,tau2,w))=e=D2(w,tau2);
+    kkt_Q_D_second.pi2_d
+\end{verbatim}
+
 
 \section{Costos de información y su aplicación en problemas de maximización de beneficios}\label{marco:costos}
 
@@ -408,6 +949,7 @@ En \citeB{dewan_estimating_2020} se toma como ejemplo un costo $C(P)$ cuadrátic
     {\mathcal{C}}(P)=\begin{cases}0,&P\leq d\\c(P-d)^2,&P>d\end{cases}\label{costocuad}\\
 \end{array}
 \end{equation}
+\vspace{2.5mm}
 
 \ref{costocuad} muestra que a mientras el rendimiento sea mayor a la información pública, se incurrirá un costo de obtención de un \textit{performance} mayor posible gracias a la obtención de información adicional.
 \vspace{2.5mm}
@@ -421,28 +963,6 @@ Finalmente, aplicando la \textbf{Proposición 4} se llega a que el rendimiento �
 \end{equation}
 
 
-\section{Problema de Investigación}
-
-En el análisis anterior se reconoce la importancia del subastador en este modelo y en el futuro de la generación eléctrica si se planea utilizar este sistema de \textit{cap and trade}. La cantidad de permisos emitidos según el \textit{CAP} deben estar de acuerdo a un criterio de optimalidad. Es decir, lo más cercanos a la realidad en cuanto al presupuesto determinado y la demanda futura. Es por esto que se decide profundizar en el problema del subastador para hacer más realista su rol en el sistema.
-\vspace{2.5mm}
-
-Para entender su funcionamiento y raíces se llevo a cabo un estudio de \citeB{daertrycke_risk_2017}, trabajo clave en la realización de \citeB{amigo_two_2021}. Este estudia distintos modelos de equilibrio de capacidad. Particularmente el punto \textit{3.3 Two stage RN competitive capacity equilibrium} de ese artículo estudia el modelo base con el cuál se desarrolló el modelo de dos etapas. Este es un modelo básico de equilibrio en capacidad, el cuál fue necesario para conocer una aplicación de un problema de equilibrio en capacidad, la teoría y realizar el computo de este tipo de problemas. Particularmente, este modelo de equilibrio en capacidad con riesgo neutral estudia un productor y su demandante donde el problema de optimización diseñado busca maximizar su utilidad dejando como variables la inversión inicial y la producción de electricidad, con restricciones de equilibrio en capacidad en donde la producción debe ser menor a la capacidad instalada. En la Sección \ref{c21} se lleva a cabo una explicación más detallada de su estudio y resolución. 
-\vspace{2.5mm}
-
-\citeB{amigo_two_2021} cuentan con un problema más complejo, donde se consideran múltiples productores (cada uno representa solo una tecnología de generación), muchos más periodos y se consideran muchas otra variables. Esto se tradujo en dos problemas de optimización, uno para los productores con 5 restricciones para cada $i(productor), w(escenario)$ y $t(periodo)$ respectivamente y el problema del subastador \ref{eq:sub} con una restricción \ref{res:sub1}. Estos problemas se logran resolver en conjunto al cumplir otras 4 restricciones de compensación y aplicando los criterios KKT como un problema de complementario mixto (MCP). 
-\vspace{2.5mm}
-
-Este problema de optimización (el del subastador) considera como única variable la cantidad de permisos de contaminación $\theta$ los cuales están en unidades $tCO_2 e$ (toneladas de dióxido de carbono emitidas). Estos son los permisos comprados por las empresas generadoras en la primera etapa del modelo. Amigo define que el presupuesto de carbono denotado $CAP$, el cual establece el nivel de emisiones en la segunda etapa, sigue una distribución normal de varianza cero, donde $\theta$ no puede sobrepasar probabilística mente el el presupuesto de emisión, como se denota en \ref{res:subastador0} donde $\varepsilon$ representa el margen de permisos de emisión total. \ref{res:sub1} nace de esta condición donde $\varphi^-1$ es la inversa de la acumulada de la distribución normal de CAP. Es acá donde surge la posibilidad de investigación para este trabajo. 
-\vspace{2.5mm}
-
-\begin{equation}
-\begin{array}{cl}
-    Pr(\theta \geq CAP)\leq \varepsilon \label{res:subastador0}
-\end{array}
-\end{equation}
-\vspace{2.5mm}
-
-\citeB{amigo_two_2021} comentan que existe espacio para desarrollar y perfeccionar el problema del subastador. Por un lado el problema del productor está desarrollado de forma extensa con muchas restricciones que la definen, pero el subastador tiene un papel tan importante como el de los productores ya que este será el que tome las decisiones iniciales con las cuales la generación de energía se verá influenciado por mucho tiempo. Las decisiones del subastador deben ser consideradas tan especificas y desarrolladas que las de los generadores de electricidad. Es por esto que surge la oportunidad de encontrar una forma más completa de representar a este agente, formular las restricciones y cambios en la función objetivo si es necesario y luego evaluar la reformulación del modelo en un \textit{solver}.
 
 
 
