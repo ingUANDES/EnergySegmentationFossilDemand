@@ -17,3 +17,190 @@ $$E_{\Theta} [ x_{w} c_{w}] = x_{1}c_{1}0.5 + x_{2}c_{2}0.3 + x_{3}c_{3}0.2 $$
 \section{Parámetros Modelo Original}\label{anexo:parametros}
 
 
+\section{Pruebas iniciales del rendimiento y atención racional en el subastador}\label{anexo:rendimiento}
+
+
+Para realizar la evaluación del modelo, se realizará un gráfico con los resultados similar a la figura \ref{fig:fig6}. En esta se grafica la cantidad de permisos vendidos por el productor que produce energía con carbón y su influencia en el precio de mercado de los permisos. Esto representa el impacto que puede tener el modelo en eliminar el carbón como productor.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=15cm]{docs/DocumentoMemoria/images/figura 6 amigo.png}
+    \caption{Venta de permisos por generador de carbón (Fuente: \protect\citeB{amigo_two_2021})}
+    \label{fig:fig6}
+\end{figure}
+
+
+\subsubsection{Modelo sin restricciones}
+
+Primero se evaluará el modelo al considerar únicamente la función objetivo del subastador con el costo original $\mathcal{F}$ y el costo de rendimiento. También se considera como variable de decisión únicamente los permisos $\theta$.  
+
+\begin{equation}
+\begin{array}{rrclcl}
+    \displaystyle \min_{\theta} & -\theta \pi^aP + \tilde{\mathcal{F}}(P)+F(\theta)  \label{fo:perfornorest}\\
+\end{array}
+\end{equation}
+\begin{equation}
+\begin{array}{cl}
+    \theta \geq 0 & (\varrho)\label{res:sub2}
+\end{array}
+\end{equation}
+
+Con lo anterior se logra el siguiente Lagrangiano:
+
+$$\mathcal{L}(\theta)=-P\theta\pi^a+\mathcal{F}(\theta)+c(P-d)^2 - \varrho\theta $$
+
+Realizando la derivada de primer orden para $\theta$ se obtiene:
+
+\begin{equation}
+\begin{array}{rrclcl}
+    \frac{\partial\mathcal{L}(\theta)}{\partial (\theta)}=-P\pi^a+\frac{\partial\mathcal{F}(\theta)}{\partial(\theta)}-\varrho=0 \label{lag1}\\
+\end{array}
+\end{equation}
+\begin{equation}
+\begin{array}{rrclcl}
+    \rightarrow -P\pi^a+\frac{\partial\mathcal{F}(\theta)}{\partial(\theta)}=\varrho \label{lag1}\\
+\end{array}
+\end{equation}
+Con esto se obtiene la siguiente complementariedad para el problema del subastador:
+
+\begin{equation}
+\begin{array}{rrclcl}
+    0\leq -P\pi^a+\frac{\partial\mathcal{F}(\theta)}{\partial(\theta)}\perp \theta \geq 0 \label{compllag1}\\
+\end{array}
+\end{equation}
+
+Al igual que en el modelo original de \citeB{amigo_two_2021}, se consideran los siguientes valores para constantes y parámetros:
+\begin{enumerate}
+    \item $\frac{\partial\mathcal{F}(\theta)}{\partial(\theta)}=0$
+    \item $CAP\sim \mathcal{N}(100MtCO_{2}e,0)$
+\end{enumerate}
+
+Con esto, al correr el modelo en el \textit{solver}, cambiando únicamente el valor del rendimiento ($P$), se encontraron los siguientes resultados:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{P($\%$)} & \textbf{$\theta$ (millones)} & \textbf{$\pi^a$($\frac{\$}{\theta}$)} \\ \hline
+0 & N/A & N/A \\ \hline
+5 & 104 & 223 \\ \hline
+10 & 3203 & 0 \\ \hline
+15 & 3203 & 0 \\ \hline
+20 & 3203 & 0 \\ \hline
+25 & 3203 & 0 \\ \hline
+30 & 3203 & 0 \\ \hline
+35 & 3203 & 0 \\ \hline
+40 & 3203 & 0 \\ \hline
+45 & 3203 & 0 \\ \hline
+50 & 3203 & 0 \\ \hline
+55 & 3203 & 0 \\ \hline
+60 & 3203 & 0 \\ \hline
+65 & 3203 & 0 \\ \hline
+70 & 3203 & 0 \\ \hline
+75 & 3203 & 0 \\ \hline
+80 & 3203 & 0 \\ \hline
+85 & 3203 & 0 \\ \hline
+90 & 3203 & 0 \\ \hline
+95 & 3203 & 0 \\ \hline
+100 & 1870 & 0 \\ \hline
+\end{tabular}
+\caption{Resultados con rendimiento y sin restricciones}
+\label{tabla:sinrestr}
+\end{table}
+
+
+Los resultados encontrados en el Cuadro \ref{tabla:sinrestr}, pueden ser resultado de no considerar una restricción para $\theta$ respecto al presupuesto de carbono en el problema del subastador. En la siguiente subsección se desarrolla el problema incluyendo la restricción adicional.
+
+\subsubsection{Modelo con restricción original}
+
+Manteniendo la restricción original de \citeB{amigo_two_2021} mostrada en \ref{res:sub1}. Se tiene el siguiente modelo:
+
+\begin{equation}
+\begin{array}{rrclcl}
+   \displaystyle \min_{\theta} & -\theta \pi^aP + c(P-d)^2+F(\theta) \\\textrm{s.a.} \label{eq:perforconrestr}\\
+\end{array}
+\end{equation}
+\begin{equation}
+\begin{array}{cl}
+    \varphi^-1 (\varepsilon )\sigma + \mu - \theta \geq 0 & (\eta)  \label{perforconrestr:r1}
+\end{array}
+\end{equation}
+\begin{equation}
+\begin{array}{cl}
+    \theta \geq 0 & (\varrho)
+\end{array}
+\end{equation}
+
+Al igual que el caso anterior, se debe convertir este modelo en un MCP. Para esto se aplican las condiciones de KKT.
+
+$$\mathcal{L}(\theta)=-P\theta\pi^a+\mathcal{F}(\theta)+c(P-d)^2 -\eta(\varphi^-1 (\varepsilon )\sigma + \mu - \theta)- \varrho\theta $$
+
+Realizando la derivada de primer orden para $\theta$ se obtiene:
+
+\begin{equation}
+\begin{array}{rrclcl}
+    \frac{\partial\mathcal{L}(\theta)}{\partial (\theta)}=-P\pi^a+\frac{\partial\mathcal{F}(\theta)}{\partial(\theta)}-\eta -\varrho=0 \label{lag20}\\
+\end{array}
+\end{equation}
+\begin{equation}
+\begin{array}{rrclcl}
+    \rightarrow -P\pi^a+\frac{\partial\mathcal{F}(\theta)}{\partial(\theta)}-\eta=\varrho \label{lag21}\\
+\end{array}
+\end{equation}
+
+Obteniendo la primera complementariedad:
+
+\begin{equation}
+\begin{array}{rrclcl}
+    0\leq -P\pi^a+\frac{\partial\mathcal{F}(\theta)}{\partial(\theta)}-\eta \perp \theta \geq 0 \label{compllag2}\\
+\end{array}
+\end{equation}
+
+La segunda complementariedad se obtiene al considera la restricción \ref{perforconrestr:r1} con su variable dual respectiva $\eta$. Obteniendo:
+
+\begin{equation}
+\begin{array}{rrclcl}
+    0 \leq \varphi^-1 (\varepsilon )\sigma + \mu - \theta \perp \eta \geq 0 \label{compllag2}\\
+\end{array}
+\end{equation}
+
+Nuevamente, al igual que en el modelo original de \citeB{amigo_two_2021}, se consideran los siguientes valores para constantes y parámetros:
+\begin{enumerate}
+    \item $\frac{\partial\mathcal{F}(\theta)}{\partial(\theta)}=0$
+    \item $CAP\sim \mathcal{N}(100MtCO_{2}e,0)$
+\end{enumerate}
+
+Con esto, al correr el modelo en el \textit{solver}, cambiando únicamente el valor del rendimiento ($P$), se encontraron los siguientes resultados:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{P($\%$)} & \textbf{$\theta$ (millones)} & \textbf{$\pi^a$($\frac{\$}{\theta}$)} \\ \hline
+0 & 0.3336 & 30130 \\ \hline
+5 & 100 & 315.825 \\ \hline
+10 & 100 & 315.825 \\ \hline
+15 & 100 & 315.825 \\ \hline
+20 & 100 & 315.825 \\ \hline
+25 & 100 & 315.825 \\ \hline
+30 & 100 & 315.825 \\ \hline
+35 & 100 & 315.825 \\ \hline
+40 & 100 & 315.825 \\ \hline
+45 & 100 & 315.825 \\ \hline
+50 & 100 & 315.825 \\ \hline
+55 & 100 & 315.825 \\ \hline
+60 & 100 & 315.825 \\ \hline
+65 & 100 & 315.825 \\ \hline
+70 & 100 & 315.825 \\ \hline
+75 & 100 & 315.825 \\ \hline
+80 & 100 & 315.825 \\ \hline
+85 & 100 & 315.825 \\ \hline
+90 & 100 & 315.825 \\ \hline
+95 & 100 & 315.825 \\ \hline
+100 & 100 & 315.825 \\ \hline
+\end{tabular}
+\caption{Resultados con rendimiento y restricción original}
+\label{tabla:conrestr}
+\end{table}
+
+Del Cuadro \ref{tabla:conrestr} se entiende que al incluir únicamente las restricciones del problema original solo existe un efecto en el precio y cantidad de permisos cuando el rendimiento es 0. Pero esto no debería ocurrir ya que por lo menos se tiene la información pública $d$. Cabe notar que una cantidad de $100 MtCO_2 e$ con un precio de 315.825 USD cada una, son los valores de resolución del problema original con los mismos parámetros. Este resultado puede resultar debido a que no se a incluido una restricción que describa de mejor forma el costo de rendir.
