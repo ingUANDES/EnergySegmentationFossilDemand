@@ -1,6 +1,6 @@
 % cap3.tex
 
-\chapter{Desarrollo Metodológico} \label{c3} % la etiqueta para referencias
+\chapter{Desarrollo Metodológico} \label{MCP:subastador} % la etiqueta para referencias
 
 
 \section{Replicación del Modelo original y resolución por medio de MCP}
@@ -10,7 +10,7 @@ Una de las formas de resolver el problema original de \citeB{amigo_two_2021}, gr
 
 Por lo tanto, para replicar el modelo original, se realiza esta transformación y luego es probada en un \textit{solver} para evaluar y comparar sus resultados con el original.
 
-\subsection{MCP problema del subastador}\label{MCPsubastador}
+\subsection{MCP problema del subastador} \label{MCPsubastador}
 
 En adición a lo realizado con el problema del productor y las restricciones condiciones de mercado que relacionan a los productores con el subastador, se debe transformar el problema de este último \ref{eq:sub} en un MCP. Al igual que el caso anterior, para convertir el problema en un MCP, una de las opciones es aplicar el teorema de KKT. Para comenzar, se obtiene el siguiente lagrangeano:
 
@@ -334,5 +334,5 @@ La segunda complementariedad se obtiene al considera la restricción \ref{perfor
 \end{array}
 \end{equation}
 
-
+Finalmente, esta reformulación del modelo como MCP, junto con los MCP de los productores
 

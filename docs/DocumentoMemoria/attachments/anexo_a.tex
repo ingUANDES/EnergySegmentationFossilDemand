@@ -204,3 +204,159 @@ Con esto, al correr el modelo en el \textit{solver}, cambiando únicamente el va
 \end{table}
 
 Del Cuadro \ref{tabla:conrestr} se entiende que al incluir únicamente las restricciones del problema original solo existe un efecto en el precio y cantidad de permisos cuando el rendimiento es 0. Pero esto no debería ocurrir ya que por lo menos se tiene la información pública $d$. Cabe notar que una cantidad de $100 MtCO_2 e$ con un precio de 315.825 USD cada una, son los valores de resolución del problema original con los mismos parámetros. Este resultado puede resultar debido a que no se a incluido una restricción que describa de mejor forma el costo de rendir.
+
+\section{GAMS de Amigo et al. (2021)}\label{anexo:GAMScomp}
+\subsection{MCP del Productor}
+
+\subsubsection{Derivada parcial respecto a $x_i(0)$}
+
+En el código GAMS , se escribió la kkt de esta complementariedad de la siguiente forma en la línea 654:
+\begin{verbatim}
+kkt_x_first_producer(i).. Inv(i)*(1+percent(i)) + sum(w, psi(i,w))- CF(i)*t_year
+*sum(w, sum( tau2,alpha(i,w,tau2))) - xi(i)=g=0;
+\end{verbatim}
+Siendo xi(i) la variable dual $\xi_i$ . Donde esta kkt se complementa con la variable respectiva $x_i(0)$ en la línea 724 del código.
+\begin{verbatim}
+kkt_x_first_producer.x_first
+\end{verbatim}
+
+\subsubsection{Derivada parcial respecto a $x_i(t,\omega)$}
+
+Al igual que en el caso anterior, el código mantiene la variable dual, se puede ver en la línea 657 del código el KKT respectivo:
+
+\begin{verbatim}
+kkt_x_second_producer(i,tau2,w).. ((1/(1+R))**(ord(tau2)))*Prob(w)*Inv(i)*
+(1+percent(i))*TCR(i,tau2)- CF(i)*t_year*sum(tau3$(tauAlpha_i(i,tau2,
+tau3)),alpha(i,w,tau3)) + psi(i,w) -varphi(i,w,tau2)  =g=0;
+\end{verbatim}
+
+Con varphi(i,w,tau2) como la variable dual mencionada $\varphi_{i,\omega,t}$. 
+
+\subsubsection{Derivada parcial respecto a $Q_i(0)$}
+
+Como en los anteriores, en el código no se despeja la variable dual $\lambda_i$, se mantiene y se programa el MCP respectivo con la variable $Q_i(0)$. Se puede ver en la línea 660 del código de la siguiente forma:
+
+\begin{verbatim}
+kkt_q1_producer(i,tau).. (int(i)+C(i)*Q_first(i,tau))-pi_d(tau) + kappa(i,tau) - 
+lambda(i,tau)+sum(w,gamma(i,w)*epsilon(i))=g= 0;
+\end{verbatim}
+
+Programando la complementariedad en la línea 728:
+
+\begin{verbatim}
+kkt_q1_producer.Q_first    
+\end{verbatim}
+
+\subsubsection{Derivada parcial respecto a $Q_i(t,\omega)$}
+
+La línea 662 del código completa la kkt de la siguiente forma: 
+
+\begin{verbatim}
+kkt_qtau_producer(i,tau2,w).. 
+((1/(1+R))**(ord(tau2)))*Prob(w)*((TC(i,tau2)*(int(i)+C(i)*Q_second(i,tau2,w)))- 
+\end{verbatim}
+\begin{verbatim}
+pi2_d(tau2,w))+alpha(i,w,tau2)+gamma(i,w)*epsilon(i)-delta(i,tau2,w) =g= 0;
+\end{verbatim}
+
+Con la complementariedad escrita de la siguiente forma en la línea 729 del código:
+\begin{verbatim}
+kkt_qtau_producer.Q_second    
+\end{verbatim}
+
+\subsubsection{Derivada parcial respecto a $A_i(t)$}
+
+En el código se tiene lo siguiente en la línea 664:
+\begin{verbatim}
+   kkt_A_producer(i).. pi_a - sum(w, beta(i,w)) - sum(w, gamma(i,w))=g= 0 
+\end{verbatim}
+
+Y efectuando la complementariedad en la línea 730:
+\begin{verbatim}
+    kkt_A_producer.A
+\end{verbatim}
+
+\subsubsection{Derivada parcial respecto a $V_i(w)$}
+Programando la kkt en el código en la línea 667:
+\begin{verbatim}
+    kkt_V_producer(i,w)..  -Prob(w)*pi_v(i,w)+beta(i,w)+gamma(i,w)=g= 0
+\end{verbatim}
+
+Completando la complementariedad en la línea 731:
+\begin{verbatim}
+    kkt_V_producer.V
+\end{verbatim}
+
+\subsubsection{Derivada parcial respecto a $P_i(w)$}
+
+Programando la kkt en el código en la línea 670:
+\begin{verbatim}
+    kkt_P_producer(i,j,w)$(ord(j) <> ord(i))..      Prob(w)* pi_v(j,w)-gamma(i,w) =g= 0
+\end{verbatim}
+
+Completando la complementariedad en la línea 732:
+\begin{verbatim}
+    kkt_P_producer.P  
+\end{verbatim}
+
+\subsubsection{Completando el problema del productor}
+
+Las cuales se encuentran programadas entre las líneas 609 y 703 del código:
+
+\begin{verbatim}
+    capacity_stage_2_xnext(i,w,tau2).. CF(i)*t_year*(sum(tau3$(tau3_i(i,tau2,tau3)),
+    x_next(i,tau3,w))+x_first(i)+Q_barT2(i,tau2) +Q_bar(i))-Q_second(i,tau2,w) =g=0;
+\end{verbatim}
+\begin{verbatim}
+    capacity_stage_1(i,tau)..  CF(i)*t_year*Q_bar(i)- Q_first(i,tau) =g=0;
+\end{verbatim}
+\begin{verbatim}
+    trading_permits(i,w)..  A(i)-V(i,w) =g= 0;
+\end{verbatim}
+\begin{verbatim}
+    total_allowances(i,w)..  A(i) + sum(j$(ord(j) <> ord(i)),P(i,j,w))-V(i,w) - 
+    sum(tau2,Q_second(i,tau2,w)*epsilon(i)) - sum(tau,Q_first(i,tau)*epsilon(i))   
+    =g= 0;
+\end{verbatim}
+\begin{verbatim}
+    resource_potential(i,w)..   -Q_bar(i) - x_first(i) - sum(tau3,x_next(i,tau3,w))+
+    sum(tau2,Q_barT2(i,tau2)) + RP(i) =g= 0;
+\end{verbatim}
+
+Existiendo sus complementariedades entre las líneas 734 y 744:
+
+\begin{verbatim}
+    capacity_stage_1.kappa
+    capacity_stage_2_xnext.alpha
+    resource_potential.psi
+    trading_permits.beta
+\end{verbatim}
+
+\subsection{MCP condiciones de mercado}
+
+\subsubsection{Restricción de permisos disponibles}
+En el código se encuentra la restricción y complementariedad en las líneas 708 y 751 respectivamente: 
+\begin{verbatim}
+    kkt_A_theta..    theta - sum(i,A(i))=e= 0;
+    kkt_A_theta.pi_a
+\end{verbatim}
+
+\subsubsection{Restricción de equilibrio en el mercado de compra y venta de permisos}
+En el código se encuentra la restricción y complementariedad en las líneas 713 y 752 respectivamente: 
+\begin{verbatim}
+    kkt_P_V(i,w).. V(i,w)=e=sum(j$(ord(j) <> ord(i)),P(j,i,w));
+    kkt_P_V.pi_v 
+\end{verbatim}
+
+\subsubsection{Abastecimiento de demanda en la primera etapa}
+\begin{verbatim}
+    kkt_Q_D_first(tau).. sum(i,Q_first(i,tau))=e=D1(tau);
+    kkt_Q_D_first.pi_d
+\end{verbatim}
+
+\subsubsection{Abastecimiento de demanda en la segunda etapa}
+En el código se encuentra la restricción y complementariedad en las líneas 711 y 754 respectivamente: 
+\begin{verbatim}
+    kkt_Q_D_second(tau2,w)..sum(i,Q_second(i,tau2,w))=e=D2(w,tau2);
+    kkt_Q_D_second.pi2_d
+\end{verbatim}
