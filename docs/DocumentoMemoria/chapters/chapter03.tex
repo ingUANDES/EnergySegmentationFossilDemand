@@ -1,6 +1,6 @@
 % cap3.tex
 
-\chapter{Desarrollo Metodológico} \label{c3} % la etiqueta para referencias
+\chapter{Desarrollo Metodológico} \label{MCP:subastador} % la etiqueta para referencias
 
 
 \section{Replicación del Modelo original y resolución por medio de MCP}
@@ -10,267 +10,9 @@ Una de las formas de resolver el problema original de \citeB{amigo_two_2021}, gr
 
 Por lo tanto, para replicar el modelo original, se realiza esta transformación y luego es probada en un \textit{solver} para evaluar y comparar sus resultados con el original.
 
-\subsection{MCP problema del productor}
+\subsection{MCP problema del subastador} \label{MCPsubastador}
 
-Primero, es necesario aplicar el teorema de KKT en  el problema del productor \ref{fo:prod} para transformarlo en un MCP.
-\vspace{2.5mm}
-
-El lagrangeano del problema del productor queda: 
-
-\footnotesize{
-\begin{align}
-&\mathcal{L}_i(x_i,Q_i,A_i,P_i,V_i) = f_i \big( \pi^d(0),Q_i(0)\big)+ A_i \pi^{a} + I_i x_i(0)  +& \nonumber \\ 
-&\sum_{\omega} Pr(\omega)\Bigg[ \sum_{t>0} \frac{1}{(1+R)^t} \Big[ TC_i(t)\cdot f_i \big( \pi^d(t,\omega),Q_i(t,\omega) \big) + TCR_i(t) \cdot I_i\cdot x_i(t,\omega) \Big] + \pi^v(\omega)\cdot \big(P_i(\omega)-V_i(\omega)\big) \Bigg]   + &\nonumber \\
-&\kappa_{i}\Big[Q_i(0) -  \big(CF_i\cdot\tau \big)\bar{Q}_i \Big] +\sum_{\omega,t>0} \alpha_{i,\omega,t}\Bigg[Q_i(t,\omega) - \big(CF_i \cdot\tau\big) \big(\bar{Q}_i + \sum_{t^{\prime} \leq t } x_i(t,\omega) + x_i(0) \big)\Bigg] + & \nonumber \\ &\sum_{\omega}\beta_{i,\omega}\Big[V_i(\omega)-A_i \Big] + \sum_{\omega}\gamma_{i,\omega} \Big[-A_{i} - P_{i}(\omega) + V_i(\omega) +\sum_{t>0} Q_i(t,\omega) \varepsilon_{i} + Q_i(0)\varepsilon_{i}\Big] - \sum_{\omega, t>0}\delta_{i,\omega,t} Q_i(t,\omega) + & \nonumber \\ &\sum_{\omega}\psi_{i,\omega} \Big[  \bar{Q}_i+ x_i(0) + \sum_{t > 0} x_i(t,\omega) - RP_i \Big] - \lambda_{i}\Big[Q_{i}(0)\Big] - \sum_{\omega, t>0}\varphi_{i,\omega,t} x_i(t,\omega) - \xi_i x_i(0) & \label{eq:lagrange}
-\end{align}}
-
-Realizando las derivadas de primer orden se obtienen:
-
-\subsubsection{Derivada parcial respecto a $x_i(0)$}
-\footnotesize{
-\begin{align}
-    \frac{\partial \mathcal{L} }{\partial x_i(0)} = 0 = I_i  + \sum_{\omega}\psi_{i,\omega} -\sum_{\omega, t>0} \alpha_{i,\omega,t}(CF_i\cdot \tau) -\xi_i=0  \qquad \forall \  i \\
-    \Leftrightarrow I_i  + \sum_{\omega}\psi_{i,\omega} -\sum_{\omega, t>0} \alpha_{i,\omega,t}(CF_i\cdot \tau) = \xi_i  \qquad \forall \  i 
-\end{align}
-}
-
-Donde $\xi_i$ es la variable dual en \ref{res:capi0}. Por lo que esta kkt debe ser complementaria a $x_i(0)$, obteniendo la siguiente complementariedad:
-
-\footnotesize{
-\begin{align}
-    x_i(0)\geq 0 \qquad \forall \  i \\
-    I_i  + \sum_{\omega}\psi_{i,\omega} -\sum_{\omega, t>0} \alpha_{i,\omega,t}(CF_i\cdot \tau) \geq 0  \qquad \forall \  i\\
-    x_i(0)\cdot(I_i  + \sum_{\omega}\psi_{i,\omega} -\sum_{\omega, t>0} \alpha_{i,\omega,t}(CF_i\cdot \tau))=0 \qquad \forall \  i
-\end{align}
-}
-En el código GAMS , se escribió la kkt de esta complementariedad de la siguiente forma en la línea 654:
-\begin{verbatim}
-kkt_x_first_producer(i).. Inv(i)*(1+percent(i)) + sum(w, psi(i,w))- CF(i)*t_year
-*sum(w, sum( tau2,alpha(i,w,tau2))) - xi(i)=g=0;
-\end{verbatim}
-Siendo xi(i) la variable dual $\xi_i$ . Donde esta kkt se complementa con la variable respectiva $x_i(0)$ en la línea 724 del código.
-\begin{verbatim}
-kkt_x_first_producer.x_first
-\end{verbatim}
-
-\subsubsection{Derivada parcial respecto a $x_i(t,\omega)$}
-\footnotesize{
-\begin{align}
-    \frac{\partial \mathcal{L} }{\partial x_i(t,\omega)}= 0 = Pr(\omega) \Bigg[\frac{1}{(1+R)^t}TCR_i(t) \cdot I_i \Bigg] - \sum_{t> t\prime}\alpha_{i,\omega,t} ( CF_i \cdot \tau)+ \psi_{i,\omega}-\varphi_{i,\omega,t} \qquad  \forall \  i, \omega, t> 0\\
-    \leftrightarrow Pr(\omega) \Bigg[\frac{1}{(1+R)^t}TCR_i(t) \cdot I_i \Bigg] - \sum_{t> t\prime}\alpha_{i,\omega,t} ( CF_i \cdot \tau)+ \psi_{i,\omega}=\varphi_{i,\omega,t} \qquad  \forall \  i, \omega, t> 0
-\end{align}
-}
-
-Donde $\varphi$ es la variable dual en la restricción \ref{res:capt}, por lo que, para resolver como MCP se tiene la siguiente complementariedad:
-
-
-\footnotesize{
-\begin{align}
-    Pr(\omega) \Bigg[\frac{1}{(1+R)^t}TCR_i(t) \cdot I_i \Bigg] - \sum_{t> t\prime}\alpha_{i,\omega,t} ( CF_i \cdot \tau)+ \psi_{i,\omega} \geq 0 \qquad  \forall \  i, \omega, t> 0\\
-    x_i(t,\omega) \geq 0 \qquad  \forall \  i, \omega, t> 0\\
-    (Pr(\omega) \Bigg[\frac{1}{(1+R)^t}TCR_i(t) \cdot I_i \Bigg] - \sum_{t> t\prime}\alpha_{i,\omega,t} ( CF_i \cdot \tau)+ \psi_{i,\omega})*x_i(t,\omega)=0
-\end{align}
-}
-
-Al igual que en el caso anterior, el código mantiene la variable dual, se puede ver en la línea 657 del código el KKT respectivo:
-
-\begin{verbatim}
-kkt_x_second_producer(i,tau2,w).. ((1/(1+R))**(ord(tau2)))*Prob(w)*Inv(i)*
-(1+percent(i))*TCR(i,tau2)- CF(i)*t_year*sum(tau3$(tauAlpha_i(i,tau2,
-tau3)),alpha(i,w,tau3)) + psi(i,w) -varphi(i,w,tau2)  =g=0;
-\end{verbatim}
-
-Con varphi(i,w,tau2) como la variable dual mencionada $\varphi_{i,\omega,t}$. 
-
-
-\subsubsection{Derivada parcial respecto a $Q_i(0)$}
-\footnotesize{
-\begin{align}
-    \frac{\partial \mathcal{L} }{\partial Q_i(0)}= 0 =  \big(a_{i}+b_i Q_{i}(0)\big)-\pi^d(0) + \kappa_i  + \sum_{\omega} \gamma_{i,\omega}\varepsilon_i-\lambda_i \qquad \forall \  i  \\
-     \leftrightarrow \big(a_{i}+b_i Q_{i}(0)\big)-\pi^d(0) + \kappa_i  + \sum_{\omega} \gamma_{i,\omega}\varepsilon_i = \lambda_i \qquad \forall \  i
-\end{align}
-}
-$\lambda_i$ es la variable dual de la restricción \ref{res:q0}, por lo que, para resolver como MCP se tiene lo siguiente:
-\footnotesize{
-\begin{align}
-    \big(a_{i}+b_i Q_{i}(0)\big)-\pi^d(0) + \kappa_i  + \sum_{\omega} \gamma_{i,\omega}\varepsilon_i \geq 0 \qquad \forall \  i  \\
-    Q_i(0) \geq 0 \qquad \forall \  i  \\
-    Q_i(0)*( \big(a_{i}+b_i Q_{i}(0)\big)-\pi^d(0) + \kappa_i  + \sum_{\omega} \gamma_{i,\omega}\varepsilon_i)=0 
-\end{align}
-}
-Como en los anteriores, en el código no se despeja la variable dual $\lambda_i$, se mantiene y se programa el MCP respectivo con la variable $Q_i(0)$. Se puede ver en la línea 660 del código de la siguiente forma:
-
-\begin{verbatim}
-kkt_q1_producer(i,tau).. (int(i)+C(i)*Q_first(i,tau))-pi_d(tau) + kappa(i,tau) - 
-lambda(i,tau)+sum(w,gamma(i,w)*epsilon(i))=g= 0;
-\end{verbatim}
-
-Programando la complementariedad en la línea 728:
-
-\begin{verbatim}
-kkt_q1_producer.Q_first    
-\end{verbatim}
-
-
-\subsubsection{Derivada parcial respecto a $Q_i(t,\omega)$}
-\footnotesize{
-\begin{align}
-   \frac{\partial \mathcal{L} }{\partial Q_i(t,w)}= 0
-   =Pr(\omega)  \frac{1}{(1+R)^t} \bigg( TC_i(t) \big(a_{i}+b_i Q_i(t,\omega)\big ) -\pi^d(t,\omega) \bigg) + \alpha_{i,\omega,\tau} + \gamma_{i,\omega} \varepsilon_{i} -\delta_{i,\omega,t} \qquad  \forall \ i, \omega, t > 0\\
-   \leftrightarrow Pr(\omega)  \frac{1}{(1+R)^t} \bigg( TC_i(t) \big(a_{i}+b_i Q_i(t,\omega)\big ) -\pi^d(t,\omega) \bigg) + \alpha_{i,\omega,\tau} + \gamma_{i,\omega} \varepsilon_{i}= \delta_{i,\omega,t} \qquad \forall \ i, \omega, t > 0
-\end{align}
-}
-$\delta_{i,\omega,t}$ es la variable dual de la restricción \ref{res:qt}, al resolverlo como MCP se tiene la siguiente complementariedad:
-
-\footnotesize{
-\begin{align}
-    Pr(\omega)  \frac{1}{(1+R)^t} \bigg( TC_i(t) \big(a_{i}+b_i Q_i(t,\omega)\big ) -\pi^d(t,\omega) \bigg) + \alpha_{i,\omega,\tau} + \gamma_{i,\omega} \varepsilon_{i} \geq 0 \qquad \forall \ i, \omega, t > 0\\
-    Q_i(t,\omega) \geq 0 \qquad  \forall i, \omega, t > 0\\
-    (Pr(\omega)  \frac{1}{(1+R)^t} \bigg( TC_i(t) \big(a_{i}+b_i Q_i(t,\omega)\big ) -\pi^d(t,\omega) \bigg) + \alpha_{i,\omega,\tau} + \gamma_{i,\omega} \varepsilon_{i})\cdot  Q_i(t,\omega)= 0 \qquad \forall \ i, \omega, t > 0
-\end{align}
-}
-
-La línea 662 del código completa la kkt de la siguiente forma: 
-
-\begin{verbatim}
-kkt_qtau_producer(i,tau2,w).. 
-((1/(1+R))**(ord(tau2)))*Prob(w)*((TC(i,tau2)*(int(i)+C(i)*Q_second(i,tau2,w)))- 
-\end{verbatim}
-\begin{verbatim}
-pi2_d(tau2,w))+alpha(i,w,tau2)+gamma(i,w)*epsilon(i)-delta(i,tau2,w) =g= 0;
-\end{verbatim}
-
-Con la complementariedad escrita de la siguiente forma en la línea 729 del código:
-\begin{verbatim}
-kkt_qtau_producer.Q_second    
-\end{verbatim}
-
-\subsubsection{Derivada parcial respecto a $A_i(t)$}
-\footnotesize{
-\begin{align}
-   \frac{\partial \mathcal{L} }{\partial A_i}= 0
-   = \pi^{a} - \sum_{\omega}\beta_{i,\omega} - \sum_{\omega}\gamma_{i,\omega}  \qquad \forall \  i \\
-\end{align}
-}
-
-Para resolverlo como MCP se tiene la siguiente complementariedad:
-\footnotesize{
-\begin{align}
-    \pi^{a} - \sum_{\omega}\beta_{i,\omega} - \sum_{\omega}\gamma_{i,\omega} \geq 0 \qquad \forall  i\\
-    A_i \geq 0 \qquad \forall  i\\
-    (\pi^{a} - \sum_{\omega}\beta_{i,\omega} - \sum_{\omega}\gamma_{i,\omega}) \cdot A_i = 0 \qquad \forall  i
-\end{align}
-}
-
-En el código se tiene lo siguiente en la línea 664:
-\begin{verbatim}
-   kkt_A_producer(i).. pi_a - sum(w, beta(i,w)) - sum(w, gamma(i,w))=g= 0 
-\end{verbatim}
-
-Y efectuando la complementariedad en la línea 730:
-\begin{verbatim}
-    kkt_A_producer.A
-\end{verbatim}
-
-\subsubsection{Derivada parcial respecto a $V_i(w)$}
-\footnotesize{
-\begin{align}
-   \frac{\partial \mathcal{L} }{\partial V_i(w)}= 0
-   = -Pr(\omega) \pi^v(\omega) + \beta_{i,\omega}  + \gamma_{i,\omega}  \qquad \forall \  i, \omega \\
-\end{align}
-}
-
-Para resolverlo como MCP se tiene la siguiente complementariedad:
-\footnotesize{
-\begin{align}
-    -Pr(\omega) \pi^v(\omega) + \beta_{i,\omega}  + \gamma_{i,\omega} \geq 0 \qquad \forall \  i, \omega \\
-    V_i(w) \geq 0 \qquad \forall  i,\omega \\
-    (-Pr(\omega) \pi^v(\omega) + \beta_{i,\omega}  + \gamma_{i,\omega}) \cdot  V_i(w) = 0  \qquad \forall \  i, \omega 
-\end{align}
-}
-
-Programando la kkt en el código en la línea 667:
-\begin{verbatim}
-    kkt_V_producer(i,w)..  -Prob(w)*pi_v(i,w)+beta(i,w)+gamma(i,w)=g= 0
-\end{verbatim}
-
-Completando la complementariedad en la línea 731:
-\begin{verbatim}
-    kkt_V_producer.V
-\end{verbatim}
-
-\subsubsection{Derivada parcial respecto a $P_i(w)$}
-\footnotesize{
-\begin{align}
-   \frac{\partial \mathcal{L} }{\partial P_i(w)}= 0
-   = Pr(\omega) \pi^v(\omega) -\gamma_{i,\omega} \qquad \forall \  i, \omega \\
-\end{align}
-}
-
-Para resolverlo como MCP se tiene la siguiente complementariedad:
-\footnotesize{
-\begin{align}
-    Pr(\omega) \pi^v(\omega) -\gamma_{i,\omega} \geq 0 \qquad \forall \  i, \omega \\
-    P_i(w) \geq 0 \qquad \forall  i,\omega \\
-    (Pr(\omega) \pi^v(\omega) -\gamma_{i,\omega}) \cdot  P_i(w) = 0  \qquad \forall \  i, \omega 
-\end{align}
-}
-
-Programando la kkt en el código en la línea 670:
-\begin{verbatim}
-    kkt_P_producer(i,j,w)$(ord(j) <> ord(i))..      Prob(w)* pi_v(j,w)-gamma(i,w) =g= 0
-\end{verbatim}
-
-Completando la complementariedad en la línea 732:
-\begin{verbatim}
-    kkt_P_producer.P  
-\end{verbatim}
-
-\subsubsection{Completando el problema del productor}
-El resto de las complementariedades del problema del productor se producen al complementar las restricciones del modelo original con sus variables duales:
-
-\footnotesize{
-\begin{align}
-    & 0 \leq \big(CF_i \cdot \tau \big) \Bigg[\bar{Q}_i + \sum_{t\leq t^{\prime}} x_i(t,\omega) + x_i(0) \Bigg] - Q_i(t,\omega)  \perp \alpha_{i,\omega,\tau} \geq 0 \qquad \forall \ i, \omega, t  > 0\\
-    & 0 \leq \Big(CF_i\cdot\tau \Big)\bar{Q}_i(0)-Q_{i}(0) \perp \kappa_i \geq 0 \qquad \forall \ i \\
-    & 0 \leq  A_{i} - V_i(\omega) \perp \beta_{i,\omega} \geq 0 \qquad \forall  \ \omega \\
-    & 0 \leq  A_{i} + P_{i} (\omega) - V_i(\omega) - \sum_{t>0} Q_i(t,\omega) \varepsilon_{i} -Q_i(0)\varepsilon_{i} \perp \gamma_{i,\omega} \geq 0 \qquad \forall \ i, \omega\\
-    & 0 \leq  RP_i - \bar{Q}_i - x_i(0) - \sum_{t>0} x_i(t,\omega) \perp \psi_{i,\omega} \geq 0 \qquad \forall \ i,\omega 
-\end{align}
-}
-Las cuales se encuentran programadas entre las líneas 609 y 703 del código:
-
-\begin{verbatim}
-    capacity_stage_2_xnext(i,w,tau2).. CF(i)*t_year*(sum(tau3$(tau3_i(i,tau2,tau3)),
-    x_next(i,tau3,w))+x_first(i)+Q_barT2(i,tau2) +Q_bar(i))-Q_second(i,tau2,w) =g=0;
-\end{verbatim}
-\begin{verbatim}
-    capacity_stage_1(i,tau)..  CF(i)*t_year*Q_bar(i)- Q_first(i,tau) =g=0;
-\end{verbatim}
-\begin{verbatim}
-    trading_permits(i,w)..  A(i)-V(i,w) =g= 0;
-\end{verbatim}
-\begin{verbatim}
-    total_allowances(i,w)..  A(i) + sum(j$(ord(j) <> ord(i)),P(i,j,w))-V(i,w) - 
-    sum(tau2,Q_second(i,tau2,w)*epsilon(i)) - sum(tau,Q_first(i,tau)*epsilon(i))   =g= 0;
-\end{verbatim}
-\begin{verbatim}
-    resource_potential(i,w)..   -Q_bar(i) - x_first(i) - sum(tau3,x_next(i,tau3,w))+
-    sum(tau2,Q_barT2(i,tau2)) + RP(i) =g= 0;
-\end{verbatim}
-
-Existiendo sus complementariedades entre las líneas 734 y 744:
-
-\begin{verbatim}
-    capacity_stage_1.kappa
-    capacity_stage_2_xnext.alpha
-    resource_potential.psi
-    trading_permits.beta
-\end{verbatim}
-
-\subsection{MCP problema del subastador}
-
-En adición a lo realizado con el problema del productor, se debe transformar el problema del subastador \ref{eq:sub} en un MCP. Al igual que el caso anterior, para convertir el problema en un MCP, una de las opciones es aplicar el teorema de KKT. Para comenzar, se obtiene el siguiente lagrangeano:
+En adición a lo realizado con el problema del productor y las restricciones condiciones de mercado que relacionan a los productores con el subastador, se debe transformar el problema de este último \ref{eq:sub} en un MCP. Al igual que el caso anterior, para convertir el problema en un MCP, una de las opciones es aplicar el teorema de KKT. Para comenzar, se obtiene el siguiente lagrangeano:
 
 \footnotesize{
 \begin{align}
@@ -324,57 +66,6 @@ Esta restricción y complementariedad se encuentran en las líneas 717 y 757 res
     theta_const.eta
 \end{verbatim}
 
-\subsection{Condiciones de mercado}
-Para lograr unir ambos problemas en un solo MCP es necesario incluir las restricciones de condiciones de mercado \ref{rescom:1}, \ref{rescom:2},\ref{res:3},\ref{rescom:4}. De estas se obtienen las siguientes complementariedades:
-
-\subsubsection{Restricción de permisos disponibles}
-\footnotesize{
-\begin{align}
- \pi^a \geq 0 \\
- \theta - \sum_{i}A_i = 0  
-\end{align}}
-En el código se encuentra la restricción y complementariedad en las líneas 708 y 751 respectivamente: 
-\begin{verbatim}
-    kkt_A_theta..    theta - sum(i,A(i))=e= 0;
-    kkt_A_theta.pi_a
-\end{verbatim}
-
-\subsubsection{Restricción de equilibrio en el mercado de compra y venta de permisos}
-\footnotesize{
-\begin{align}
- \pi^v(\omega) \geq 0 \qquad \forall \omega\\
- \sum_{i}P_{i,\omega} - \sum_{i}V_{i,\omega} = 0 \qquad \forall \omega  
-\end{align}}
-En el código se encuentra la restricción y complementariedad en las líneas 713 y 752 respectivamente: 
-\begin{verbatim}
-    kkt_P_V(i,w).. V(i,w)=e=sum(j$(ord(j) <> ord(i)),P(j,i,w));
-    kkt_P_V.pi_v 
-\end{verbatim}
-
-\subsubsection{Abastecimiento de demanda en la primera etapa}
-\footnotesize{
-\begin{align}
- \pi^d(0) \geq 0 \\
- \sum_{i}Q_i(0) - D(0) = 0   
-\end{align}}
-En el código se encuentra la restricción y complementariedad en las líneas 710 y 753 respectivamente: 
-\begin{verbatim}
-    kkt_Q_D_first(tau).. sum(i,Q_first(i,tau))=e=D1(tau);
-    kkt_Q_D_first.pi_d
-\end{verbatim}
-
-\subsubsection{Abastecimiento de demanda en la segunda etapa}
-footnotesize{
-\begin{align}
- \pi^d(\omega,t) \geq 0 \qquad \forall \omega,t\\
- \sum_{i}Q_i(t,\omega) - D(t,\omega) = 0 \qquad \forall \omega,t  
-\end{align}}
-En el código se encuentra la restricción y complementariedad en las líneas 711 y 754 respectivamente: 
-\begin{verbatim}
-    kkt_Q_D_second(tau2,w)..sum(i,Q_second(i,tau2,w))=e=D2(w,tau2);
-    kkt_Q_D_second.pi2_d
-\end{verbatim}
-
 \subsection{Resolución del problema y resultados}
 
 Finalmente, para resolver el problema en GAMS, solo se debe completar la información adicional, como parámetros, definición de variables y aplicar las líneas de código necesarias para un MCP en GAMS. Con esto realizado, se obtuvieron los siguientes resultados:
@@ -384,6 +75,18 @@ CREAR UNA TABLA CON LOS RESULTADOS DEL GAMS, INCLUIR DISTINTOS CAP, THETA, LOS P
 TAL VEZ COMPARAR CON LOS RESULTADOS CON JULIA.
 
 \section{Problema del subastador}
+
+Este problema de optimización (el del subastador) considera como única variable la cantidad de permisos de contaminación $\theta$ los cuales están en unidades $tCO_2 e$ (toneladas de dióxido de carbono emitidas). Estos son los permisos comprados por las empresas generadoras en la primera etapa del modelo. Amigo define que el presupuesto de carbono denotado $CAP$, el cual establece el nivel de emisiones en la segunda etapa, sigue una distribución normal de varianza cero, donde $\theta$ no puede sobrepasar probabilística mente el el presupuesto de emisión, como se denota en \ref{res:subastador0} donde $\varepsilon$ representa el margen de permisos de emisión total. \ref{res:sub1} nace de esta condición donde $\varphi^-1$ es la inversa de la acumulada de la distribución normal de CAP. Es acá donde surge la posibilidad de investigación para este trabajo. 
+\vspace{2.5mm}
+
+\begin{equation}
+\begin{array}{cl}
+    Pr(\theta \geq CAP)\leq \varepsilon \label{res:subastador0}
+\end{array}
+\end{equation}
+\vspace{2.5mm}
+
+\citeB{amigo_two_2021} comentan que existe espacio para desarrollar y perfeccionar el problema del subastador. Por un lado el problema del productor está desarrollado de forma extensa con muchas restricciones que la definen, pero el subastador tiene un papel tan importante como el de los productores ya que este será el que tome las decisiones iniciales con las cuales la generación de energía se verá influenciado por mucho tiempo. Las decisiones del subastador deben ser consideradas tan especificas y desarrolladas que las de los generadores de electricidad. Es por esto que surge la oportunidad de encontrar una forma más completa de representar a este agente, formular las restricciones y cambios en la función objetivo si es necesario y luego evaluar la reformulación del modelo en un \textit{solver}.
 
 Uno de los problemas del modelo original del subastador \ref{eq:sub} es que para simplificar su cálculo en el \textit{solver} y KKT, la distribución normal asociada al $CAP$ presentaba desviación estándar $\sigma$ igual a cero y el único valor representativo del presupuesto era la media $\mu$, dejando de ser realmente una entrada estocástica. 
 \vspace{2.5mm}
@@ -551,196 +254,28 @@ De la cuál, se deben encontrar los valores de $\alpha$ y $\beta$ que cumplan co
 
 \section{Reordenar KKT subastador Amigo et alii}
 
-
-Para evaluar el comportamiento del reordenamiento del subastador, es necesario entender como se comporta el modelo al variar los parámetros y comparar los resultados con el modelo original. \vspace{2.5mm}
-
-Para comenzar, se evaluará el comportamiento del modelo al incluir el nuevo costo de rendimiento explicado en \ref{fo:performance0}. Este será evaluado al modelar el sistema como un MCP al aplicar el teorema de KKT con el nuevo costo resolviendo el problema en GAMS. Se resolverán primero al solamente incluir el costo de rendimiento y no considerar restricciones (solo se considera la naturaleza de las variables) y luego se resolverá considerando restricciones adicionales.
+Para implementar el nuevo modelo del subastador, es necesario entender cómo se comporta el modelo al cambiar los valores de las nuevas variables de forma endógena y comparar los resultados de la resolución de modelo con el original. 
 \vspace{2.5mm}
 
-Para realizar la evaluación del modelo, se realizará un gráfico con los resultados similar a la figura \ref{fig:fig6}. En esta se grafica la cantidad de permisos vendidos por el productor que produce energía con carbón y su influencia en el precio de mercado de los permisos. Esto representa el impacto que puede tener el modelo en eliminar el carbón como productor.
+Para comenzar, se evaluó el comportamiento del modelo al incluir el nuevo costo de rendimiento explicado en la función objetivo \ref{fo:performance0}. Este será evaluado al modelar el sistema como un MCP al aplicar el teorema de KKT con el nuevo costo y las restricciones nuevas resolviendo el problema en GAMS y mostrando sus resultados. 
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=15cm]{docs/DocumentoMemoria/images/figura 6 amigo.png}
-    \caption{Venta de permisos por generador de carbón (Fuente: \protect\citeB{amigo_two_2021})}
-    \label{fig:fig6}
-\end{figure}
-
-
-\subsubsection{Modelo sin restricciones}
-
-Primero se evaluará el modelo al considerar únicamente la función objetivo del subastador con el costo original $\mathcal{F}$ y el costo de rendimiento. También se considera como variable de decisión únicamente los permisos $\theta$.  
+Antes de incluir el rendimiento y atención racional con mayor profundidad, se realizó un estudio del problema al incorporar únicamente el rendimiento en la función objetivo \ref{fo:perfornorest11}, sin añadir nuevas restricciones. Esto, con el objetivo de entender el posible efecto que el rendimiento pueda tener en la maximización de beneficios y tener una primera aproximación de los resultados. La realización de esto se puede ver en detalle en el Anexo \ref{anexo:rendimiento}. 
+\vspace{2.5mm}
 
 \begin{equation}
 \begin{array}{rrclcl}
-    \displaystyle \min_{\theta} & -\theta \pi^aP + \tilde{\mathcal{F}}(P)+F(\theta)  \label{fo:perfornorest}\\
-\end{array}
-\end{equation}
-\begin{equation}
-\begin{array}{cl}
-    \theta \geq 0 & (\varrho)\label{res:sub2}
+    \displaystyle \min_{\theta} & -\theta \pi^aP + \tilde{\mathcal{F}}(P)+F(\theta)  \label{fo:perfornorest11}\\
 \end{array}
 \end{equation}
 
-Con lo anterior se logra el siguiente Lagrangiano:
+Primero, se modeló el problema del subastador únicamente con la función objetivo y la naturaleza de la variable $\theta$, sin incorporar otra restricción. Este, junto con el modelo del productor y las condiciones de mercado, fueron resueltas como un único problema MCP. Al observar los valores de las variables $\theta$(permisos de contaminación emitidos por el subastador) y $\pi^a$(valor de venta de cada permiso por parte del subastador) en la tabla \ref{tabla:sinrestr}, se observa que al no existir una restricción que acote los permisos, estos rápidamente se disparan a cantidades muy altas donde, debido al exceso de oferta, sus precios tienden a 0.
+\vspace{2.5mm}
 
-$$\mathcal{L}(\theta)=-P\theta\pi^a+\mathcal{F}(\theta)+c(P-d)^2 - \varrho\theta $$
+Segundo, se modeló la misma función objetivo incorporando la restricción \ref{res:sub1} del modelo original. Con el objetivo de acotar los permisos y observar cómo el rendimiento, sin incorporar una restricción de factibilidad de los costos, afecta el precio de venta de los permisos. De esto, se encontró que el subastador ignora los costos de rendimiento, ya que los valores encontrados para $\theta$ y  $\pi^a$, con el rendimiento sobre 5\%, son iguales a si no se considera un rendimiento. Sobre esto se entendió que falta incorporar alguna restricción de factibilidad para que el subastador considere su efecto en la función objetivo.
+\vspace{2.5mm}
 
-Realizando la derivada de primer orden para $\theta$ se obtiene:
+Finalmente, al considerar este primer entendimiento, se lleva a cabo una reestructuración del problema del subastador.
 
-\begin{equation}
-\begin{array}{rrclcl}
-    \frac{\partial\mathcal{L}(\theta)}{\partial (\theta)}=-P\pi^a+\frac{\partial\mathcal{F}(\theta)}{\partial(\theta)}-\varrho=0 \label{lag1}\\
-\end{array}
-\end{equation}
-\begin{equation}
-\begin{array}{rrclcl}
-    \rightarrow -P\pi^a+\frac{\partial\mathcal{F}(\theta)}{\partial(\theta)}=\varrho \label{lag1}\\
-\end{array}
-\end{equation}
-Con esto se obtiene la siguiente complementariedad para el problema del subastador:
-
-\begin{equation}
-\begin{array}{rrclcl}
-    0\leq -P\pi^a+\frac{\partial\mathcal{F}(\theta)}{\partial(\theta)}\perp \theta \geq 0 \label{compllag1}\\
-\end{array}
-\end{equation}
-
-Al igual que en el modelo original de \citeB{amigo_two_2021}, se consideran los siguientes valores para constantes y parámetros:
-\begin{enumerate}
-    \item $\frac{\partial\mathcal{F}(\theta)}{\partial(\theta)}=0$
-    \item $CAP\sim \mathcal{N}(100MtCO_{2}e,0)$
-\end{enumerate}
-
-Con esto, al correr el modelo en el \textit{solver}, cambiando únicamente el valor del rendimiento ($P$), se encontraron los siguientes resultados:
-
-\begin{table}[H]
-\centering
-\begin{tabular}{|l|l|l|}
-\hline
-\textbf{P($\%$)} & \textbf{$\theta$ (millones)} & \textbf{$\pi^a$($\frac{\$}{\theta}$)} \\ \hline
-0 & N/A & N/A \\ \hline
-5 & 104 & 223 \\ \hline
-10 & 3203 & 0 \\ \hline
-15 & 3203 & 0 \\ \hline
-20 & 3203 & 0 \\ \hline
-25 & 3203 & 0 \\ \hline
-30 & 3203 & 0 \\ \hline
-35 & 3203 & 0 \\ \hline
-40 & 3203 & 0 \\ \hline
-45 & 3203 & 0 \\ \hline
-50 & 3203 & 0 \\ \hline
-55 & 3203 & 0 \\ \hline
-60 & 3203 & 0 \\ \hline
-65 & 3203 & 0 \\ \hline
-70 & 3203 & 0 \\ \hline
-75 & 3203 & 0 \\ \hline
-80 & 3203 & 0 \\ \hline
-85 & 3203 & 0 \\ \hline
-90 & 3203 & 0 \\ \hline
-95 & 3203 & 0 \\ \hline
-100 & 1870 & 0 \\ \hline
-\end{tabular}
-\caption{Resultados con rendimiento y sin restricciones}
-\label{tabla:sinrestr}
-\end{table}
-
-
-Los resultados encontrados en el Cuadro \ref{tabla:sinrestr}, pueden ser resultado de no considerar una restricción para $\theta$ respecto al presupuesto de carbono en el problema del subastador. En la siguiente subsección se desarrolla el problema incluyendo la restricción adicional.
-
-\subsubsection{Modelo con restricción original}
-
-Manteniendo la restricción original de \citeB{amigo_two_2021} mostrada en \ref{res:sub1}. Se tiene el siguiente modelo:
-
-\begin{equation}
-\begin{array}{rrclcl}
-   \displaystyle \min_{\theta} & -\theta \pi^aP + c(P-d)^2+F(\theta) \\\textrm{s.a.} \label{eq:perforconrestr}\\
-\end{array}
-\end{equation}
-\begin{equation}
-\begin{array}{cl}
-    \varphi^-1 (\varepsilon )\sigma + \mu - \theta \geq 0 & (\eta)  \label{perforconrestr:r1}
-\end{array}
-\end{equation}
-\begin{equation}
-\begin{array}{cl}
-    \theta \geq 0 & (\varrho)
-\end{array}
-\end{equation}
-
-Al igual que el caso anterior, se debe convertir este modelo en un MCP. Para esto se aplican las condiciones de KKT.
-
-$$\mathcal{L}(\theta)=-P\theta\pi^a+\mathcal{F}(\theta)+c(P-d)^2 -\eta(\varphi^-1 (\varepsilon )\sigma + \mu - \theta)- \varrho\theta $$
-
-Realizando la derivada de primer orden para $\theta$ se obtiene:
-
-\begin{equation}
-\begin{array}{rrclcl}
-    \frac{\partial\mathcal{L}(\theta)}{\partial (\theta)}=-P\pi^a+\frac{\partial\mathcal{F}(\theta)}{\partial(\theta)}-\eta -\varrho=0 \label{lag20}\\
-\end{array}
-\end{equation}
-\begin{equation}
-\begin{array}{rrclcl}
-    \rightarrow -P\pi^a+\frac{\partial\mathcal{F}(\theta)}{\partial(\theta)}-\eta=\varrho \label{lag21}\\
-\end{array}
-\end{equation}
-
-Obteniendo la primera complementariedad:
-
-\begin{equation}
-\begin{array}{rrclcl}
-    0\leq -P\pi^a+\frac{\partial\mathcal{F}(\theta)}{\partial(\theta)}-\eta \perp \theta \geq 0 \label{compllag2}\\
-\end{array}
-\end{equation}
-
-La segunda complementariedad se obtiene al considera la restricción \ref{perforconrestr:r1} con su variable dual respectiva $\eta$. Obteniendo:
-
-\begin{equation}
-\begin{array}{rrclcl}
-    0 \leq \varphi^-1 (\varepsilon )\sigma + \mu - \theta \perp \eta \geq 0 \label{compllag2}\\
-\end{array}
-\end{equation}
-
-Nuevamente, al igual que en el modelo original de \citeB{amigo_two_2021}, se consideran los siguientes valores para constantes y parámetros:
-\begin{enumerate}
-    \item $\frac{\partial\mathcal{F}(\theta)}{\partial(\theta)}=0$
-    \item $CAP\sim \mathcal{N}(100MtCO_{2}e,0)$
-\end{enumerate}
-
-Con esto, al correr el modelo en el \textit{solver}, cambiando únicamente el valor del rendimiento ($P$), se encontraron los siguientes resultados:
-
-\begin{table}[H]
-\centering
-\begin{tabular}{|l|l|l|}
-\hline
-\textbf{P($\%$)} & \textbf{$\theta$ (millones)} & \textbf{$\pi^a$($\frac{\$}{\theta}$)} \\ \hline
-0 & 0.3336 & 30130 \\ \hline
-5 & 100 & 315.825 \\ \hline
-10 & 100 & 315.825 \\ \hline
-15 & 100 & 315.825 \\ \hline
-20 & 100 & 315.825 \\ \hline
-25 & 100 & 315.825 \\ \hline
-30 & 100 & 315.825 \\ \hline
-35 & 100 & 315.825 \\ \hline
-40 & 100 & 315.825 \\ \hline
-45 & 100 & 315.825 \\ \hline
-50 & 100 & 315.825 \\ \hline
-55 & 100 & 315.825 \\ \hline
-60 & 100 & 315.825 \\ \hline
-65 & 100 & 315.825 \\ \hline
-70 & 100 & 315.825 \\ \hline
-75 & 100 & 315.825 \\ \hline
-80 & 100 & 315.825 \\ \hline
-85 & 100 & 315.825 \\ \hline
-90 & 100 & 315.825 \\ \hline
-95 & 100 & 315.825 \\ \hline
-100 & 100 & 315.825 \\ \hline
-\end{tabular}
-\caption{Resultados con rendimiento y restricción original}
-\label{tabla:conrestr}
-\end{table}
-
-Del Cuadro \ref{tabla:conrestr} se entiende que al incluir únicamente las restricciones del problema original solo existe un efecto en el precio y cantidad de permisos cuando el rendimiento es 0. Pero esto no debería ocurrir ya que por lo menos se tiene la información pública $d$. Cabe notar que una cantidad de $100 MtCO_2 e$ con un precio de 315.825 USD cada una, son los valores de resolución del problema original con los mismos parámetros. Este resultado puede resultar debido a que no se a incluido una restricción que describa de mejor forma el costo de rendir.
 
 \subsubsection{Modelo con restricción de rendimiento}\label{modelo:conrendimiento}
 
@@ -799,5 +334,5 @@ La segunda complementariedad se obtiene al considera la restricción \ref{perfor
 \end{array}
 \end{equation}
 
-
+Finalmente, esta reformulación del modelo como MCP, junto con los MCP de los productores
 
