@@ -24,7 +24,7 @@ Para realizar la evaluación del modelo, se realizará un gráfico con los resul
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=15cm]{docs/DocumentoMemoria/images/figura 6 amigo.png}
+    \includegraphics[width=15cm]{docs/DocumentoMemoria/core/images/figura 6 amigo.png}
     \caption{Venta de permisos por generador de carbón (Fuente: \protect\citeB{amigo_two_2021})}
     \label{fig:fig6}
 \end{figure}
@@ -41,7 +41,7 @@ Primero se evaluará el modelo al considerar únicamente la función objetivo de
 \end{equation}
 \begin{equation}
 \begin{array}{cl}
-    \theta \geq 0 & (\varrho)\label{res:sub2}
+    \theta \geq 0 & (\varrho)
 \end{array}
 \end{equation}
 
@@ -58,7 +58,7 @@ Realizando la derivada de primer orden para $\theta$ se obtiene:
 \end{equation}
 \begin{equation}
 \begin{array}{rrclcl}
-    \rightarrow -P\pi^a+\frac{\partial\mathcal{F}(\theta)}{\partial(\theta)}=\varrho \label{lag1}\\
+    \rightarrow -P\pi^a+\frac{\partial\mathcal{F}(\theta)}{\partial(\theta)}=\varrho \label{lag11}\\
 \end{array}
 \end{equation}
 Con esto se obtiene la siguiente complementariedad para el problema del subastador:
@@ -160,7 +160,7 @@ La segunda complementariedad se obtiene al considera la restricción \ref{perfor
 
 \begin{equation}
 \begin{array}{rrclcl}
-    0 \leq \varphi^-1 (\varepsilon )\sigma + \mu - \theta \perp \eta \geq 0 \label{compllag2}\\
+    0 \leq \varphi^-1 (\varepsilon )\sigma + \mu - \theta \perp \eta \geq 0 \label{compllag21}\\
 \end{array}
 \end{equation}
 
@@ -360,3 +360,223 @@ En el código se encuentra la restricción y complementariedad en las líneas 71
     kkt_Q_D_second(tau2,w)..sum(i,Q_second(i,tau2,w))=e=D2(w,tau2);
     kkt_Q_D_second.pi2_d
 \end{verbatim}
+
+
+\section{Aproach inicial: Reordenando modelo del subastador con función de costo diferenciable}\label{Anexo:aproachinicial}
+
+Se define el \emph{performance} óptimo para el premio ($R = \theta \pi^a$). Donde el \emph{performace} óptimo  se define como $P^*(r) = (C')^{-1}(r)$ de la siguiente forma:
+
+\begin{equation}
+\begin{array}{rrclcl}
+    P^*(\theta \pi^a) = \begin{cases}\frac{\theta \pi^a}{2c}+d,&\theta \pi^a\leq 2c(1-d)\\1,&\theta \pi^a>2c(1-d)\end{cases}, \label{performaceoptimo}\\
+\end{array}
+\end{equation}
+
+\citeB{dewan_estimating_2020} propone la opción de agregar una función de costo asociada al \textit{performance}(rendimiento en inglés) de obtener la variable de decisión (en este caso $\theta$) lo más cercana a la óptima al invertir en investigación que mejore la estimación de la variable.
+\vspace{2.5mm}
+
+Considerando \ref{nuevafposible}, tomando $Pr(\theta\leq CAP) = P$ con $P : $\textit{performance}, la función objetivo del subastador puede reorganizarse de la siguiente forma:
+
+\begin{equation}
+\begin{array}{rrclcl}
+    \displaystyle \min_{\theta,P} & -\theta \pi^aP + \tilde{\mathcal{F}}(P)+F(\theta)  \label{fo:performance0}\\
+\end{array}
+\end{equation}
+
+Para completar el problema de optimización se debe definir ciertos supuesto. Para comenzar, se debe definir que factores serán variables y parámetros. Por el momento, se asume que la única variable es $\theta$ y el subastador busca un \textit{performace} mayor al umbral de información pública.  
+\vspace{2.5mm}
+
+Entonces, debe identificarse $\tilde{\mathcal{F}}(P)$ de acuerdo a su definición en \ref{costoperformace} cuando se cumple que el \textit{performace} es mayor al umbral de información pública $d$ entonces se define lo siguiente, conociendo los parámetros $c, d$:
+
+$$\tilde{\mathcal{F}}(P)=c(P-d)^2$$ 
+
+De esto se deben definir las restricciones del problema. La primera corresponde a la positividad de $\theta$. 
+
+\begin{equation}
+\begin{array}{cl}
+    \theta \geq 0 & (\varrho)\label{res:newsub1}
+\end{array}
+\end{equation}
+
+Para la segunda, se debe aplicar la función de \textit{performance} óptimo para el ingreso \ref{performaceoptimo}. La idea es encontrar una restricción para definir este problema teniendo solo a $\theta$ como variable.  Entonces la opción es aplicar la siguiente restricción: 
+
+\begin{equation}
+\begin{array}{cl}
+    \theta \pi^a\leq 2c(1-d) & (\eta) \label{res:newsub2}
+\end{array}
+\end{equation}
+
+Con esto el problema del subastador quedaría reformulado de la siguiente manera:
+
+\begin{equation}
+\begin{array}{rrclcl}
+    \displaystyle \max_{\theta} & \theta \pi^a(\frac{\theta \pi^a}{2c}+d) - c((\frac{\theta \pi^a}{2c}+d)-d)^2  \\\textrm{s.a.}\\
+\end{array}
+\end{equation}
+\begin{equation}
+\begin{array}{cl}
+    \theta \pi^a\leq 2c(1-d) & (\eta) 
+\end{array}
+\end{equation}
+\begin{equation}
+\begin{array}{cl}
+    \theta \geq 0 & (\varrho)
+\end{array}
+\end{equation}
+
+\subsubsection{Maximizando el rendimiento}
+
+Esta formulación es considerada completa en un contexto donde, al igual que el trabajo original, se quiere maximizar los \textit{allowances} (permisos de contaminación) para la industria generadora. Pero, en esta memoria, se busca reordenar el problema donde el subastador sufra perdidas por su mala gestión, intentando mejorar su rendimiento.
+\vspace{2.5mm}
+
+Para lograr lo anterior, es necesario definir el problema tomando como variable de decisión el rendimiento ( \textit{performance}). Con esto, es necesario definir la variable $P$ respecto a $\theta$ para que poder utilizar el problema en el modelo general al incluir a el problema de los productores(generadores de electricidad).
+\vspace{2.5mm}
+
+Luego, de \ref{res:newsub2} y \ref{performaceoptimo} se obtiene la siguiente igualdad:
+
+$$P^*(\theta \pi^a) = \frac{\theta \pi^a}{2c}+d$$
+
+Si se despeja $P$ se obtiene su valor respecto a $\theta$:
+
+$$\theta=\frac{(P-d)2c}{\pi^a}$$
+
+Despejando esta variable en \ref{fo:performance0}, se obtiene la siguiente función objetivo:
+
+
+\begin{equation}
+\begin{array}{rrclcl}
+    \displaystyle \max_{P} & \frac{(P-d)2c}{\pi^a} \pi^{a}P - c(P-d)^2  \label{fo:3}\\
+\end{array}
+\end{equation}
+
+La cuál se puede simplificar llegando a lo siguiente:
+
+\begin{equation}
+\begin{array}{rrclcl}
+    \displaystyle \max_{P} & c(P^{2}-d^{2}) \label{fo:4}\\
+\end{array}
+\end{equation}
+
+La cuál tiene sentido pero no es aplicable en el trabajo de \citeB{dewan_estimating_2020}, ya que según la proposición 4, descrita en \ref{marco:costos}, el problema de maximización debe ser cóncavo. Pero debido a la forma en la que se definió el premio ($r=\pi^{a}\theta$), la concavidad de la función de costo en este caso no transforma \ref{fo:4} en cóncava. Debido a esto, no se puede encontrar un máximo local que sea también un máximo global en el problema que comprueba la proposición 4.
+\vspace{2.5mm}
+
+
+Para lograr la concavidad necesaria, se encuentra la posibilidad de incorporar un elemento del problema original del subastador. Con esto, además de cumplir con la proposición 4, se expande el alcance de este trabajo, ya que ahora no solo se está reordenado el problema al aplicar un sistema nuevo de incentivo, si no que, se incorpora el costo mencionado en el trabajo originial de AMIGO llamado Costo Social del Carbón (SCC). Con esto amplía el estudio para definir este costo respecto al rendimiento del subastador.
+\vspace{2.5mm}
+
+La primera aplicación de este costo es la de entender que el costo SCC dependerá de los permisos emitidos, ya que a mayor cantidad de permisos, existirá mayor costos asociados al uso del carbón. Por lo que, inicialmente, se  define el SCC como: $F(\theta)= \alpha\theta + \beta$ ($\alpha$,$\beta$ parámetros). 
+\vspace{2.5mm}
+
+Luego, la idea es que este costo transforme \ref{fo:4} a una función cóncava, por lo que se debe cumplir lo siguiente:
+
+\begin{equation}
+\begin{array}{rrclcl}
+    F(\theta)= \alpha\theta + \beta = kP^2 \label{fo:5}\\
+\end{array}
+\end{equation}
+
+Donde, si $k>c$ (de \ref{fo:4}), se logra una función objetivo cóncava. Obteniendo, luego de reemplazar la variable de permisos $\theta$ por su valor en función del rendimiento $P$, la siguiente función de costo social a incorporar en el modelo:
+
+\begin{equation}
+\begin{array}{rrclcl}
+    F(\frac{(P-d)2c}{\pi^a})= \alpha\frac{(P-d)2c}{\pi^a} + \beta = kP^2 \\
+\end{array}
+\end{equation}
+
+De la cuál, se deben encontrar los valores de $\alpha$ y $\beta$ que cumplan con la igualdad.
+
+
+
+
+\section{Resultados modelo \textit{Profit Oriented}} \label{anexoPO}
+
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|l|l|l|l|l|}
+    \hline
+        Rend[P]  & CAP & $\theta$  & $\frac{\theta}{CAP}$  & $\pi^a$ \\ \hline
+        0.798 & 100,000,000.000 & 120,200,000.000 & 1.20 &  \$270.13  \\ \hline
+        0.8 & 100,000,000.000 & 120,200,000.000 & 1.20 &  \$270.13  \\ \hline
+        0.85 & 100,000,000.000 & 113,654,321.432 & 1.14 &  \$25.75  \\ \hline
+        0.9 & 100,000,000.000 & 113,568,965.603 & 1.14 &  \$93.65  \\ \hline
+        0.95 & 100,000,000.000 & 118,470,479.300 & 1.18 &  \$188.86  \\ \hline
+        0.99 & 100,000,000.000 & 114,916,396.444 & 1.15 &  \$298.11  \\ \hline
+        1 & 100,000,000.000 & 118,332,486.090 & 1.18 &  \$317.24  \\ \hline
+        0.798 & 200,000,000.000 & 240,400,000.000 & 1.20 &  \$161.56  \\ \hline
+        0.8 & 200,000,000.000 & 240,400,000.000 & 1.20 &  \$60.57  \\ \hline
+        0.85 & 200,000,000.000 & 229,255,128.800 & 1.15 &  \$12.77  \\ \hline
+        0.9 & 200,000,000.000 & 223,154,111.799 & 1.12 &  \$47.66  \\ \hline
+        0.95 & 200,000,000.000 & 234,207,864.377 & 1.17 &  \$95.53  \\ \hline
+        0.99 & 200,000,000.000 & 224,918,654.768 & 1.12 &  \$152.31  \\ \hline
+        1 & 200,000,000.000 & 226,010,004.000 & 1.13 &  \$166.10  \\ \hline
+        0.798 & 300,000,000.000 & 360,600,000.000 & 1.20 &  \$119.47  \\ \hline
+        0.8 & 300,000,000.000 & 360,600,000.000 & 1.20 &  \$119.47  \\ \hline
+        0.85 & 300,000,000.000 & 356,171,492.939 & 1.19 &  \$2,083.93  \\ \hline
+        0.9 & 300,000,000.000 & 360,600,000.000 & 1.20 &  \$13,948,075.51  \\ \hline
+        0.95 & 300,000,000.000 & 268,982,380.464 & 0.90 &  \$83.18  \\ \hline
+        0.99 & 300,000,000.000 & 313,308,201.957 & 1.04 &  \$109.34  \\ \hline
+        1 & 300,000,000.000 & 313,402,369.287 & 1.04 &  \$119.78  \\ \hline
+        0.798 & 400,000,000.000 & 480,800,000.000 & 1.20 &  \$95.83  \\ \hline
+        0.8 & 400,000,000.000 & 454,798,037.400 & 1.14 &  \$95.83  \\ \hline
+        0.85 & 400,000,000.000 & 480,800,000.000 & 1.20 &  \$10,345,937.92  \\ \hline
+        0.9 & 400,000,000.000 & 480,800,000.000 & 1.20 &  \$22.12  \\ \hline
+        0.95 & 400,000,000.000 & 268,982,380.500 & 0.67 &  \$83.18  \\ \hline
+        0.99 & 400,000,000.000 & 404,778,933.700 & 1.01 &  \$84.63  \\ \hline
+        1 & 400,000,000.000 & 362,299,397.300 & 0.91 &  \$103.62  \\ \hline
+        0.798 & 500,000,000.000 & 601,000,000.000 & 1.20 &  \$79.31  \\ \hline
+        0.8 & 500,000,000.000 & 601,000,000.000 & 1.20 &  \$79.31  \\ \hline
+        0.85 & 500,000,000.000 & 601,000,000.000 & 1.20 &  \$7.78  \\ \hline
+        0.9 & 500,000,000.000 & 601,000,000.000 & 1.20 &  \$47.07  \\ \hline
+        0.95 & 500,000,000.000 & 268,982,577.800 & 0.54 &  \$83.18  \\ \hline
+        0.99 & 500,000,000.000 & 551,200,775.300 & 1.10 &  \$62.15  \\ \hline
+        1 & 500,000,000.000 & 274,684,779.400 & 0.55 &  \$136.66  \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|l|l|l|l|l|}
+    \hline
+        Rend[P]  & CAP & $\theta$  & $\frac{\theta}{CAP}$  & $\pi^a$ \\ \hline
+        0.798 & 600,000,000.000 & 721,200,000.000 & 1.20 &  \$66.57  \\ \hline
+        0.8 & 600,000,000.000 & 605,279,898.700 & 1.01 &  \$66.57  \\ \hline
+        0.85 & 600,000,000.000 & 721,200,000.000 & 1.20 &  \$66.57  \\ \hline
+        0.9 & 600,000,000.000 & 578,230,501.600 & 0.96 &  \$6,546.01  \\ \hline
+        0.95 & 600,000,000.000 & 268,982,577.800 & 0.45 &  \$83.18  \\ \hline
+        0.99 & 600,000,000.000 & 719,988,509.800 & 1.20 &  \$47.58  \\ \hline
+        1 & 600,000,000.000 & 274,684,779.400 & 0.46 &  \$136.66  \\ \hline
+        0.798 & 700,000,000.000 & 841,400,000.000 & 1.20 &  \$56.37  \\ \hline
+        0.8 & 700,000,000.000 & 605,279,898.700 & 0.86 &  \$56.37  \\ \hline
+        0.85 & 700,000,000.000 & 790,095,058.700 & 1.13 &  \$56.37  \\ \hline
+        0.9 & 700,000,000.000 & 181,880,800.200 & 0.26 &  \$105.13  \\ \hline
+        0.95 & 700,000,000.000 & 268,982,854.700 & 0.38 &  \$83.18  \\ \hline
+        0.99 & 700,000,000.000 & 275,744,578.300 & 0.39 &  \$14,670.45  \\ \hline
+        1 & 700,000,000.000 & 212,794,913.300 & 0.30 &  \$3,786,269.25  \\ \hline
+        0.798 & 800,000,000.000 & 961,600,000.000 & 1.20 &  \$48.76  \\ \hline
+        0.8 & 800,000,000.000 & 961,600,000.000 & 1.20 &  \$152.50  \\ \hline
+        0.85 & 800,000,000.000 & 790,095,058.700 & 0.99 &  \$152.50  \\ \hline
+        0.9 & 800,000,000.000 & 181,880,800.200 & 0.23 &  \$105.13  \\ \hline
+        0.95 & 800,000,000.000 & 268,982,577.800 & 0.34 &  \$83.18  \\ \hline
+        0.99 & 800,000,000.000 & 275,744,735.700 & 0.34 &  \$14,665.37  \\ \hline
+        1 & 800,000,000.000 & 212,794,913.339 & 0.27 &  \$3,786,269.25  \\ \hline
+        0.798 & 900,000,000.000 & 1,081,800,000.000 & 1.20 &  \$42.26  \\ \hline
+        0.8 & 900,000,000.000 & 605,279,898.700 & 0.67 &  \$42.26  \\ \hline
+        0.85 & 900,000,000.000 & 790,095,058.700 & 0.88 &  \$42.26  \\ \hline
+        0.9 & 900,000,000.000 & 181,880,800.200 & 0.20 &  \$105.13  \\ \hline
+        0.95 & 900,000,000.000 & 268,982,577.800 & 0.30 &  \$83.18  \\ \hline
+        0.99 & 900,000,000.000 & 275,744,846.500 & 0.31 &  \$14,661.80  \\ \hline
+        1 & 900,000,000.000 & 212,794,913.300 & 0.24 &  \$3,786,269.25  \\ \hline
+        0.798 & 1,000,000,000.000 & 1,202,000,000.000 & 1.20 &  \$35.98  \\ \hline
+        0.8 & 1,000,000,000.000 & 605,279,898.700 & 0.61 &  \$35.98  \\ \hline
+        0.85 & 1,000,000,000.000 & 790,095,058.700 & 0.79 &  \$35.98  \\ \hline
+        0.9 & 1,000,000,000.000 & 181,880,800.200 & 0.18 &  \$105.13  \\ \hline
+        0.95 & 1,000,000,000.000 & 268,982,577.800 & 0.27 &  \$83.18  \\ \hline
+        0.99 & 1,000,000,000.000 & 275,794,121.000 & 0.28 &  \$124.41  \\ \hline
+        1 & 1,000,000,000.000 & 212,794,913.300 & 0.21 &  \$3,786,269.25 \\ \hline
+    \end{tabular}
+    \caption{Efecto de P en $\theta$ y $\pi^a$ para todo CAP}
+    \label{efectopenthetapiatodoCAP}
+\end{table}
+
+

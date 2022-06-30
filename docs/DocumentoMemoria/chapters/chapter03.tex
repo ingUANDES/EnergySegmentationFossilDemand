@@ -3,80 +3,168 @@
 \chapter{Desarrollo Metodológico} \label{MCP:subastador} % la etiqueta para referencias
 
 
-\section{Replicación del Modelo original y resolución por medio de MCP}
+\section{Replicación del modelo original y resolución por medio de MCP}
 
-Una de las formas de resolver el problema original de \citeB{amigo_two_2021}, gracias a su forma, es transformarlo en un MCP. Esto es posible gracias al teorema de Karush-Kuhn-Tucker \ref{descripcionkkt} y sus condiciones resultantes. 
+Una de las formas de resolver el problema original de \citeB{amigo_two_2021}, debido a que este es un problema de equilibrio con varios modelos involucrados, es transformar cada modelo en MCP y resolverlos juntos. Gracias a las variables duales, estos modelos se relacionan. La transformación a MCP es posible gracias al teorema de Karush-Kuhn-Tucker \ref{descripcionkkt} y sus condiciones resultantes. 
 \vspace{2.5mm}
 
-Por lo tanto, para replicar el modelo original, se realiza esta transformación y luego es probada en un \textit{solver} para evaluar y comparar sus resultados con el original.
+Por lo tanto, para replicar el modelo original, se realiza esta transformación para el problema del subastador (el MCP de los productores se desarrolló en \ref{MCPproductor} y el MCP condiciones de mercado en \ref{MCPmercado}). Finalmente esta es traducida en un \textit{solver} para evaluar y comparar sus resultados con el original.
 
 \subsection{MCP problema del subastador} \label{MCPsubastador}
 
-En adición a lo realizado con el problema del productor y las restricciones condiciones de mercado que relacionan a los productores con el subastador, se debe transformar el problema de este último \ref{eq:sub} en un MCP. Al igual que el caso anterior, para convertir el problema en un MCP, una de las opciones es aplicar el teorema de KKT. Para comenzar, se obtiene el siguiente lagrangeano:
+En adición a lo realizado con el problema del productor y las restricciones condiciones de mercado que relacionan a los productores con el subastador, se debe transformar el problema de este último \ref{eq:sub} en un MCP.  Para comenzar, se obtiene el lagrangeano del problema:
 
-\footnotesize{
+\begin{footnotesize}
 \begin{align}
 \mathcal{L}(\theta) = -\theta\pi^a + \mathcal{F}(\theta) - \eta (\varphi^-1(M)\sigma+\mu-\theta) - \varrho(\theta)  \label{eq:lagrange2}
-\end{align}}
+\end{align}
+\end{footnotesize}
+
 
 \subsubsection{Derivada parcial respecto a $\theta$}
 
-Debido a que $\theta$ es la única variable del modelo, solo se debe realizar la derivada del lagrangeano respecto a esta. Obteniendo lo siguiente:
+Debido a que $\theta$ es la única variable del modelo, se debe realizar solamente la derivada del lagrangeano respecto a esta. Obteniendo lo siguiente:
 
-\footnotesize{
+\begin{footnotesize}
 \begin{align}
     \frac{\partial \mathcal{L}(\theta) }{\partial \theta} = 0 =  -\pi^a + \frac{\partial\mathcal{F}(\theta)}{\partial \theta} + \eta - \varrho \\
     \Leftrightarrow -\pi^a + \frac{\partial\mathcal{F}(\theta)}{\partial \theta} + \eta = \varrho \label{kkt:subastadororiginal}
 \end{align}
-}
-Donde $\varrho$ es la variable dual de la naturaleza de $\theta$ (\ref{res:sub2}). Obteniendo la siguiente complementariedad:
 
-\footnotesize{
+\end{footnotesize}
+
+Donde $\varrho$ es la variable dual de la naturaleza de $\theta$ (\ref{res:sub1}). Obteniendo la siguiente complementariedad:
+
+\begin{footnotesize}
 \begin{align}
     \theta \geq 0 \\
     -\pi^a + \frac{\partial\mathcal{F}(\theta)}{\partial \theta} + \eta \geq 0\\
     \theta \cdot (-\pi^a + \frac{\partial\mathcal{F}(\theta)}{\partial \theta} + \eta)=0
 \end{align}
-}
-En el código GAMS de la programación del modelo, se encuentra la kkt \ref{kkt:subastadororig} en la línea 716:
 
-\begin{verbatim}
-    kkt_auctioneer..                         -pi_a + eta  =g=0
-\end{verbatim}
+\end{footnotesize}
 
-Realizando la complementariedad en la línea 756:
+Para finalizar el MCP del subastador es necesario considerar la complementariedad de la restricción \ref{res:sub2}, obteniendo: 
 
-\begin{verbatim}
-    kkt_auctioneer.theta
-\end{verbatim}
-
-Para finalizar el MCP del subastador es necesario considerar la complementariedad de la restricción \ref{res:sub2}, obteniendo lo siguiente: 
-
-\footnotesize{
+\begin{footnotesize}
 \begin{align}
  \eta \geq 0 \\
  \varphi^-1(M)\sigma+\mu-\theta \geq 0 \\
  \eta \cdot (\varphi^-1(M)\sigma+\mu-\theta)=0
-\end{align}}
+\end{align}
+\end{footnotesize}
 
-Esta restricción y complementariedad se encuentran en las líneas 717 y 757 respectivamente:
 
-\begin{verbatim}
-    theta_const..   -theta + PhiRisk*(Std)+mean =g= 0;
-    theta_const.eta
-\end{verbatim}
+Para conocer los resultados de la replicación del problema ver \ref{replicaciongams}.
 
-\subsection{Resolución del problema y resultados}
+\section{Traducción del modelo al lenguaje Julia}
 
-Finalmente, para resolver el problema en GAMS, solo se debe completar la información adicional, como parámetros, definición de variables y aplicar las líneas de código necesarias para un MCP en GAMS. Con esto realizado, se obtuvieron los siguientes resultados:
+Una de las inquietudes de Sebastian Cea (profesor guía y coautor del modelo original) y Felipe Feijoo(encargado de codificar el modelo en GAMS y coautor del modelo original) sobre la continuación de su trabajo publicado en 2021, era relacionado al programa GAMS. Este fue el programa con el que encontraron los resultados originales y basaron su trabajo. Pero, GAMS parece estar quedando atrás en cuanto a adaptación de nuevas librerías y \textit{solvers} para resolver problemas más complejos. Debido a esto existía la motivación de cambiar de \textit{solver} y programa.
 \vspace{2.5mm}
 
-CREAR UNA TABLA CON LOS RESULTADOS DEL GAMS, INCLUIR DISTINTOS CAP, THETA, LOS PRECIOS, PRODUCCIONES. 
-TAL VEZ COMPARAR CON LOS RESULTADOS CON JULIA.
+Debido a lo anterior, se tomó como objetivo paralelo a reestructurar el modelo, traducir este a Julia. Julia fue el lenguaje elegido ya que, como se explica en el marco teórico \ref{mtjulia}, este es uno de lenguajes de programación con mayor crecimiento en el mercado, presenta excelente soporte \textit{online} y reconocido como uno de los más eficientes entre su competencia. El problema es que, debido a su relativamente corta existencia (primera aparición pública en 2012\footnote{https://www.forbes.com/sites/suparnadutt/2017/09/20/this-startup-created-a-new-programming-language-now-used-by-the-worlds-biggest-companies/?sh=1f0b44627de2}), existe poca documentación que contenga ejercicios o problemas resueltos o trabajos publicados con su utilización en internet. Entonces, en especial con un tema tan específico como problemas de equilibrio resueltos por MCP, realizar su traducción no es trivial.
+\vspace{2.5mm}
 
-\section{Problema del subastador}
+Los primeros pasos a realizar para la traducción fue comenzar a familiarizarse con el lenguaje y sus librerías comunes como \textit{JUMP} (\url{https://jump.dev/JuMP.jl/stable/}). Para conocer su funcionamiento de resolución de problemas de optimización se practicó con la codificación de ejercicios como \ref{ejerciciojulia}. Estos ayudaron como preparación para la replicación del modelo de \citeB{amigo_two_2021}.
+\vspace{2.5mm}
 
-Este problema de optimización (el del subastador) considera como única variable la cantidad de permisos de contaminación $\theta$ los cuales están en unidades $tCO_2 e$ (toneladas de dióxido de carbono emitidas). Estos son los permisos comprados por las empresas generadoras en la primera etapa del modelo. Amigo define que el presupuesto de carbono denotado $CAP$, el cual establece el nivel de emisiones en la segunda etapa, sigue una distribución normal de varianza cero, donde $\theta$ no puede sobrepasar probabilística mente el el presupuesto de emisión, como se denota en \ref{res:subastador0} donde $\varepsilon$ representa el margen de permisos de emisión total. \ref{res:sub1} nace de esta condición donde $\varphi^-1$ es la inversa de la acumulada de la distribución normal de CAP. Es acá donde surge la posibilidad de investigación para este trabajo. 
+Primero, se intentó resolver el problema con el \textit{solver} Gurobi. Pero, debido a que este presenta limitaciones para problemas no lineales, no fue posible la resolución de este problema ya que este es un MCP que convierte el problema en no lineal.
+\vspace{2.5mm}
+
+Segundo, se intentó formular el MCP con la librería Complementarity.jl (\url{https://github.com/chkwon/Complementarity.jl}), pero al finalizar la traducción y luego de algunos días de \textit{debugging}, se entendió que el problema nunca se podría solucionar con esa librería. A pesar de que esta librería es especial para problemas MCP,  esta no soporta complementariedades con igualdades en las restricciones. Entonces, por ejemplo, la complementariedad de condiciones de mercado \ref{complementariedadcondicion1} no era soportada por esta librearía. 
+\vspace{2.5mm}
+
+ Finalmente, se decidió utilizar el \textit{solver} PATH (\url{https://pages.cs.wisc.edu/~ferris/path.html}) junto con la librería \textit{JUMP} ya que es la combinación con más problemas MCP resueltos encontrados en documentación \textit{online}. 
+ \vspace{2.5mm}
+ 
+Esta codificación funciona con el siguiente formato, el cuál presenta ventajas para incluir sumatorias y variables indexadas: 
+
+\begin{itemize}
+ 
+\item Instalación: se instala PATH (se debe instalar JUMP si no se a realizado anteriormente) en la terminal de JULIA o \textit{notebook} de JUPYTER:\\
+
+\begin{footnotesize}
+   \begin{lstlisting}
+   import Pkg;
+   Pkg.add("PATHSolver")
+   \end{lstlisting}
+   \end{footnotesize}
+
+
+\item Librerías: se llama a la librería JUMP y \textit{solver} PATH (previamente se tienen que instalar por medio de Pkg):
+   
+   \begin{footnotesize}
+   \begin{lstlisting}
+   using JuMP,PATH
+   \end{lstlisting}
+   \end{footnotesize}
+   
+    \item Licencia: se presenta la licencia. Solicitar una gratis para resolver problemas sin mínimos de variables en \url{https://pages.cs.wisc.edu/~ferris/path.html} (si el modelo tiene menos de 300 variables, no es necesario este paso ya que se utiliza una licencia predeterminada con capacidad limitada)
+    \begin{footnotesize}
+   \begin{lstlisting}
+   PATHSolver.c_api_License_SetString("licencia")
+   \end{lstlisting}
+   \end{footnotesize}
+    
+   \item Definir modelo: se define el modelo y el optimizador por utilizar para resolverlo:
+   
+   \begin{footnotesize}
+   \begin{lstlisting}
+   modelo=Model(PATHSolver.Optimizer)
+   \end{lstlisting}
+   \end{footnotesize}
+   
+   \item Definir las variables: es necesario definir las variables según su naturaleza, con la siguiente nomenclatura,
+   
+   \begin{footnotesize}
+   \begin{lstlisting}
+  @variable(modelo, x[i in 1:tecnologias]>=0)
+   \end{lstlisting}
+   \end{footnotesize}
+   Si la variable tiene complementariedad con una restricción de igualdad agregarla de la siguiente forma:
+   \begin{footnotesize}
+   \begin{lstlisting}
+  @variable(modelo, y)
+   \end{lstlisting}
+   \end{footnotesize}
+   
+  
+  \item Definir las complementariedades: se codifican las complementariedades. Para un problema MCP, todas las variables deben presentar complementariedad para poder ser resueltas. $\perp$ representa la complementariedad:
+  
+  \begin{footnotesize}
+  \begin{lstlisting}[mathescape=true]
+  @constraint(modelo, complementariedad1[i in 1:tecnologias],  
+  Inv[i] + sum(psi[i,w] for w in 1:escenarios)  $\perp$ x_first[i])
+  \end{lstlisting}
+  \end{footnotesize}
+  
+  \item Fijar variables: si se requiere fijar el valor de alguna variable o fijar su límite inferior o superior:
+  
+  \begin{footnotesize}
+  \begin{lstlisting}
+ for i in 1:3
+    fix(x_first[i], 0; force = true) 
+end # 0 es el valor fijado
+    
+    set_upper_bound(x[1], 2000) #2000 es el limite fijado
+    set_lower_bound(x[2], 300) # 300 es el limite fijado
+  \end{lstlisting}
+  \end{footnotesize}
+  
+  
+  \item  Resolver: se llama al \textit{solver} para encontrar una solución.
+  
+  \begin{footnotesize}
+   \begin{lstlisting}
+  optimize!(modelo)
+  \end{lstlisting}
+  \end{footnotesize}
+ 
+\end{itemize}
+
+\section{Analizando el problema del subastador}
+
+Este problema de optimización (el del subastador) considera como única variable la cantidad de permisos de contaminación $\theta$, los cuales están en unidades $tCO_2 e$ (toneladas de dióxido de carbono emitidas). Estos son los permisos comprados por las empresas generadoras en la primera etapa del modelo. \citeB{amigo_two_2021} definen que el presupuesto de carbono denotado $CAP$, el cual establece el nivel de emisiones en la segunda etapa, sigue una distribución normal de varianza cero, donde $\theta$ no puede sobrepasar probabilística mente el presupuesto de emisión, como se denota en \ref{res:subastador0} donde $\varepsilon$ representa el margen de permisos de emisión total. \ref{res:sub1} nace de esta condición donde $\varphi^-1$ es la inversa de la acumulada de la distribución normal de CAP. Es acá donde surge la posibilidad de investigación y mejora para este trabajo. 
 \vspace{2.5mm}
 
 \begin{equation}
@@ -86,7 +174,8 @@ Este problema de optimización (el del subastador) considera como única variabl
 \end{equation}
 \vspace{2.5mm}
 
-\citeB{amigo_two_2021} comentan que existe espacio para desarrollar y perfeccionar el problema del subastador. Por un lado el problema del productor está desarrollado de forma extensa con muchas restricciones que la definen, pero el subastador tiene un papel tan importante como el de los productores ya que este será el que tome las decisiones iniciales con las cuales la generación de energía se verá influenciado por mucho tiempo. Las decisiones del subastador deben ser consideradas tan especificas y desarrolladas que las de los generadores de electricidad. Es por esto que surge la oportunidad de encontrar una forma más completa de representar a este agente, formular las restricciones y cambios en la función objetivo si es necesario y luego evaluar la reformulación del modelo en un \textit{solver}.
+\citeB{amigo_two_2021} comentan que existe espacio para desarrollar y perfeccionar el problema del subastador. El problema del productor está desarrollado de forma extensa con muchas restricciones que la definen, pero el subastador tiene un papel tan importante como el de los productores ya que este será el que tome las decisiones iniciales con las cuales la generación de energía se verá influenciada por mucho tiempo.  Es por esto que surge la oportunidad de encontrar una forma más completa de representar a este agente, formular las restricciones y cambios en la función objetivo si es necesario y luego evaluar la reformulación del modelo en un \textit{solver}.
+\vspace{2.5mm}
 
 Uno de los problemas del modelo original del subastador \ref{eq:sub} es que para simplificar su cálculo en el \textit{solver} y KKT, la distribución normal asociada al $CAP$ presentaba desviación estándar $\sigma$ igual a cero y el único valor representativo del presupuesto era la media $\mu$, dejando de ser realmente una entrada estocástica. 
 \vspace{2.5mm}
@@ -94,29 +183,31 @@ Uno de los problemas del modelo original del subastador \ref{eq:sub} es que para
 También, el subastador es representado como un planificador que minimiza el negativo de la utilidad, siendo $-\theta \pi^a$ el ingreso negativo por ventas de los permisos y $F(\theta)$ una función de costo asociado a la producción de energía por carbón. El problema en esto es que parece no explicar con totalidad la importancia del subastador en el problema. Ya que este debe ser un ente que busca maximizar sus beneficios tal cual  lo son las empresas generadoras de electricidad en el sistema pero debe tener restricciones que lo incentiven a emitir la cantidad de permisos correctos, o sea, la cantidad de permisos más cercana al presupuesto de carbono $CAP$ estocástico del sistema.
 \vspace{2.5mm}
 
-Entonces, esta es un área de exploración para determinar cuál sería una reformulación del problema del subastador donde exista un incentivo por emitir los permisos adecuados y así los generadores no tengan que pagar precios más elevados de los que deberían ser.
+Entonces, esta es un área de exploración para determinar cuál sería una reformulación del problema del subastador donde exista un incentivo por emitir los permisos adecuados y así los generadores no tengan que pagar precios muy elevados de permisos, sin perjudicar a las personas que consumen la energía y que tampoco exista una sobre emisión de contaminante.
 \vspace{2.5mm}
 
-Una forma propuesta es la de incluir la probabilidad de encontrar un $\theta$ adecuado, el cual afecte el ingreso del subastador (la ganancia no se calcula como $p\cdot q$ sino que como $p\cdot q\cdot P$, donde $P$ es una proporción entre $[0,1]$ que representa la precisión). Esta probabilidad esté determinada por la cantidad invertida en acercarse al presupuesto lo más posible, medido como gasto en información. Esto no remplaza al costo social del carbón (SCC por sus siglas en inglés), es un costo adicional.
+El camino a seguir para la reformualación de este problema es incluir el efecto de atención (inatención) racional, estudiado por \citeB{dewan_estimating_2020} (para un resumen de esta y otras literaturas del tema ver \ref{marco:costos}).
+\vspace{2.5mm}
 
+La propuesta inicial es la de incluir la probabilidad de encontrar un $\theta$ adecuado, la cual afecte el ingreso del subastador (la ganancia no se calcularía como $p\cdot q$ sino que como $p\cdot q\cdot P$, donde $P$ es una probabilidad entre $[0,1]$ que representa la precisión). Y que esta probabilidad esté determinada por la cantidad invertida en acercarse al presupuesto lo más posible, medido como gasto en información.
 
 \section{Racionalidad del Planificador}
 
-El planificador debe elegir el número de permisos $\theta$ a vender en el mercado en $t=0$ a precio $\pi^a$. Para esto es lógico pensar que la elección del número de permisos se debe basar en el beneficio que genera la venta de los permisos. Los ingresos serán dados por $\pi^a\cdot\theta$. Los costos vendrán dados por una función $\mathcal{F}(\theta)$ que representa, usualmente, el Costo Social del Carbon. Adicionalmente, el subastador dispone de un presupuesto de emisiones de $CO_2$ es $CAP\in\mathbb{R}_+$ que es una variable aleatoria. De esta forma el planificador debiera maximizar sus beneficios, $\pi^a\cdot\theta-\mathcal{F}(\theta)$, restringido a vender una cantidad de permisos inferior al presupuesto, $\theta\leq CAP$.
+En el modelo original el planificador debe elegir el número de permisos $\theta$ a vender en el mercado en $t=0$ a precio $\pi^a$. Para esto es lógico pensar que la elección del número de permisos se debe basar en el beneficio que genera la venta de los permisos. Los ingresos se calculan $\pi^a\cdot\theta$. Los costos son dados por una función $\mathcal{F}(\theta)$, que representa, el Costo Social del Carbon. Adicionalmente, el subastador dispone de un presupuesto de emisiones de $CO_2$ el cual es definido como $CAP\in\mathbb{R}_+$ La cuál, como se mencionó anteriormente, era inicialmente considerada como una variable aleatoria en el trabajo de \citeB{amigo_two_2021}, pero al momento de su implementación se añadió como parámetro del modelo. 
 \vspace{2.5mm}
 
-Sin embargo, $CAP$ es una variable aleatoria difícil de estimar. De esta forma, \citeB{amigo_two_2021} se limitan a incluir una restricción probabilística que limita la sobre-emisión de permisos por una probabilidad $\epsilon$ pequeña:
-
-$$Pr(\theta\geq CAP)\leq\epsilon.$$
-
-De esta forma, dada la estructura estocástica de $CAP$ (por ejemplo, distribuida según una normal con media $\mu$ y varianza $\sigma^2$), el problema del planificador se resume por las ecuaciones (9) y (10) de Amigo et alii.
+En consecuencia de lo anterior, el planificador debiera maximizar sus beneficios, $\pi^a\cdot\theta-\mathcal{F}(\theta)$, restringido a vender una cantidad de permisos inferior al presupuesto, $\theta\leq CAP$.
 \vspace{2.5mm}
 
-En este trabajo el objetivo principal del planificador social es el grado de precisión con el que se cumple la restricción presupuestaria $\theta\leq CAP$. De esta forma maximizará
 
-$$r\cdot Pr(\theta\leq CAP)-\tilde{\mathcal{F}}(Pr(\theta\leq CAP)),$$ \label{nuevafposible}
+En el nuevo modelo el objetivo principal del planificador social cambia a el grado de precisión con el que se cumple la restricción presupuestaria $\theta\leq CAP$. De esta forma el planificador(subastador) maximizará:
 
-Donde $r$ es la valor de cumplir exactamente con el presupuesto, en este caso es el ingreso total de venta de los permisos ($r = \theta \pi^a$) y $\tilde{\mathcal{F}}$ es una función de costo por desempeño de cumplimiento que puede tomar una forma cuadrática:
+\begin{align}
+P\cdot Pr(\theta\leq CAP)-\tilde{\mathcal{F}}(Pr(\theta\leq CAP)) \label{nuevafposible}    
+\end{align}
+
+
+Donde $P$ es la valor de cumplir exactamente con el presupuesto, en este caso es el ingreso total de venta de los permisos ($r = \theta \pi^a$) y $\tilde{\mathcal{F}}$ es una función de costo por desempeño de cumplimiento que puede tomar una forma cuadrática:
 
 \begin{equation}
 \begin{array}{rrclcl}
@@ -124,143 +215,25 @@ Donde $r$ es la valor de cumplir exactamente con el presupuesto, en este caso es
 \end{array}
 \end{equation}
 
-Donde $d$ es el umbral de desempeño con información pública y $c$ es el costo marginal de adquirir información para mejorar el desempeño en cumplimiento.
+En el cuál $d$ es el umbral de desempeño con información pública (proporción de la información gratis) y $c$ es el costo marginal de adquirir información para mejorar el desempeño en cumplimiento.
 \vspace{2.5mm}
 
-Finalmente, se define el \emph{performance} óptimo para el premio ($r = \theta \pi^a$). Donde el \emph{performace} óptimo  se define como $P^*(r) = (C')^{-1}(r)$ de la siguiente forma:
 
-\begin{equation}
-\begin{array}{rrclcl}
-    P^*(\theta \pi^a) = \begin{cases}\frac{\theta \pi^a}{2c}+d,&\theta \pi^a\leq 2c(1-d)\\1,&\theta \pi^a>2c(1-d)\end{cases}, \label{performaceoptimo}\\
-\end{array}
-\end{equation}
+\section{Nuevo problema del subastador}
 
-\section{Reordenando modelo del subastador con función de costo diferenciable}
+ Para implementar el concepto de atención racional, \textit{performance} y su efecto en los costos y las variables del problema en el subastador, se busca aplicar lo aprendido sobre sus efectos y manera de inclusión en los modelos de optimización.
+\vspace{2.5mm} 
 
-\citeB{dewan_estimating_2020} propone la opción de agregar una función de costo asociada al \textit{performance}(rendimiento en inglés) de obtener la variable de decisión (en este caso $*\theta*$) lo más cercana a la óptima al invertir en investigación que mejore la estimación de la variable.
+Esta propuesta, inicialmente fue atacada con la perspectiva presente en el Anexo \ref{}, a base de estos y aprendiendo sobre errores en su implementación, se llega a las dos versiones del modelo, propuestos a continuación.
+
+\section{Problema del subastador como \textit{profit oriented}}\label{profit}
+
+
+
+Para comenzar, se evaluó el comportamiento del modelo al incluir \ref{nuevafposible} en la función objetivo del subastador.
 \vspace{2.5mm}
 
-Considerando \ref{nuevafposible}, tomando $Pr(\theta\leq CAP) = P$ con $P = $\textit{performance}, la función objetivo del subastador puede reorganizarse de la siguiente forma:
-
-\begin{equation}
-\begin{array}{rrclcl}
-    \displaystyle \min_{\theta,P} & -\theta \pi^aP + \tilde{\mathcal{F}}(P)+F(\theta)  \label{fo:performance0}\\
-\end{array}
-\end{equation}
-
-Para completar el problema de optimización se debe definir ciertos supuesto. Para comenzar, se debe definir que factores serán variables y parámetros. Por el momento, se asume que la única variable es $\theta$ y el subastador busca un \textit{performace} mayor al umbral de información pública.  
-\vspace{2.5mm}
-
-Entonces, debe identificarse $\tilde{\mathcal{F}}(P)$ de acuerdo a su definición en \ref{costoperformace} cuando se cumple que el \textit{performace} es mayor al umbral de información pública $d$ entonces se define lo siguiente, conociendo los parámetros $c, d$:
-
-$$\tilde{\mathcal{F}}(P)=c(P-d)^2$$ 
-
-De esto se deben definir las restricciones del problema. La primera corresponde a la positividad de $\theta$. 
-
-\begin{equation}
-\begin{array}{cl}
-    \theta \geq 0 & (\varrho)\label{res:newsub1}
-\end{array}
-\end{equation}
-
-Para la segunda, se debe aplicar la función de \textit{performance} óptimo para el ingreso \ref{performaceoptimo}. La idea es encontrar una restricción para definir este problema teniendo solo a $\theta$ como variable. Entonces la opción es aplicar la siguiente restricción: 
-
-\begin{equation}
-\begin{array}{cl}
-    \theta \pi^a\leq 2c(1-d) & (\eta) \label{res:newsub2}
-\end{array}
-\end{equation}
-
-Con esto el problema del subastador quedaría reformulado de la siguiente manera:
-
-\begin{equation}
-\begin{array}{rrclcl}
-    \displaystyle \max_{\theta} & \theta \pi^a(\frac{\theta \pi^a}{2c}+d) - c((\frac{\theta \pi^a}{2c}+d)-d)^2  \\\textrm{s.a.}\\
-\end{array}
-\end{equation}
-\begin{equation}
-\begin{array}{cl}
-    \theta \pi^a\leq 2c(1-d) & (\eta) \label{res:newsub2}
-\end{array}
-\end{equation}
-\begin{equation}
-\begin{array}{cl}
-    \theta \geq 0 & (\varrho)\label{res:newsub1}
-\end{array}
-\end{equation}
-
-\subsubsection{Maximizando el rendimiento}
-
-Esta formulación es considerada completa en un contexto donde, al igual que el trabajo original, se quiere maximizar los \textit{allowances} (permisos de contaminación) para la industria generadora. Pero, en esta memoria, se busca reordenar el problema donde el subastador sufra perdidas por su mala gestión, intentando mejorar su rendimiento.
-\vspace{2.5mm}
-
-Para lograr lo anterior, es necesario definir el problema tomando como variable de decisión el rendimiento ( \textit{performance}). Con esto, es necesario definir la variable $P$ respecto a $\theta$ para que poder utilizar el problema en el modelo general al incluir a el problema de los productores(generadores de electricidad).
-\vspace{2.5mm}
-
-Luego, de \ref{res:newsub2} y \ref{performaceoptimo} se obtiene la siguiente igualdad:
-
-$$P^*(\theta \pi^a) = \frac{\theta \pi^a}{2c}+d$$
-
-Si se despeja $P$ se obtiene su valor respecto a $\theta$:
-
-$$\theta=\frac{(P-d)2c}{\pi^a}$$
-
-Despejando esta variable en \ref{fo:performance0}, se obtiene la siguiente función objetivo:
-
-
-\begin{equation}
-\begin{array}{rrclcl}
-    \displaystyle \max_{P} & \frac{(P-d)2c}{\pi^a} \pi^{a}P - c(P-d)^2  \label{fo:3}\\
-\end{array}
-\end{equation}
-
-La cuál se puede simplificar llegando a lo siguiente:
-
-\begin{equation}
-\begin{array}{rrclcl}
-    \displaystyle \max_{P} & c(P^{2}-d^{2}) \label{fo:4}\\
-\end{array}
-\end{equation}
-
-La cuál tiene sentido pero no es aplicable en el trabajo \citeB{dewan_estimating_2020}, ya que según la proposición 4, descrita en \ref{marco:costos}, el problema de maximización debe ser cóncavo. Pero debido a la forma en la que se definió el premio ($r=\pi^{a}\theta$), la concavidad de la función de costo en este caso no transforma \ref{fo:4} en cóncava. Debido a esto, no se puede encontrar un máximo local que sea también un máximo global en el problema que comprueba la proposición 4.
-\vspace{2.5mm}
-
-Esto se comprueba en el gráfico INSERTAR GRÁFICO DE MAXIMIZACIÓN NO CONCAVA
-\vspace{2.5mm}
-
-Para lograr la concavidad necesaria, se encuentra la posibilidad de incorporar un elemento del problema original del subastador. Con esto, además de cumplir con la proposición 4, se expande el alcance de este trabajo, ya que ahora no solo se está reordenado el problema al aplicar un sistema nuevo de incentivo, si no que, se incorpora el costo mencionado en el trabajo originial de AMIGO llamado Costo Social del Carbón (SCC). Con esto amplía el estudio para definir este costo respecto al rendimiento del subastador.
-\vspace{2.5mm}
-
-La primera aplicación de este costo es la de entender que el costo SCC dependerá de los permisos emitidos, ya que a mayor cantidad de permisos, existirá mayor costos asociados al uso del carbón. Por lo que, inicialmente, se  define el SCC como: $F(\theta)= \alpha\theta + \beta$ ($\alpha$,$\beta$ parámetros). 
-\vspace{2.5mm}
-
-Luego, la idea es que este costo transforme \ref{fo:4} a una función cóncava, por lo que se debe cumplir lo siguiente:
-
-\begin{equation}
-\begin{array}{rrclcl}
-    F(\theta)= \alpha\theta + \beta = kP^2 \label{fo:5}\\
-\end{array}
-\end{equation}
-
-Donde, si $k>c$ (de \ref{fo:4}), se logra una función objetivo cóncava. Obteniendo, luego de reemplazar la variable de permisos $\theta$ por su valor en función del rendimiento $P$, la siguiente función de costo social a incorporar en el modelo:
-
-\begin{equation}
-\begin{array}{rrclcl}
-    F(\frac{(P-d)2c}{\pi^a})= \alpha\frac{(P-d)2c}{\pi^a} + \beta = kP^2 \label{fo:5}\\
-\end{array}
-\end{equation}
-
-De la cuál, se deben encontrar los valores de $\alpha$ y $\beta$ que cumplan con la igualdad.
-
-\section{Reordenar KKT subastador Amigo et alii}
-
-Para implementar el nuevo modelo del subastador, es necesario entender cómo se comporta el modelo al cambiar los valores de las nuevas variables de forma endógena y comparar los resultados de la resolución de modelo con el original. 
-\vspace{2.5mm}
-
-Para comenzar, se evaluó el comportamiento del modelo al incluir el nuevo costo de rendimiento explicado en la función objetivo \ref{fo:performance0}. Este será evaluado al modelar el sistema como un MCP al aplicar el teorema de KKT con el nuevo costo y las restricciones nuevas resolviendo el problema en GAMS y mostrando sus resultados. 
-
-Antes de incluir el rendimiento y atención racional con mayor profundidad, se realizó un estudio del problema al incorporar únicamente el rendimiento en la función objetivo \ref{fo:perfornorest11}, sin añadir nuevas restricciones. Esto, con el objetivo de entender el posible efecto que el rendimiento pueda tener en la maximización de beneficios y tener una primera aproximación de los resultados. La realización de esto se puede ver en detalle en el Anexo \ref{anexo:rendimiento}. 
-\vspace{2.5mm}
+Antes de incluir el rendimiento y atención racional con mayor profundidad, se realizó un estudio del problema al incorporar lo anterior en la función objetivo \ref{fo:perfornorest11}, sin añadir nuevas restricciones. Esto, con el objetivo de entender el posible efecto que el rendimiento pueda tener en la maximización de beneficios y tener una primera aproximación de los resultados. El desarrollo de esto se puede ver en detalle en el Anexo \ref{anexo:rendimiento}. \vspace{2.5mm}
 
 \begin{equation}
 \begin{array}{rrclcl}
@@ -277,44 +250,46 @@ Segundo, se modeló la misma función objetivo incorporando la restricción \ref
 Finalmente, al considerar este primer entendimiento, se lleva a cabo una reestructuración del problema del subastador.
 
 
-\subsubsection{Modelo con restricción de rendimiento}\label{modelo:conrendimiento}
+\subsection{Modelo con restricción de rendimiento}\label{modelo:conrendimiento}
 
-En esta versión del modelo se evalúa la opción de incluir una restricción que involucre de forma directa el rendimiento donde se espera obtener un análisis de como el modelo responde al rendimiento. Para realizar esto, se decide considerar la restricción de factibilidad donde el ingreso de la venta de permisos multiplicada por el rendimiento debe ser mayor al costo de obtener el rendimiento. 
-$$\theta \pi^a P  \geq  c(P-d)^2 $$
-$$\leftrightarrow \theta \pi^a P - c(P-d)^2 \geq 0 $$
+En esta versión del modelo se evalúa la opción de incluir una restricción que involucre de forma directa el rendimiento, con lo cual se espera obtener un análisis de cómo el modelo responde al rendimiento. Para realizar esto, se decide incorporar una restricción de factibilidad donde el ingreso de la venta de permisos multiplicada por el rendimiento debe ser mayor al costo de obtener el rendimiento. Transformando el problema a uno donde el subastador se orienta en obtener utilidades.
+
+\begin{align}
+\theta \pi^a P  \geq  c(P-d)^2 \\
+\leftrightarrow \theta \pi^a P - c(P-d)^2 \geq 0  
+\end{align}
+
+\vspace{2.5mm}
 
 Agregando esta restricción, se obtiene el siguiente modelo: 
 
-\begin{equation}
-\begin{array}{rrclcl}
-   \displaystyle \min_{\theta} & -\theta \pi^aP + c(P-d)^2+F(\theta) \\\textrm{s.a.} \label{eq:perforconrestrfact}\\
-\end{array}
-\end{equation}
-\begin{equation}
-\begin{array}{cl}
+\begin{eqnarray}
+\min_{\theta} & -\theta \pi^aP + c(P-d)^2\label{eq:perforconrestrfact}
+\end{eqnarray}
+
+sujeto a
+\begin{eqnarray}
     \theta \pi^a P - c(P-d)^2 \geq 0 & (\eta)  \label{perforconrestrfact:r1}
-\end{array}
-\end{equation}
-\begin{equation}
-\begin{array}{cl}
     \theta \geq 0 & (\varrho)
-\end{array}
-\end{equation}
+\end{eqnarray}
 
-\ref{eq:perforconrestrfact} se convierte en MCP por medio de las condiciones de KKT explicadas anteriormente en este trabajo. 
+El problema \ref{eq:perforconrestrfact} se convierte en MCP por medio de las condiciones de KKT explicadas anteriormente en este trabajo de la siguiente manera: 
 
-$$\mathcal{L}(\theta)=-P\theta\pi^a+\mathcal{F}(\theta)+c(P-d)^2 -\eta(\theta \pi^a P - c(P-d)^2)- \varrho\theta $$
+\begin{eqnarray}
+\mathcal{L}(\theta)&=&-P\theta\pi^a+c(P-d)^2 -\eta(\theta \pi^a P - c(P-d)^2)- \varrho\theta 
+\end{eqnarray}
 
-Realizando la derivada de primer orden para $\theta$ se obtiene:
+
+Realizando la derivada de primer orden para $\theta$ se obtiene lo siguiente:
 
 \begin{equation}
 \begin{array}{rrclcl}
-    \frac{\partial\mathcal{L}(\theta)}{\partial (\theta)}=-P\pi^a+\frac{\partial\mathcal{F}(\theta)}{\partial(\theta)}-\eta(\pi^a P) -\varrho=0 \label{lag30}\\
+    \frac{\partial\mathcal{L}(\theta)}{\partial (\theta)}=-P\pi^a-\eta(\pi^a P) -\varrho=0 \label{lag30}\\
 \end{array}
 \end{equation}
 \begin{equation}
 \begin{array}{rrclcl}
-    \rightarrow -P\pi^a(1+\eta)+\frac{\partial\mathcal{F}(\theta)}{\partial(\theta)}=\varrho \label{lag31}\\
+    \rightarrow -P\pi^a(1+\eta)=\varrho \label{lag31}\\
 \end{array}
 \end{equation}
 
@@ -322,7 +297,7 @@ Obteniendo la primera complementariedad:
 
 \begin{equation}
 \begin{array}{rrclcl}
-    0\leq -P\pi^a(1+\eta)+\frac{\partial\mathcal{F}(\theta)}{\partial(\theta)} \perp \theta \geq 0 \label{compllag3}\\
+    0\leq -P\pi^a(1+\eta)+ \perp \theta \geq 0 \label{compllag3}\\
 \end{array}
 \end{equation}
 
@@ -330,9 +305,342 @@ La segunda complementariedad se obtiene al considera la restricción \ref{perfor
 
 \begin{equation}
 \begin{array}{rrclcl}
-    0 \leq \theta \pi^a P - c(P-d)^2 \perp \eta \geq 0 \label{compllag3}\\
+    0 \leq \theta \pi^a P - c(P-d)^2 \perp \eta \geq 0 \label{compllag31}\\
 \end{array}
 \end{equation}
 
-Finalmente, esta reformulación del modelo como MCP, junto con los MCP de los productores
+Finalmente, esta reformulación del modelo como MCP, junto con el MCP de los productores y de las condiciones de mercado, pueden solucionarse como un único problema de equilibrio en forma de MCP.
 
+
+\section{Problema del subastador con búsqueda de bienestar social}\label{bienestarsocial}
+
+Una empresa goburnamental busca, bajo su defición general, generar un beneficio social a partir de la perdida social producto del cobro de impuesto a ciudadanos y empresas. Lo que se busca es, que esta disminución producida en un mercado, sea devuelta o entregada por medio de mejor salud pública, educación, menos contaminación que benefician al medio ambiente donde vive el tributante, entre otros. 
+\vspace{2.5mm}
+
+Debido a lo anterior, es que el subastador (planificador social) en el modelo de \textit{cap and trade} para disminuir emisiones en una empresa pública, no debe estar centrado únicamente en maximizar ganancias (como en la versión mostrada en el capítulo \ref{profit}). Este debe orientarse principalmente en disminuir el costo social de no rendir lo más eficientemente posible.
+\vspace{2.5mm}
+
+Con el fin de minimizar el costo social, el subastador debe emitir una cantidad de permisos que cumplan con los NDC chilenos, sea un aporte para el medio ambiente (exista disminución de emisiones), se ajuste de mejor forma a todos los escenarios posibles de demanda eléctrica en el futuro y que no existan perdidas (las ganancias de ventas de permisos debe ser igual o mayor a los costos). 
+\vspace{2.5mm}
+
+En base al trabajo de \citeB{dewan_estimating_2020}, aplicando un perfil de desatención racional del subastador, el cuál busca, por medio de la adquisición de mejor información, maximizar el beneficio social con la siguiente función objetivo que refleja lo anterior:
+\vspace{2.5mm}
+
+\begin{equation}
+\begin{array}{rrclcl}
+\displaystyle \min_{\theta} & -\theta \pi^a + c(1-\frac{\abs{\theta - \hat{\theta}}}{\hat{\theta}}-d)^2 \\
+\end{array}
+\end{equation}
+
+En esta nueva formulación, el rendimiento (\textit{performance P}) es calculado como 1 menos la tasa de eficiencia de permisos. Esta última es la diferencia entre la cantidad de permisos emitidos y los permisos determinados por el \textit{CAP} que genera el mayor beneficio social. 
+
+\begin{equation}
+\begin{array}{rrclcl}
+\displaystyle P = 1- \frac{\abs{\theta - \hat{\theta}}}{\hat{\theta}} \\
+\end{array}
+\end{equation}
+
+
+Debido a lo anterior se tiene que cuando se genera la cantidad de permisos eficiente, el rendimiento  $P = 1 - \frac{\abs{0}}{\hat{\theta}}= 1 - 0 = 1 =100\%$. Obteniendo un rendimiento perfecto que minimiza los costos del subastador, que representan también, los costos sociales de emisiones no eficientes.
+\vspace{2.5mm}
+
+La razón de porqué la diferencia entre permisos se encuentra en valor absoluto es que existe un costo social asociado a que se produzcan los siguientes dos escenarios:
+
+\begin{enumerate}
+    \item[1.] $\theta - \hat{\theta} \geq 0$
+    \item[2.] $\theta - \hat{\theta} \leq 0$
+\end{enumerate}
+
+El primer escenario resulta en un costo o en perdida de bienestar social ya que si se emiten más permisos que los socialmente necesitados, no se evitará la suficiente contaminación. 
+\vspace{2.5mm}
+
+El segundo escenario también representa un costo ya que a pesar de que inicialmente se podría considerar que emitir una menor cantidad de permisos sería muy beneficioso para el medio ambiente ya que se emitiría menos contaminante, también, producir menos permisos significa un mayor precio de permisos a comprar por las empresas generadoras de electricidad, que a su vez, transferirán esos costos a los clientes, aumentando el precio de la electricidad para la sociedad a un corto plazo. Produciendo un costo social. 
+\vspace{2.5mm}
+
+En esta segunda versión de la reestructuración del problema del subastador, existe como única restricción: que no se produzcan utilidades negativas.
+\vspace{2.5mm}
+
+\begin{equation}
+\begin{array}{rrclcl}
+\displaystyle \theta \pi^a - c(1-\frac{\abs{\theta - \hat{\theta}}}{\hat{\theta}}-d)^2 \geq 0  \\
+\end{array}
+\end{equation}
+
+Con esto último, el modelo del subastador queda de la siguiente manera:
+
+\begin{equation}
+\begin{array}{rrclcl}
+\displaystyle \min_{\theta} & -\theta \pi^a + c(1-\frac{\abs{\theta - \hat{\theta}}}{\hat{\theta}}-d)^2 \\\textrm{s.a.} \label{fo:social}\\
+\end{array}
+\end{equation}
+\begin{equation}
+\begin{array}{rrclcl}
+\displaystyle \theta \pi^a - c(1-\frac{\abs{\theta - \hat{\theta}}}{\hat{\theta}}-d)^2 \geq 0 \qquad (\eta)\label{social:r1}
+\end{array}
+\end{equation}
+\begin{equation}
+\begin{array}{rrclcl}
+\theta \geq 0 \qquad (\varrho)\label{social:r11}
+\end{array}
+\end{equation}
+
+Para resolver esta segunda versión como MCP, se distingue el problema de derivar el valor absoluto. Este es un problema común ya que la función de un valor absoluto no es continua, por lo que su diferenciación no existe. Pero existe una diferenciación condicionada, donde el resultado depende de si el argumento al interior del valor absoluto en positivo o negativo. Debido a que esto produce un impedimento en la resolución del problema de equilibrio del \textit{cap and trade} de dos etapas, debido a que esta formulación imposibilita su resolución, se estudian dos formas de resolver el problema y encontrar resultados equivalentes. 
+\vspace{2.5mm}
+
+En la primera se potencia la tasa de eficiencia de permisos, mientras que en la segunda se cambia el valor absoluto como la precisión $r$, la cuál es restringida por la diferencia positiva y negativa de los permisos emitidos y los socialmente eficientes. Ambas formas son desarrolladas y evaluadas.
+
+\subsection{Modelo con tasa al cuadrado}\label{tasacuadrada}
+
+Este modelo busca eliminar el problema de la derivada de valores absolutos al elevar al cuadrado la tasa de eficiencia de permisos. El rendimiento queda de la siguiente forma:  
+\vspace{2.5mm}
+
+\begin{equation}
+\begin{array}{rrclcl}
+\displaystyle P = 1- (\frac{{\theta - \hat{\theta}}}{\hat{\theta}})^2 \\
+\end{array}
+\end{equation}
+
+A pesar de que esta nueva forma elimina el problema del valor absoluto para resolver el modelo como
+MCP, la elevación al cuadrado puede minimizar el efecto de inatención racional del subastador. Lo anterior se evidencia ya que al ser al cuadrado, el \textit{performance} es mayor que el real. 
+\vspace{2.5mm}
+
+\textbf{Ejemplo:}
+
+$$\theta= 100 \quad \hat{\theta}=80$$
+$$\rightarrow P= 1 - \frac{\abs{\theta-\hat{\theta}}}{\hat{\theta}}=P= 1 - \frac{\abs{100-80}}{80} = 0.75$$
+
+Con la nueva formulación, se tiene lo siguiente:
+$$\rightarrow P= 1 - (\frac{\abs{\theta-\hat{\theta}}}{\hat{\theta}})^2=P= 1 - (\frac{\abs{100-80}}{80})^2 = 0.9375$$
+
+En el ejemplo anterior se observa como potencialmente se produce una diferencia significativa entre el cálculo real del rendimiento y el alternativo. Esto afecta el análisis ya que en la reestructuración del subastador se busca que la tasa de eficiencia de permisos tenga un mayor efecto en el sistema y esta versión, con tasa al cuadrado, produce menos beneficio social producto de su cálculo.
+\vspace{2.5mm}
+
+Bajo estas circunstancias, se continúa con el desarrollo del problema del subastador para luego ser evaluada y comparada con las otras opciones exploradas. 
+\vspace{2.5mm}
+
+Con el nuevo rendimiento se tiene el siguiente modelo del subastador:
+\newpage
+
+\begin{equation}
+\begin{array}{rrclcl}
+\displaystyle \min_{\theta} & -\theta \pi^a + c(1-\frac{(\theta - \hat{\theta})^2}{\hat{\theta^2}}-d)^2 \\\textrm{s.a.} \label{fo:social1}\\
+\end{array}
+\end{equation}
+\begin{equation}
+\begin{array}{rrclcl}
+\displaystyle \theta \pi^a - c(1-\frac{(\theta - \hat{\theta})^2}{\hat{\theta}^2}-d)^2 \geq 0 \qquad (\eta)\label{social1:r11}
+\end{array}
+\end{equation}
+\begin{equation}
+\begin{array}{rrclcl}
+1 - \frac{(\theta-\hat{\theta})^2}{\hat{\theta}^2} - d \geq 0 \qquad (\mu) \label{social1:r31}
+\end{array}
+\end{equation}
+\begin{equation}
+\begin{array}{rrclcl}
+\frac{(\theta-\hat{\theta})^2}{\hat{\theta}^2 }+ d \geq 0 \qquad (\lambda)\label{social1:r41}
+\end{array}
+\end{equation}
+\begin{equation}
+\begin{array}{rrclcl}
+\theta \geq 0 \qquad (\varrho)\label{social1:r21}
+\end{array}
+\end{equation}
+\vspace{2.5mm}
+
+Las restricciones \ref{social1:r31} y \ref{social1:r41} restringen que la resta de $P-d$ sea mayor a 0 y menor a 1, cumpliendo con la condición \ref{costoperformace}. 
+\vspace{2.5mm}
+
+Para transformar este problema a un MCP, se desarrolla el teorema de KKT. 
+\vspace{2.5mm}
+
+En primer lugar, se encuentra el lagrangeano del problema junto a las variables duales de las restricciones.
+\vspace{2.5mm}
+
+\begin{footnotesize}
+\begin{align}
+\mathcal{L}(\theta) = -\theta \pi^a + c(1-\frac{(\theta - \hat{\theta})^2}{\hat{\theta^2}}-d)^2 - \eta (\theta \pi^a - c(1-\frac{(\theta - \hat{\theta})^2}{\hat{\theta}^2}-d)^2) - \mu(1 - \frac{(\theta-\hat{\theta})^2}{\hat{\theta}^2} - d ) -  
+\lambda(\frac{(\theta-\hat{\theta})^2}{\hat{\theta}^2 }+ d) - \varrho(\theta)  \label{eq:lagrangesocial1 }
+\end{align}
+\end{footnotesize}
+
+
+En segundo lugar, se deriva parcialmente el lagrangeano respecto a la única variable del problema $\theta$. Obteniendo lo siguiente:
+
+\begin{scriptsize}
+\begin{align}
+    \frac{\partial \mathcal{L}(\theta) }{\partial \theta} = 0 = 
+    - \pi^a + c(-2\theta + 2\hat{\theta})\frac{(2-2d-2(\frac{\theta - \hat{\theta}}{\hat{\theta}})^2)}{\hat{\theta}^2} - \eta \pi^a + c\eta((-2\theta + 2\hat{\theta})\frac{(2-2d-2(\frac{\theta - \hat{\theta}}{\hat{\theta}})^2)}{\hat{\theta}^2}) - \mu(\frac{-2\theta + 2\hat{\theta}}{\hat{\theta}^2}) - \lambda(\frac{2\theta-2\hat{\theta}}{\hat{\theta}^2}) - \varrho \\
+    \Leftrightarrow - \pi^a + c(-2\theta + 2\hat{\theta})\frac{(2-2d-2(\frac{\theta - \hat{\theta}}{\hat{\theta}})^2)}{\hat{\theta}^2} - \eta \pi^a + c\eta((-2\theta + 2\hat{\theta})\frac{(2-2d-2(\frac{\theta - \hat{\theta}}{\hat{\theta}})^2)}{\hat{\theta}^2}) - \mu(\frac{-2\theta + 2\hat{\theta}}{\hat{\theta}^2}) - \lambda(\frac{2\theta-2\hat{\theta}}{\hat{\theta}^2}) = \varrho 
+\end{align}
+\end{scriptsize}
+
+Al igual que en las otras formulaciones de este problema, $\varrho$ es la variable dual de la naturaleza de $\theta$. Obteniendo la primera complementariedad:
+
+\begin{scriptsize}
+\begin{align}
+    \theta \geq 0 \\
+   - \pi^a + c(-2\theta + 2\hat{\theta})\frac{(2-2d-2(\frac{\theta - \hat{\theta}}{\hat{\theta}})^2)}{\hat{\theta}^2} - \eta \pi^a + c\eta((-2\theta + 2\hat{\theta})\frac{(2-2d-2(\frac{\theta - \hat{\theta}}{\hat{\theta}})^2)}{\hat{\theta}^2}) - \mu(\frac{-2\theta + 2\hat{\theta}}{\hat{\theta}^2}) - \lambda(\frac{2\theta-2\hat{\theta}}{\hat{\theta}^2}) \geq 0\\
+    \theta \cdot (- \pi^a + c(-2\theta + 2\hat{\theta})\frac{(2-2d-2(\frac{\theta - \hat{\theta}}{\hat{\theta}})^2)}{\hat{\theta}^2} - \eta \pi^a + c\eta((-2\theta + 2\hat{\theta})\frac{(2-2d-2(\frac{\theta - \hat{\theta}}{\hat{\theta}})^2)}{\hat{\theta}^2}) - \mu(\frac{-2\theta + 2\hat{\theta}}{\hat{\theta}^2}) - \lambda(\frac{2\theta-2\hat{\theta}}{\hat{\theta}^2}))=0
+\end{align}
+\end{scriptsize}
+
+En tercer lugar,  en la segunda complementariedad del problema la variable dual $\eta$ se complementa con la restricción de utilidades positivas (\ref{social1:r11}): 
+
+\begin{footnotesize}
+\begin{align}
+    \eta \geq 0 \\
+   \theta \pi^a - c(1-\frac{(\theta - \hat{\theta})^2}{\hat{\theta}^2}-d)^2 \geq 0\\
+    \eta \cdot (\theta \pi^a - c(1-\frac{(\theta - \hat{\theta})^2}{\hat{\theta}^2}-d)^2)=0
+\end{align}
+\end{footnotesize}
+
+En cuarto lugar, se calcula la tercera complementariedad del problema, en la cual la variable dual $\mu$ se complementa con la restricción \ref{social1:r31}:
+
+\begin{footnotesize}
+\begin{align}
+    \mu \geq 0 \\
+  1 - \frac{(\theta-\hat{\theta})^2}{\hat{\theta}^2} - d  \geq 0\\
+    \mu \cdot (1 - \frac{(\theta-\hat{\theta})^2}{\hat{\theta}^2} - d )=0
+\end{align}
+\end{footnotesize}
+
+En quinto lugar, se calcula la última complementariedad, en la cual la variable dual $\lambda$ se complementa con la restricción \ref{social1:r41}:
+
+\begin{footnotesize}
+\begin{align}
+    \lambda \geq 0 \\
+  \frac{(\theta-\hat{\theta})^2}{\hat{\theta}^2 }+ d \geq 0 \\
+    \lambda \cdot (\frac{(\theta-\hat{\theta})^2}{\hat{\theta}^2 }+ d)=0
+\end{align}
+\end{footnotesize}
+
+Finalmente, se tiene el modelo como MCP para equilibrar con el MCP del problema del productor y las condicones de mercado y así, resolver el problema.
+
+
+\subsection{Modelo con precisión}\label{modeloconprecision}
+
+La segunda estructuración del modelo del subastador con búsqueda de bienestar social, resuelve el problema del valor absoluto al agregar una variable al problema que es restringida por la diferencia positiva y negativa de los permisos emitidos y el presupuesto propuesto por el gobierno (\textit{CAP}). Esta nueva variable es la precisión $r$. Sus restricciones, antes mencionadas, son las siguientes: 
+
+\begin{align}
+   r \approx \abs{\theta - \hat{\theta}}\\
+   r \geq \theta - \hat{\theta}\label{igual1}\\
+   r \geq -\theta + \hat{\theta}\label{igual2}
+\end{align}
+
+Esta transformación es posible gracias a que \ref{igual1} y \ref{igual2} representan la posibilidad de ambos resultados al interior del valor absoluto. La incorporación de esta variable $r$ crea una interpretación adicional al problema:  la precisión es un concepto ampliamente utilizado en los modelos de atención racional. Ya que, como subastador elijes el nivel de precisión que se quiere tener y con ese nivel se abre un rango de decisiones posibles según los costos asociados. 
+\vspace{2.5mm}
+
+Considerando esta transformación del valor absoluto, se tiene el siguiente modelo del subastador:
+\newpage
+
+\begin{equation}
+\begin{array}{rrclcl}
+\displaystyle \min_{\theta,r} & -\theta \pi^a + c(1-\frac{r}{\hat{\theta}}-d)^2 \\\textrm{s.a.} \label{fo:social2}\\
+\end{array}
+\end{equation}
+\begin{equation}
+\begin{array}{rrclcl}
+\displaystyle \theta \pi^a - c(1-\frac{r}{\hat{\theta}}-d)^2 \geq 0 \qquad (\eta)\label{social1:r12}
+\end{array}
+\end{equation}
+\begin{equation}
+\begin{array}{rrclcl}
+\displaystyle r - \theta + \hat{\theta} \geq 0 \qquad (\lambda)\label{social1:r22}
+\end{array}
+\end{equation}
+\begin{equation}
+\begin{array}{rrclcl}
+\displaystyle r + \theta - \hat{\theta} \geq 0 \qquad (\delta)\label{social1:r23}
+\end{array}
+\end{equation}
+\begin{equation}
+\begin{array}{rrclcl}
+1-\frac{r}{\hat{\theta}}-d \geq 0 \qquad (\mu)\label{social1:r26}
+\end{array}
+\end{equation}
+\begin{equation}
+\begin{array}{rrclcl}
+\frac{r}{\hat{\theta}} + d \geq 0 \qquad (\chi)\label{social1:r27}
+\end{array}
+\end{equation}
+\begin{equation}
+\begin{array}{rrclcl}
+\theta \geq 0 \qquad (\varrho)\label{social1:r24}
+\end{array}
+\end{equation}
+\begin{equation}
+\begin{array}{rrclcl}
+r \geq 0 \qquad (\alpha)\label{social1:r25}
+\end{array}
+\end{equation}
+\vspace{2.5mm}
+
+Las restricciones \ref{social1:r26} y \ref{social1:r27} acotan la resta $P-d$ a que esta sea mayor a 0 y menor a 1, cumpliendo con la condición \ref{costoperformace}. 
+\vspace{2.5mm}
+
+Para transformar este problema a un MCP, se desarrolla el teorema de KKT. 
+\vspace{2.5mm}
+
+En primer lugar, se encuentra el lagrangeano del problema junto a las variables duales de las restricciones.
+\vspace{2.5mm}
+
+\begin{scriptsize}
+\begin{align}
+\mathcal{L}(\theta,r) = -\theta \pi^a + c(1-\frac{r}{\hat{\theta}}-d)^2 - \eta(\theta \pi^a - c(1-\frac{r}{\hat{\theta}}-d)^2) - \lambda(r - \theta + \hat{\theta}) -  \delta(r + \theta - \hat{\theta}) -\mu(1-\frac{r}{\hat{\theta}}-d) -\chi(\frac{r}{\hat{\theta}} + d) - \varrho \theta - r\alpha \label{eq:lagrangesocial2 }
+\end{align}
+\end{scriptsize}
+
+En segundo lugar, se deriva parcialmente el lagrangeano respecto a cada variable:
+
+\textbf{Derivada parcial respecto a $\theta$}\\
+
+\begin{footnotesize}
+\begin{align}
+    \frac{\partial \mathcal{L}(\theta,r) }{\partial \theta} = 0 =  -\pi^a   - \eta\pi^a  + \lambda -  \delta - \varrho \\
+    \Leftrightarrow -\pi^a   - \eta\pi^a  + \lambda -  \delta = \varrho 
+\end{align}
+\end{footnotesize}
+
+$\varrho$ es la variable dual de la naturaleza de $\theta$, obteniendo la primera complementariedad:
+
+\begin{footnotesize}
+\begin{align}
+    \theta \geq 0 \\
+   -\pi^a   - \eta\pi^a  + \lambda -  \delta \geq 0\\
+    \theta \cdot (-\pi^a   - \eta\pi^a  + \lambda -  \delta)=0
+\end{align}
+\end{footnotesize}
+
+\textbf{Derivada parcial respecto a r}
+
+\begin{footnotesize}
+\begin{align}
+    \frac{\partial \mathcal{L}(\theta,r) }{\partial r} = 0 =  2c\frac{(-1+d+\frac{r}{\hat{\theta}})}{\hat{\theta}} + 2c\eta \frac{(-1+d+\frac{r}{\hat{\theta}})}{\hat{\theta}} - \lambda - \delta + \frac{\mu}{\hat{\theta}} - \frac{\chi}{\hat{\theta}} - \alpha \\
+    \Leftrightarrow 2c\frac{(-1+d+\frac{r}{\hat{\theta}})}{\hat{\theta}} + 2c\eta \frac{(-1+d+\frac{r}{\hat{\theta}})}{\hat{\theta}} - \lambda - \delta + \frac{\mu}{\hat{\theta}} - \frac{\chi}{\hat{\theta}} = \alpha 
+\end{align}
+\end{footnotesize}
+
+$\alpha$ es la variable dual de $r$, generando la segunda complementariedad gracias a las condiciones de \textit{KKT}:
+
+\begin{footnotesize}
+\begin{align}
+    r \geq 0 \\
+   2c\frac{(-1+d+\frac{r}{\hat{\theta}})}{\hat{\theta}} + 2c\eta \frac{(-1+d+\frac{r}{\hat{\theta}})}{\hat{\theta}} - \lambda - \delta + \frac{\mu}{\hat{\theta}} - \frac{\chi}{\hat{\theta}} \geq 0\\
+   r \cdot (2c\frac{(-1+d+\frac{r}{\hat{\theta}})}{\hat{\theta}} + 2c\eta \frac{(-1+d+\frac{r}{\hat{\theta}})}{\hat{\theta}} - \lambda - \delta + \frac{\mu}{\hat{\theta}} - \frac{\chi}{\hat{\theta}})=0
+\end{align}
+\end{footnotesize}
+
+En tercer lugar, se agregan las complementariedades entre las restricciones del problema y sus variables duales respectivamente:
+
+\begin{footnotesize}
+\begin{align}
+0 \leq \eta \perp \theta \pi^a - c(1-\frac{r}{\hat{\theta}}-d)^2 \geq 0 \\
+0 \leq \lambda \perp r - \theta + \hat{\theta} \geq 0 \\
+0 \leq \delta \perp r + \theta - \hat{\theta} \geq 0\\
+0 \leq \mu \perp 1-\frac{r}{\hat{\theta}}-d \geq 0\\
+0 \leq\chi \perp \frac{r}{\hat{\theta}} + d \geq 0 
+\end{align}
+\end{footnotesize}
+
+Finalmente, el problema está formulado como MCP, el cuál, junto a los MCP del productor y condiciones de mercado, puede resolverse como un único problema.
