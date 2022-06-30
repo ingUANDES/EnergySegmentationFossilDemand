@@ -1,0 +1,37 @@
+---
+title: "Cap-and-trade in Energy Capacity Investment when the planner is inattentive"
+author: "Cea-Echenique, Feijoo and Muñoz"
+date: "July 2022 version `r Sys.Date()`"
+output: 
+  beamer_presentation: 
+    toc: yes
+    slide_level: 2
+    keep_tex: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# Motivation
+## Motivation
+
+- Bullet 1
+- Bullet 2
+- Bullet 3
+
+
+# Model
+## Model
+
+```{r cars, echo = TRUE}
+summary(cars)
+```
+
+# Results
+## Results
+
+```{r pressure}
+plot(pressure)
+```
+
