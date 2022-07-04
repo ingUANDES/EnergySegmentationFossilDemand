@@ -22,10 +22,10 @@ Encontrar un modelo óptimo y eficiente para implementar en la industria de ener
 El ECLP dicta que Chile tiene como objetivo ser carbono neutral\footnote{Carbono neutral no significan 0 toneladas de dióxido de carbono emitidas, sino que las emisiones sean iguales a las absorciones por agentes como el sector forestal.} como fecha límite para el año 2050. A la fecha, el país tiene como estrategia para disminuir las emisiones de la industria eléctrica aplicar un ``impuesto verde'' descrito en la ley 20.780 promulgada en el año 2014. Diversos estudios (mencionados en el marco teórico de este trabajo) argumentan que esto no es suficiente y su aplicabilidad no es sustentable y no incentiva el cambio a energías renovables. En efecto, los autores \citeB{amigo_two_2021} demuestran y concluyen que, en primer lugar, el objetivo de carbono neutralidad es lograble y, en segundo lugar, que el \emph{National Determined Contribution}  (NDC por sus siglas en inglés)\footnote{National Determined Contribution: Aporte del país en la propuesta del acuerdo de París}  propuesto para el acuerdo de París\footnote{En el acuerdo de París se estableció como objetivo no superar un aumento global de temperatura de 2 °C para finales de este siglo.}, que consiste en que, para el año 2030, el nivel de $CO_2 e$ (dióxido de carbono emitido) no supere los 131 $MtCO_2 e$ en Chile, es una meta fácil de lograr y, por lo tanto, ineficiente. Ellos proponen la implementación de una versión de su modelo de \emph{cap and trade}, con la cuál se pueden alcanzar objetivos mucho más ambiciosos en la reducción de emisiones y sobre el cambio a una generación de energía con fuentes sustentables.
 \vspace{2.5mm}
 
-Entonces, el propósito de este trabajo es aportar en la investigación, testeo y extensión del modelo por medio de la incorporación del concepto de inatención (o atención) racional.
+Entonces, el propósito de este trabajo es aportar en la investigación, testeo y extensión del modelo por medio de la incorporación del concepto de inatención (o atención) racional. Como hipótesis se tiene que la falta de atención impacta negativamente en el cumplimiento de las métricas de reducción de amisiones de carbono.
 \vspace{2.5mm}
 
-La finalidad es entender su efecto en el modelo y concluir si este presenta potencialidad para disminuir las emisiones de carbono y así aumentar el bienestar social.
+En adición a lo anterior, se busca entender el efecto de su implementación en el modelo y concluir si este presenta potencialidad para disminuir las emisiones de carbono y así aumentar el bienestar social.
 
 
 \section{Objetivos}
@@ -69,7 +69,7 @@ Con el fin de cumplir los objetivos y alcances de este trabajo se lleva a cabo l
 \item Evaluar nuevo modelo en \textit{solver} y analizar resultados: se evalúa el nuevo modelo al ejecutarlo en un \textit{solver} y se analizan las variables óptimas encontradas.
 \end{enumerate}
 
-
+\newpage
 \section{Estructura del documento}
 
 La estructura del documento se divide en cinco capítulos: introducción, marco teórico, desarrollo metodológico, análisis de resultados y conclusiones.
@@ -81,7 +81,7 @@ El presente capítulo introductorio que tiene como objetivo contextualizar al le
 El marco teórico presenta el estudio realizado anterior a la implementación del concepto de atención racional en el modelo. En este se definen los problemas de equilibrio, MCP y la condiciones de KKT. Se presenta un tutorial para resolver problemas no lineales en distintos lenguajes de programación y \textit{solvers}. También se explica el trabajo realizado por \citeB{amigo_two_2021} y el concepto de atención racional.
 \vspace{2.5mm}
 
-En el desarrollo metodológico se replica el modelo original y luego se reformula en dos versiones nuevas. En adición a esto, se realiza la traducción del problema original al lenguaje de programación Julia con el fin de agilizar futuras resoluciones. En particular, Julia resulta ser más eficiente\footnote{Sólo menos ineficiente que C, ver \url{https://julialang.org/benchmarks/}} en el cómputo y en la automatización del análisis de resultados.
+En el desarrollo metodológico se replica el modelo original y luego se reformula en dos versiones nuevas. En adición a esto, se realiza la traducción del problema original al lenguaje de programación \julia con el fin de agilizar futuras resoluciones. En particular, \julia resulta ser más eficiente\footnote{Sólo menos ineficiente que C, ver \url{https://julialang.org/benchmarks/}} en el cómputo y en la automatización del análisis de resultados.
 \vspace{2.5mm}
 
 El capítulo 4 muestra los resultados de la replicación del modelo original y de los nuevos modelos formulados en el capítulo anterior. Se proporciona un análisis de estos y su comparación con el modelo original.
