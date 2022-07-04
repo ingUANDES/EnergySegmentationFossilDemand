@@ -42,14 +42,12 @@ Por un lado,  el parámetro $d$ de información disponible se determina consider
 Para determinar este error, debido a que no se encontró información sobre cómo se calculó el presupuesto de $1.100\quad MTCO_{2}e$ establecido en el NDC actualizado de Chile para el periodo 2020-2030 por el Ministerio del Medio Ambiente de Chile, se utilizó un estudio sobre el cálculo de estos presupuestos.
 \vspace{2.5mm}
 
-Los autores \citeB{andres_new_2014} estudian este cálculo y la existencia de un error en ellos. Proponen, debido a diferentes circunstancias y características de cada país, un error estimado del cálculo de estos parámetros. Señalando que existe un error en Chile de 0,202. Con esto, se toma un valor de información pública o información disponible $d=0,798$, el cuál representa el total del valor del presupuesto de carbono determinado por Chile que sí es confiable o sí representa una estimación real del presupuesto que se debe considerar.   
+Los autores de \citeB{andres_new_2014} y \citeB{ballantyne_audit_2015} estudian este cálculo y la existencia de un error en ellos. Proponen, debido a diferentes circunstancias y características de cada país, un error estimado del cálculo de estos parámetros. Señalando que existe un error en Chile de 0,202. Con esto, se toma un valor de información pública o información disponible $d=0,798$, el cuál representa el total del valor del presupuesto de carbono determinado por Chile que sí es confiable o sí representa una estimación real del presupuesto que se debe considerar.   
 \vspace{2.5mm}
 
 A partir de este presupuesto, es trabajo del subastador minimizar el ruido y encontrar un presupuesto que maximice sus ganancias y, consecuentemente, maximice el bienestar social.
 \vspace{2.5mm}
 
-Para un estudio complementario a cómo este error puede afectar las emisiones de un país y la importancia de ofrecer un intervalo de confianza, o mencionar el error de los cálculos en algo como el presupuesto de carbono, se recomienda la lectura del trabajo de  \citeB{ballantyne_audit_2015}.
-\vspace{2.5mm}
 
 Por otro lado, el valor del parámetro $c$, se determina por medio de una calibración de cada modelo, variando este parámetro hasta calibrar cada uno con el modelo original. En otras palabras, se toma como referencia la solución del modelo original para un presupuesto de carbono (parámetro exógeno al modelo)  dado de 100 millones de toneladas de $CO_{2}e$. Se toma el óptimo encontrado de la variable $\pi_a$ para calibrar el modelo. Entonces, se varía el parámetro $c$ en los modelos nuevos hasta obtener un precio de venta de permisos por parte del subastador (representado por la variable $\pi_a$ en los modelos) similar o igual al del modelo original para el mismo presupuesto de carbono.
 \vspace{2.5mm}
@@ -506,12 +504,12 @@ Estos resultados muestran que la dominancia (en cuanto a cantidad de permisos co
 Una de las variables indirectas al modelo del subastador pero sobre la cual es importante estudiar el efecto de la reformulación del subastador es el precio de venta de electricidad que las empresas le cobran a las personas en el periodo 2018-2050. Su estudio puede entregar información valiosa sobre el bienestar social que estos nuevos modelos produzcan.
 \vspace{2.5mm}
 
-En el Cuadro \ref{POpidporcap} se encuentran los precios de electricidad $\pi^d$ ofrecido por las empresas generadoras de electricidad en el año 2018 (primera etapa) para todos los CAP y sus permisos emitidos resultantes. Los resultados muestran que a menores CAP resultan en menore precios de electricidad, a excepción del $CAP= 800MtCO_2$, en el cuál el precio es el segundo mayor de la tabla. Esto puede deberse a que, según lo mostrado en la Figura \ref{setapaPO}, las empresas generadoras contaminadoras, venden todos sus permisos en la segunda etapa, entonces, estas suben sus precios de venta de electricidad en la primera etapa.
+En el Cuadro \ref{POpidporcap} se encuentran los precios de electricidad $\pi^d$ ofrecido por las empresas generadoras de electricidad en el año 2018 (primera etapa) para todos los CAP y sus permisos emitidos resultantes. Los resultados muestran que mayores CAP resultan en menores precios de electricidad, a excepción del $CAP= 800MtCO_2$, en el cuál el precio es el segundo mayor de la tabla. Esto puede deberse a que, según lo mostrado en la Figura \ref{setapaPO}, las empresas generadoras contaminadoras, venden todos sus permisos en la segunda etapa, entonces, estas suben sus precios de venta de electricidad en la primera etapa.
 \vspace{2.5mm}
 
 \begin{figure}[H]
 \centering
-\resizebox{14cm}{10cm}{%
+\resizebox{12cm}{9cm}{%
 \begin{tikzpicture}
 \centering
 \begin{axis}[legend style={nodes={scale=0.5, transform shape}}, 
@@ -571,112 +569,30 @@ En el Cuadro \ref{POpidporcap} se encuentran los precios de electricidad $\pi^d$
 }
 
 \caption{{\footnotesize Promedio de precios de electricidad (2019-2050)  por escenario}}
-\label{rendcap}
+\label{pidcap}
 \end{figure}
+
+Finalmente, se comparan los precios promedio de electricidad en la segunda etapa (años 2019-2050) para cada uno de los escenarios del modelo en la Figura \ref{pidcap}, los cuales siguen la lógica de mayor precio por mayor demanda energética, pero se distingue una caída pronunciada en los precios para todos los escenarios cuando el $CAP=800MtCO_2$ . Esto puede deberse, como se muestra en el Cuadro \ref{efectocapthetapia}, a la alta emisión de permisos en ese periodo, resultando en una mayor producción por parte de las empresas contaminantes en comparación a las renovables.
+\vspace{2.5mm}
+
+Los escenarios, que pronostican la demanda eléctrica en los años mencionados anteriormente, son los mismos que en el modelo original, mostradas en la Figura \ref{fig:demandaescenarios}. 
+\vspace{2.5mm}
+
+El escenario 1 corresponde a un futuro de Chile con bajo PIB, el escenario 2 corresponde a un Chile con PIB medio, el escenario 3 corresponde a un Chile con electrificación, el escenario 4 corresponde a un PIB alto y el escenario 5 corresponde a alta intención de bajar uso eléctrico. 
+\vspace{2.5mm}
+
 
 \begin{figure}[H]
-\centering
-\resizebox{13cm}{10cm}{%
-\begin{tikzpicture}
-\centering
-\begin{axis}[legend style={nodes={scale=0.5, transform shape}}, 
-        legend image post style={mark=*},
-    xlabel={{\footnotesize Escenario}},
-    ylabel={$\overline{\pi^d}$},
-    xmin=0, xmax=7,
-    ymin=70, ymax=160,
-    xtick={0,1,2,3,4,5},
-    ytick={70,80,90,100,110,120,130,140,150},
-    legend pos=north east,
-    ymajorgrids=true,
-    grid style=dashed,
-]
-
-\addplot[
-    color=red,
-    mark=square,
-    ]
-    coordinates {
-    (1,125.4)(2,134.52)(3,129.51)(4,148.38)(5,119.09)
-    };
-
-\addplot[
-    color=blue,
-    mark=square,
-    ]
-    coordinates {(1,106.36)(2,108.2)(3,100.99)(4,109.17)(5,104.63)
-    };
-\addplot[
-    color=green,
-    mark=square,
-    ]
-    coordinates {
-    (1,102.59)(2,108.88)(3,106.32)(4,119.22)(5,96.54)
-    };
-\addplot[
-    color=yellow,
-    mark=square,
-    ]
-    coordinates {
-    (1,96.75)(2,102.1)(3,100.32)(4,110.27)(5,91.42)
-    }; 
-\addplot[
-    color=orange,
-    mark=square,
-    ]
-    coordinates {
-    (1,90.43)(2,96.58)(3,95.15)(4,105.62)(5,83.21)
-    };
-\addplot[
-    color=black,
-    mark=square,
-    ]
-    coordinates {
-    (1,88.07)(2,93.38)(3,92.08)(4,102.2)(5,78.39)
-    };
-\addplot[
-    color=cyan,
-    mark=square,
-    ]
-    coordinates {
-    (1,88.07)(2,93.38)(3,92.08)(4,102.2)(5,78.39)
-    };
-\addplot[
-    color=brown,
-    mark=square,
-    ]
-    coordinates {
-    (1,77.16)(2,77.39)(3,73.62)(4,77.33)(5,81.56)
-    };
-\addplot[
-    color=violet,
-    mark=square,
-    ]
-    coordinates {
-    (1,88.07)(2,93.38)(3,92.08)(4,102.2)(5,78.39)
-    };
-\addplot[
-    color=lime,
-    mark=square,
-    ]
-    coordinates {
-   (1,88.07)(2,93.38)(3,92.08)(4,102.2)(5,78.39)
-    };
-    \legend{100M, 200M,300M,400M,500M,600M,700M,800M,900M,1000M}
-
-\end{axis}
-\end{tikzpicture}
-}
-\caption{{\footnotesize Promedio de precios de electricidad (2019-2050)  por escenario}}
-\label{rendcap}
+    \centering
+    \includegraphics[width=10cm]{docs/DocumentoMemoria/core/images/demanda energetica segun escenario.png}
+    \caption{{\footnotesize Demanda energética (Fuente: \protect\citeB{amigo_two_2021})}}
+    \label{fig:demandaescenarios}
 \end{figure}
-
-
 
 
 \section{Modelo de Bienestar Social con tasa cuadrada}
 
-Este modelo, explicado en el capítulo \ref{tasacuadrada}, es resuelto como un único MCP de problema de equilibrio:
+Este modelo, explicado en el capítulo \ref{tasacuadrada}, es resuelto como un único MCP de problema de equilibrio de la siguiente forma:
 \vspace{2.5mm}
 
 \textbf{MCP productor}
@@ -685,7 +601,7 @@ Se repite el MCP del productor presente en el capítulo anterior \ref{resultados
 
 \textbf{MCP condiciones de mercado}
 
-Al igual que el productor, este es el mismo MCP de las condiciones de mercado presente en el capítulo \ref{resultadosprofit}.
+Al igual que el productor, este es el mismo MCP de las condiciones de mercado presente en el Capítulo \ref{resultadosprofit}.
 
 \textbf{MCP subastador}
 
@@ -736,7 +652,7 @@ Los resultados de la calibración, en el Cuadro \ref{calibracioncuadrado}, muest
 
 \subsection{Resultados}
 
-Contrario al modelo anterior, en este modelo, el siguiente (Modelo con Precisión) y el original, el único parámetro que se varía para encontrar resultados es el presupuesto de carbono establecido por el gobierno (CAP). El rendimiento (P) se calcula con lso valores de las variables encontradas.
+Contrario al anterior, en este modelo, el siguiente (Modelo con Precisión) y el original, el único parámetro que se varía para encontrar resultados es el presupuesto de carbono establecido por el gobierno (CAP). El rendimiento (P) se calcula con los valores de las variables encontradas.
 \vspace{2.5mm}
 
 Según lo explicado en el Capítulo \ref{tasacuadrada}, el rendimiento se calcula de las siguiente forma: 
@@ -770,6 +686,9 @@ Considerando lo anterior, se tienen los siguientes resultados:
     \label{resultadostasacuadrada}
 \end{table}
 
+El Cuadro \ref{resultadostasacuadrada}, muestra que este modelo entrega rendimientos variados para la mayoría de los CAP. A pesar de lo anterior, en los primeros cuatro CAP, el subastador prefiere no invertir en información $(P-d=0)$. También, presenta una caída sostenible de los precios mientras mayor es el CAP, existiendo eso si una anomalía en el cuarto CAP donde existe un precio de venta de permisos $pi^a=0$. Esto probablemente es debido a una falla en el modelo por su alta no linealidad o se debe buscar otra formulación del modelo para encontrar mejores resultados.
+\vspace{2.5mm}
+
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}
@@ -798,8 +717,14 @@ Considerando lo anterior, se tienen los siguientes resultados:
 \end{axis}
 \end{tikzpicture}
 \caption{{\footnotesize Efecto del CAP sobre P}}
-\label{rendcap}
+\label{rendcapTC}
 \end{figure}
+
+Cuando se grafica el cambio del rendimiento en la Figura \ref{rendcapTC}, se observa un aumento de rendimiento entre los CAP 400 y 700, los cuales representan los escenarios donde existe una caída significativa a menor cociente $\frac{\theta}{CAP}$ según lo mostrado en la Figura \ref{rendcapTC2}.
+\vspace{2.5mm}
+
+Lo anterior, puede deberse a que mientras el subastador más invierte en información,entiende que menos se permisos de deben emitir para disminuir el costo social.
+\vspace{2.5mm}
 
 \begin{figure}[H]
 \centering
@@ -829,21 +754,32 @@ Considerando lo anterior, se tienen los siguientes resultados:
 \end{axis}
 \end{tikzpicture}
 \caption{{\footnotesize Efecto del CAP sobre $\frac{\theta}{CAP}$}}
-\label{rendcap}
+\label{rendcapTC2}
 \end{figure}
+
+En cuanto a la comparación de distribución de permisos entre las empresas contaminadoras, las figuras \ref{comptc1} y \ref{comptc2} muestras que, al igual que el modelo pasado, el Gas domina entre su competencia en la mayoría de los casos. 
+\vspace{2.5mm}
+
+A pesar de lo anterior, el Petro Diesel es el comprador mayoritario en los $CAP= 100$ y $CAP=200$ en la primera etapa. En la segunda etapa, estos venden casi todos sus permisos, entendiendo que lo hicieron como medida de inversión en corto plazo ya que con este modelo, probablemente los costos de producción son muy altos para bajas emisiones.
+\vspace{2.5mm}
 
 \begin{figure}[H]
   \centering
   \begin{minipage}[b]{0.49\textwidth}
     \includegraphics[width=\textwidth]{docs/DocumentoMemoria/core/images/distr primera etapa tasa cuadrada.png}
     \caption{{\footnotesize Distribución Primera Etapa}}
+    \label{comptc1}
   \end{minipage}
   \hfill
   \begin{minipage}[b]{0.49\textwidth}
     \includegraphics[width=\textwidth]{docs/DocumentoMemoria/core/images/distr segunda etapa tasa cuadrada.png}
     \caption{{\footnotesize Distribución Segunda Etapa}}
+    \label{comptc2}
   \end{minipage}
 \end{figure}
+
+Los precios de electricidad en la primera etapa resultantes, en el Cuadro \ref{TCpidporcap}, no muestran gran varianza entre los CAP 400 y 1000. Esto puede ser producto de que el subastador emite una cantidad similar de permisos en esos casos.
+\vspace{2.5mm}
 
 \begin{table}[H]
 \begin{footnotesize}
@@ -859,18 +795,22 @@ Considerando lo anterior, se tienen los siguientes resultados:
 \end{footnotesize}
 \end{table}
 
+
+Finalmente, se comparan los promedios de precios de electricidad entre los años 2019-2050 para todos lo escenarios de demanda en la Figura \ref{TCrendcap}. Este modelo muestra consistencia en estos resultados ya que los precios para todos los escenarios se mueven consistentemente entre los CAP. Particularmente, se distingue un salto en los precios para todos los escenarios en el $CAP=700$, entregando información de que este puede no ser un modelo adecuado para altos CAP ya que produciría altos precios de electricidad para las personas. 
+
 \begin{figure}[H]
 \centering
-\resizebox{13cm}{10cm}{%
+\resizebox{12cm}{9cm}{%
 \begin{tikzpicture}
 \centering
 \begin{axis}[legend style={nodes={scale=0.5, transform shape}}, 
         legend image post style={mark=*},
-    xlabel={{\footnotesize Escenario}},
+    xlabel={{\footnotesize $CAP[MtCO_2]$}},
+    xticklabel style = {rotate=45,anchor=east},
     ylabel={$\$ \overline{\pi^d}$},
-    xmin=0, xmax=7,
+    xmin=0, xmax=1100,
     ymin=70, ymax=160,
-    xtick={0,1,2,3,4,5},
+    xtick={100,200,300,400,500,600,700,800,900,1000},
     ytick={70,80,90,100,110,120,130,140,150},
     legend pos=north east,
     ymajorgrids=true,
@@ -882,72 +822,37 @@ Considerando lo anterior, se tienen los siguientes resultados:
     mark=square,
     ]
     coordinates {
-    (1,121)(2,130)(3,125)(4,143)(5,115)
+    (100,121)(200,107)(300,98)(400,97)(500,83)(600,85)(700,109)(800,94)(900,93)(1000,95)
     };
 
 \addplot[
     color=blue,
     mark=square,
     ]
-    coordinates {(1,107)(2,114)(3,111)(4,124)(5,101)
+    coordinates {(100,130)(200,114)(300,104)(400,101)(500,91)(600,93)(700,113)(800,97)(900,96)(1000,98)
     };
 \addplot[
     color=green,
     mark=square,
     ]
     coordinates {
-    (1,98)(2,104)(3,102)(4,113)(5,91)
+    (100,125)(200,111)(300,102)(400,100)(500,90)(600,92)(700,113)(800,96)(900,94)(1000,95)
     };
 \addplot[
     color=yellow,
     mark=square,
     ]
     coordinates {
-    (1,97)(2,101)(3,100)(4,107)(5,94)
+    (100,143)(200,124)(300,113)(400,107)(500,100)(600,102)(700,120)(800,103)(900,101)(1000,104)
     }; 
 \addplot[
     color=orange,
     mark=square,
     ]
     coordinates {
-    (1,83)(2,91)(3,90)(4,100)(5,76)
+   (100,115)(200,101)(300,91)(400,94)(500,76)(600,77)(700,105)(800,91)(900,90)(1000,92)
     };
-\addplot[
-    color=black,
-    mark=square,
-    ]
-    coordinates {
-    (1,85)(2,93)(3,92)(4,102)(5,77)
-    };
-\addplot[
-    color=cyan,
-    mark=square,
-    ]
-    coordinates {
-    (1,109)(2,113)(3,113)(4,120)(5,105)
-    };
-\addplot[
-    color=brown,
-    mark=square,
-    ]
-    coordinates {
-    (1,94)(2,97)(3,96)(4,103)(5,91)
-    };
-\addplot[
-    color=violet,
-    mark=square,
-    ]
-    coordinates {
-    (1,93)(2,96)(3,94)(4,101)(5,90)
-    };
-\addplot[
-    color=lime,
-    mark=square,
-    ]
-    coordinates {
-   (1,95)(2,98)(3,95)(4,104)(5,92)
-    };
-    \legend{100M, 200M,300M,400M,500M,600M,700M,800M,900M,1000M}
+    \legend{1,2,3,4,5}
 
 \end{axis}
 \end{tikzpicture}
@@ -1017,7 +922,7 @@ Los resultados de la calibración, en el Cuadro \ref{calibracionprecision}, mues
 
 \subsection{Resultados}
 
-Según lo explicado en el Capítulo \ref{modeloconprecision}, el rendimiento se calcula de las siguiente forma: 
+Según lo explicado en el Capítulo \ref{modeloconprecision}, el rendimiento se calcula de la siguiente forma: 
 \vspace{2.5mm}
 
 \begin{equation}
@@ -1048,6 +953,16 @@ Considerando lo anterior, se tienen los siguientes resultados:
     \label{resultadosprecision}
 \end{table}
 
+En el Cuadro \ref{resultadosprecision} se distingue el rendimiento constante a lo largo de todos los CAP. Esto significa que el subastador encuentró como óptimo no invertir en información para disminuir el ruido. Para mejorar esto se debe formular de mejor forma la necesidad del subastador de sí invertir en información para aumentar el bienestar social. Esto se repite en todos lo modelos en diferentes niveles.
+\vspace{2.5mm}
+
+Como resultado de lo anterior, se entiende que existe espacio para mejorar los modelos y en especial para formular la atención racional enfocada en el subastador de una forma que este busque con mayor nivel el bienestar social. Una idea a seguir es la de encontrar la forma en que el error de cálculo de presupuesto se puede disminuir y asignarle esta tarea al subastador. Entonces mientras más se invierta en información, se estaría invirtiendo en disminuir el error de cálculo de presupuesto, lo que estaría buscando un mejor bienestar social.
+\vspace{2.5mm}
+
+La conclusión anterior se desarrolla con mayor detalle en los siguientes capítulos.
+\vspace{2.5mm}
+
+
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}
@@ -1076,8 +991,15 @@ Considerando lo anterior, se tienen los siguientes resultados:
 \end{axis}
 \end{tikzpicture}
 \caption{{\footnotesize Efecto del CAP sobre P}}
-\label{rendcap}
+\label{rendcapMP}
 \end{figure}
+
+La consistencia en los rendimientos, graficados en la Figura \ref{rendcapMP}, producen una disminución sostenida en los precios de los permisos $\pi^a$, sin saltos repentinos, pero si encontrando un límite inferior con un $CAP=700$.
+\vspace{2.5mm}
+
+En este modelo, como los otros, el cociente $\frac{\theta}{CAP}$, graficado en la Figura \ref{rendcapMP2}, disminuye mientras mayor es el CAP. Emitiendo cantidades similares a sus CAP ($\frac{\theta}{CAP} = 1$), producto de que el subastador no invierte en información, entonces este produce cercano al CAP propuesto.
+\vspace{2.5mm}
+
 
 \begin{figure}[H]
 \centering
@@ -1107,21 +1029,32 @@ Considerando lo anterior, se tienen los siguientes resultados:
 \end{axis}
 \end{tikzpicture}
 \caption{{\footnotesize Efecto del CAP sobre $\frac{\theta}{CAP}$}}
-\label{rendcap}
+\label{rendcapMP2}
 \end{figure}
+
+La distribución de permisos entre las empresas contaminantes (figuras \ref{distriMP1} y \ref{distriMP3}) es similar al del modelo anterior, mostrando una dominancia del Gas.
+\vspace{2.5mm}
+
+Mientras que, en la segunda etapa, de forma progresiva, existen menos permisos que en el periodo anterior. Esto muestra que el modelo disminuye las emisiones a largo plazo.
 
 \begin{figure}[H]
   \centering
   \begin{minipage}[b]{0.49\textwidth}
     \includegraphics[width=\textwidth]{docs/DocumentoMemoria/core/images/distr primera etapa precision.png}
     \caption{{\footnotesize Distribución Primera Etapa}}
+    \label{distriMP1}
   \end{minipage}
   \hfill
   \begin{minipage}[b]{0.49\textwidth}
     \includegraphics[width=\textwidth]{docs/DocumentoMemoria/core/images/distr segunda etapa precision.png}
     \caption{{\footnotesize Distribución Segunda Etapa}}
+     \label{distriMP3}
   \end{minipage}
 \end{figure}
+
+Los precios de electricidad en la primera (mostrados en el Cuadro \ref{Ppidporcap}), presentan una baja varianza entre los CAP 300 y 1000. Junto con el análisis realizado sobre la distribución de permisos, se anticipa que estos precios pueden no bajar cambiar mucho en la segunda etapa debido a que las empresas contaminadoras, las cuales producen electricidad más barata, venden gran parte de sus permisos.
+\vspace{2.5mm}
+
 
 \begin{table}[H]
 \begin{footnotesize}
@@ -1137,18 +1070,22 @@ Considerando lo anterior, se tienen los siguientes resultados:
 \end{footnotesize}
 \end{table}
 
+La Figura \ref{MPrendcap} confirma el análisis anterior, ya que los precios muestran una menor pendiente que los otros modelos para cada uno de los escenarios.
+\vspace{2.5mm}
+
 \begin{figure}[H]
 \centering
-\resizebox{13cm}{10cm}{%
+\resizebox{12cm}{9cm}{%
 \begin{tikzpicture}
 \centering
 \begin{axis}[legend style={nodes={scale=0.5, transform shape}}, 
         legend image post style={mark=*},
-    xlabel={{\footnotesize Escenario}},
+    xlabel={{\footnotesize $CAP[MtCO_2]$}},
+    xticklabel style = {rotate=45,anchor=east},
     ylabel={$\$ \overline{\pi^d}$},
-    xmin=0, xmax=7,
+    xmin=0, xmax=1100,
     ymin=70, ymax=160,
-    xtick={0,1,2,3,4,5},
+    xtick={100,200,300,400,500,600,700,800,900,1000},
     ytick={70,80,90,100,110,120,130,140,150},
     legend pos=north east,
     ymajorgrids=true,
@@ -1160,81 +1097,55 @@ Considerando lo anterior, se tienen los siguientes resultados:
     mark=square,
     ]
     coordinates {
-    (1,125)(2,134)(3,129)(4,148)(5,119)
+    (100,125)(200,117)(300,104)(400,98)(500,113)(600,91)(700,108)(800,106)(900,105)(1000,100)
     };
 
 \addplot[
     color=blue,
     mark=square,
     ]
-    coordinates {(1,117)(2,123)(3,121)(4,136)(5,110)
+    coordinates {(100,134)(200,123)(300,108)(400,103)(500,117)(600,95)(700,113)(800,111)(900,110)(1000,102)
     };
 \addplot[
     color=green,
     mark=square,
     ]
     coordinates {
-    (1,104)(2,108)(3,107)(4,113)(5,101)
+    (100,129)(200,121)(300,107)(400,102)(500,116)(600,95)(700,112)(800,110)(900,110)(1000,101)
     };
 \addplot[
     color=yellow,
     mark=square,
     ]
     coordinates {
-    (1,98)(2,103)(3,102)(4,115)(5,93)
+    (100,148)(200,136)(300,113)(400,115)(500,123)(600,108)(700,120)(800,117)(900,117)(1000,107)
     }; 
 \addplot[
     color=orange,
     mark=square,
     ]
     coordinates {
-    (1,113)(2,117)(3,116)(4,123)(5,109)
+    (100,119)(200,110)(300,101)(400,93)(500,109)(600,86)(700,104)(800,102)(900,102)(1000,97)
     };
-\addplot[
-    color=black,
-    mark=square,
-    ]
-    coordinates {
-    (1,91)(2,95)(3,95)(4,108)(5,86)
-    };
-\addplot[
-    color=cyan,
-    mark=square,
-    ]
-    coordinates {
-    (1,108)(2,113)(3,112)(4,120)(5,104)
-    };
-\addplot[
-    color=brown,
-    mark=square,
-    ]
-    coordinates {
-    (1,106)(2,111)(3,110)(4,117)(5,102)
-    };
-\addplot[
-    color=violet,
-    mark=square,
-    ]
-    coordinates {
-    (1,105)(2,110)(3,110)(4,117)(5,102)
-    };
-\addplot[
-    color=lime,
-    mark=square,
-    ]
-    coordinates {
-   (1,100)(2,102)(3,101)(4,107)(5,97)
-    };
-    \legend{100M, 200M,300M,400M,500M,600M,700M,800M,900M,1000M}
+
+    \legend{1,2,3,4,5}
 
 \end{axis}
 \end{tikzpicture}
 }
 \caption{{\footnotesize Precios de electricidad (2019-2050)  por escenario}}
-\label{TCrendcap}
+\label{MPrendcap}
 \end{figure}
 
 \section{Comparación de Modelos}
+
+Finalmente, se realiza una comparación entre todos los modelos creados en este trabajo y el modelo original de \citeB{amigo_two_2021}. La idea de esto es entender el efecto del subastador en sus utilidades,  en el bienestar social y entender si utilizar el efecto de atención racional mejora estos efectos. También, es una medida para entender el efecto particular de cada modelo. 
+\vspace{2.5mm}
+
+Esta es una primera aproximación de inclusión de atención racional en el subastador. Por lo tanto, para juzgar si la reformulación del modelo es efectiva en cuanto al aumento de bienestar social, se espera que una de estas versiones del modelo presente precios más bajos para las personas ($\pi^d$) en $40\%$ o más de los CAP o menos permisos emitidos en $40\%$ o más de los CAP.
+\vspace{2.5mm}
+
+
 
 \begin{figure}[H]
     \centering
@@ -1243,64 +1154,15 @@ Considerando lo anterior, se tienen los siguientes resultados:
     \label{utilidades}
 \end{figure}
 
+Las utilidades del subastador presentadas en la Figura \ref{utilidades}, muestran que en un $70\%$ de los presupuestos de carbono establecidos por el gobierno, el modelo original presenta las más altas ganancias. 
+\vspace{2.5mm}
 
-\begin{figure}[H]
-\centering
-\resizebox{12cm}{9cm}{%
-\begin{tikzpicture}
-\centering
-\begin{axis}[legend style={nodes={scale=0.5, transform shape}}, 
-        legend image post style={mark=*},
-    xlabel={CAP[$MtCO_2$]},
-    ylabel={$\theta$[M]},
-    xmin=0, xmax=1100,
-    ymin=0, ymax=1200,
-    xtick={100,200,300,400,500,600,700,800,900,1000},
-    xticklabel style = {rotate=45,anchor=east},
-    ytick={0,100,200,300,400,500,600,700,800,900,1000,1100},
-    legend pos=south east,
-    ymajorgrids=true,
-    grid style=dashed,
-]
+Por un lado, es importante mencionar que no se consideraron gastos para el subastador en este modelo ya que su función objetivo solo consideraba un costo llamado Costo Social del Carbón. El cuál fue despreciado en la solución del modelo de equilibrio ya que se consideró independiente de los permisos emitidos ($\theta$) por los autores originales. 
+\vspace{2.5mm}
 
-\addplot[
-    color=red,
-    mark=square,
-    ]
-    coordinates {
-    (100,100)(200,200)(300,300)(400,400)(500,500)(600,600)(700,700)(800,800)(900,900)(1000,1000)
-    };
+Por otro lado, los modelos reformulados toman los valores de los costos de información adicional por medio de la calibración del ellos con el original. Por lo que tomar en cuenta las utilidades del subastador para estos, tampoco es el indicador más importante a considerar. En un trabajo posterior, se espera calcular estos costos de forma real. 
+\vspace{2.5mm}
 
-\addplot[
-    color=blue,
-    mark=square,
-    ]
-    coordinates {(100,120.2)(200,240.4)(300,360.6)(400,454.79)(500,601)(600,605.27)(700,605.27)(800,961.6)(900,605.27)(1000,605.27)
-    };
-    
-\addplot[
-    color=green,
-    mark=square,
-    ]
-    coordinates {
-    (100,144.94)(200,289.88)(300,434.83)(400,579.77)(500,653.75)(600,619.93)(700,661.25)(800,610.91)(900,609.12)(1000,698.67)
-    };
-    
-\addplot[
-    color=yellow,
-    mark=square,
-    ]
-    coordinates {
-    (100,120.2)(200,240.4)(300,354.5)(400,435.64)(500,590.04)(600,721.2)(700,673.83)(800,757.24)(900,851.9)(1000,947.17)
-    }; 
-    \legend{Modelo Original, Modelo Profit Oriented,Modelo Tasa Cuadrada,Modelo Precisión}
-
-\end{axis}
-\end{tikzpicture}
-}
-\caption{{\footnotesize Permisos emitidos por CAP}}
-\label{permisospormodelo}
-\end{figure}
 
 \begin{figure}[H]
 \centering
@@ -1361,8 +1223,79 @@ Considerando lo anterior, se tienen los siguientes resultados:
 \end{tikzpicture}
 }
 \caption{{\footnotesize Precio de venta de permisos $\pi^a$ por CAP}}
+\label{piapormodelo}
+\end{figure}
+
+Los precios de venta de permisos son un indicador de la cantidad de permisos emitidos ya que estos obedecen a la ley de demanda. También, son un indicador de los costos asociados a la producción de permisos. La Figura \ref{piapormodelo} muestra que el modelo original presenta los mayores precios para todos los CAP. Esto puede ser un indicador de que los nuevos modelos buscan con mayor efecto el bienestar social, ya que, a pesar de que estos presentan costos de producción, igualmente no transfieren estos costos a los permisos, produciendo potencialmente menores costos de electricidad. 
+\vspace{2.5mm}
+
+Por el contrario, estos precios pueden ser producto de más permisos emitidos, y por ende, más emisiones en el medio ambiente.
+\vspace{2.5mm}
+
+
+\begin{figure}[H]
+\centering
+\resizebox{12cm}{9cm}{%
+\begin{tikzpicture}
+\centering
+\begin{axis}[legend style={nodes={scale=0.5, transform shape}}, 
+        legend image post style={mark=*},
+    xlabel={CAP[$MtCO_2$]},
+    ylabel={$\theta$[M]},
+    xmin=0, xmax=1100,
+    ymin=0, ymax=1200,
+    xtick={100,200,300,400,500,600,700,800,900,1000},
+    xticklabel style = {rotate=45,anchor=east},
+    ytick={0,100,200,300,400,500,600,700,800,900,1000,1100},
+    legend pos=south east,
+    ymajorgrids=true,
+    grid style=dashed,
+]
+
+\addplot[
+    color=red,
+    mark=square,
+    ]
+    coordinates {
+    (100,100)(200,200)(300,300)(400,400)(500,500)(600,600)(700,700)(800,800)(900,900)(1000,1000)
+    };
+
+\addplot[
+    color=blue,
+    mark=square,
+    ]
+    coordinates {(100,120.2)(200,240.4)(300,360.6)(400,454.79)(500,601)(600,605.27)(700,605.27)(800,961.6)(900,605.27)(1000,605.27)
+    };
+    
+\addplot[
+    color=green,
+    mark=square,
+    ]
+    coordinates {
+    (100,144.94)(200,289.88)(300,434.83)(400,579.77)(500,653.75)(600,619.93)(700,661.25)(800,610.91)(900,609.12)(1000,698.67)
+    };
+    
+\addplot[
+    color=yellow,
+    mark=square,
+    ]
+    coordinates {
+    (100,120.2)(200,240.4)(300,354.5)(400,435.64)(500,590.04)(600,721.2)(700,673.83)(800,757.24)(900,851.9)(1000,947.17)
+    }; 
+    \legend{Modelo Original, Modelo Profit Oriented,Modelo Tasa Cuadrada,Modelo Precisión}
+
+\end{axis}
+\end{tikzpicture}
+}
+\caption{{\footnotesize Permisos emitidos por CAP}}
 \label{permisospormodelo}
 \end{figure}
+
+La Figura \ref{permisospormodelo} muestra que el análisis anterior no es efectivo para todos los casos. En los primeros 5 CAP establecidos, el subastador en el modelo original emite menos permisos que las nuevas versiones, pero, en $CAP=600$ el modelo de Tasa Cuadrada emite una cantidad muy similar de permisos y en los siguientes,  emite menos permisos, resultando en menores emisiones. También, los otros dos modelos (Precisión y Profit Oriented) emiten menos permisos en 3 y 4 de los últimos 5 CAP respectivamente. 
+\vspace{2.5mm}
+
+Con lo anterior se cumple con los criterios mencionados al inicio de este sub capítulo para validar el uso de atención racional en este sistema ya que uno de los modelos tiene menos permisos emitidos en más de un $40\%$ de los CAP, pero lo más destacado es que todos los modelos presentan 3 o más CAP con menores emisiones.
+\vspace{2.5mm}
 
 \begin{figure}[H]
 \centering
@@ -1422,8 +1355,10 @@ Considerando lo anterior, se tienen los siguientes resultados:
 \end{tikzpicture}
 }
 \caption{{\footnotesize Promedio precios de electricidad (2019-2050) $\pi^d$ por CAP}}
-\label{permisospormodelo}
+\label{pidpormodelo}
 \end{figure}
 
+Finalmente, se comparan los precios de electricidad para las personas entre los modelos en cada CAP. La Figura \ref{pidpormodelo} demuestra que los modelos Profit Oriented y Tasa Cuadrada crean menores precios para las personas en un $60\%$ de los CAP. Particularmente, el Profit Oriented lo logra en un $80\%$ de ellos. 
+\vspace{2.5mm}
 
-REVISAR SI LOS PID POR MODELO Y VER CUAL ES EL MEJOR, CREO QUE LOS MODELOS NUEVOS SON MEJORES CON POCO CAP PERO CON MAS CAP EL ORIGINAL ES MEJOR
+A pesar de que lo anterior es, en parte, producto de la cantidad emitida de permisos, se demuestra que estos modelos sí presentan un potencial de aumentar el bienestar social.

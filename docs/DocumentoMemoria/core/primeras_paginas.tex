@@ -42,7 +42,6 @@
     Mención Gestión de Operaciones\\
     \vspace{1cm}
     Profesor Guía: \nombreprofuno \\
-    Profesor Co-Guía: \nombreprofdos \\
     \vspace{0.5cm}
     \codigo \\
     \vspace{0.5cm}
@@ -62,9 +61,9 @@
 \vspace*{2cm}
 \parbox{10cm}{
 \noindent
-Certifico que he leído esta tesis y que en mi opinión
+Certifico que he leído esta memoria y que en mi opinión
 su alcance y calidad son completamente adecuados como para ser considerada
-una tesis conducente al título de Ingeniero y grado de Magíster.
+una memoria conducente al título de Ingeniero.
 \vspace{1cm}
 
 \hfill
@@ -77,33 +76,6 @@ una tesis conducente al título de Ingeniero y grado de Magíster.
 
 \vspace*{1.5cm}
 
-\noindent
-Certifico que he leído esta tesis y que en mi opinión
-su alcance y calidad son completamente adecuados como para ser considerada
-una tesis conducente al título de Ingeniero y grado de Magíster.
-\vspace{0.75cm}
-
-\hfill
-\begin{tabular}{c}
-\hspace{8cm} \\
-\hline
-\nombreprofdos
-\end{tabular}
-
-\vspace*{1.5cm}
-
-\noindent
-Certifico que he leído esta tesis y que en mi opinión
-su alcance y calidad son completamente adecuados como para ser considerada
-una tesis conducente al título de Ingeniero y grado de Magíster.
-\vspace{0.75cm}
-
-\hfill
-\begin{tabular}{c}
-\hspace{8cm} \\
-\hline
-\nombreproftres
-\end{tabular}
 }
 
 \end{center}
@@ -126,23 +98,45 @@ una tesis conducente al título de Ingeniero y grado de Magíster.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% Genera resumen leyendo definicion de resumen
-
-  \cleardoublepage
-  \refstepcounter{dummy} \addcontentsline{toc}{section}{Resumen}
-  \begin{center} \Large \textbf{Resumen} \end{center}
-  \resumen
-
 % Genera agradecimientos leyendo definicion de agradecimientos
 
   \cleardoublepage \addcontentsline{toc}{section}{Agradecimientos}
   \begin{center} \Large \textbf{Agradecimientos} \end{center}
-  \agradecimientos
+
+Un primer agradecimiento se lo dedico a mi familia, por su contante apoyo tanto emocional como económico a lo largo de toda mi carrera universitaria. Agradezco la motivación y ganas de mejorar que me traspasaron durante los años.
+\vspace{2.5mm}
+
+Un segundo agradecimiento se lo dedico al profesor Sebastián Cea que me ofreció la oportunidad de desarrollar la memoria con él y trabajar juntos en la mejora de su modelo. Su apoyo constante, reuniones recurrentes y el perfil personalizado con el cuál me guió durante el último año me permitió aprender mucho y avanzar de forma ordenada en mi memoria. 
+\vspace{2.5mm}
+
+
+% Genera resumen leyendo definicion de resumen
+
+
+  \cleardoublepage
+  \refstepcounter{dummy} \addcontentsline{toc}{section}{Resumen}
+  \begin{center} \Large \textbf{Resumen} \end{center}
+La presente memoria estudia la incorporación de atención racional en el modelo de \textit{cap and trade} de dos etapas creado por \citeB{amigo_two_2021}. Este modelo es una alternativa para fiscalizar las emisiones de dióxido de carbono de las empresas generadoras de electricidad, en el cual, un subastador (también llamado planificador social) emite permisos que luego le vende a las empresas generadoras y con los cuales ellas se limitan a contaminar.
+\vspace{2.5mm}
+
+La inclusión de atención racional en el modelo se realiza ya que esta presenta la oportunidad de minimizar el costo social por medio de la inversión en información. La incorporación de este concepto es dificultoso en este modelo ya que este es un problema de optimización de equilibrio en capacidad con dos agentes representados en dos modelos distintos. Para resolver el problema se deben convertir en uno solo de tipo \textit{Mixed Complementarity Problem} (MCP en sus siglas en inglés). Esto es dificultoso ya que se convierte en un modelo altamente no lineal.
+\vspace{2.5mm}
+
+En esta memoria se explica qué son los modelos de equilibrio,  las condiciones de KKT, los MCP, se proporciona ejemplos de como resolverlos en distintos lenguajes de programación, se replica el modelo original y finalmente se realiza la implementación de atención racional y se resuelve.
+\vspace{2.5mm}
+
+La implementación se realiza, finalmente, en el modelo del subastador. Se realizan dos versiones: \textit{Profit Oriented}, en el cuál el subastador sufre perdidas dependiendo de su rendimiento encontrado y la versión Enfocado en Bienestar Social (sobre la cuál se realizaron dos formulaciones), esta se enfoca en el beneficio social más que en las utilidades. 
+\vspace{2.5mm}
+
+Finalmente, se resolvieron los nuevos modelos y se compraron con el original. En esto se encontró que la implementación aumenta el bienestar social y que existe potencial para perfeccionar ambas versiones y proponer un sistema en la vida real.
+
+
+
 
 % Genera dedicatoria
 
-  \cleardoublepage \vspace*{1.5in}
-  \begin{flushright} \dedicatoria \end{flushright}
+ % \cleardoublepage \vspace*{1.5in}
+  %\begin{flushright} \dedicatoria %\end{flushright}
 
 % Produce indice general, listas de figuras y de tablas
 

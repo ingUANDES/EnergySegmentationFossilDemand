@@ -1,6 +1,6 @@
 % cap2.tex
 
-\chapter{MARCO TEÓRICO}
+\chapter{Marco Teórico}
 \label{c2} 
 
 
@@ -693,29 +693,29 @@ El cuadro \ref{tabla:ejemplos} muestra que el rendimiento de los tres programas 
 
 \section{Amigo, Cea-Echenique \& Feijoo, 2021}
 
-Como se menciona en \ref{c22}, los mecanismos de \textit{cap and trade}, por lo menos en teoría, pueden funcionar de forma efectiva cuando se aplica el mecanismo correcto para el problema que se quiere solucionar. El modelo de \textit{cap and trade} de dos etapas propuesto por los autores Amigo, Cea-Echenique y Feijoo, en su trabajo titulado \textit{A two stage cap-and-trade model with allowance re-trading and capacity investment: The case of the Chilean NDC targets}, buscar disminuir las emisiones de $CO_2$ e incentivar el cambio de generación de energía a fuentes más sustentables al aplicar un modelo que reconoce que, tanto los productores como el planificador social (subastador o regulador), buscan maximizar sus beneficios.
+Como se menciona en el Capítulo \ref{c22}, los mecanismos de \textit{cap and trade}, por lo menos en teoría, pueden funcionar de forma efectiva cuando se aplica el mecanismo correcto para el problema que se quiere solucionar. El modelo de \textit{cap and trade} de dos etapas propuesto por \citeB{amigo_two_2021}, busca disminuir las emisiones de $CO_2$ e incentivar el cambio de generación de energía a fuentes más sustentables al aplicar un modelo que reconoce que, tanto los productores como el planificador social (subastador o regulador), tienen como finalidad maximizar sus beneficios.
 \vspace{2.5mm}
 
-En él, el modelo propone un sistema de dos etapas que involucra a los generadores de electricidad y al subastador que proporciona los permisos de emisiones de dióxido de carbono ($CO_2 e$). En la primera etapa (periodo $t=0$), el subastador determina los permisos de contaminación que serán vendidos a los productores de electricidad. Estos permisos corresponden a la contaminación máxima que cada generador puede emitir. Así mismo, en la misma etapa, las empresas generadoras deciden su inversión en capacidad, su generación y la asignación de sus permisos para satisfacer una demanda exógena. Ellos compran los permisos $A_i$ al subastador a un precio $\pi^a$ para hacer viable, en términos de permisos de emisión de contaminante, su producción. 
+El modelo propone un sistema de dos etapas que involucra a los generadores de electricidad y al subastador que proporciona los permisos de emisiones de dióxido de carbono ($CO_2 e$). En la primera etapa (periodo $t=0$), el subastador determina los permisos de contaminación que serán vendidos a los productores de electricidad. Estos permisos corresponden a la contaminación máxima que cada generador puede emitir. Además, en la misma etapa, las empresas generadoras deciden su inversión en capacidad, su generación y la asignación de sus permisos para satisfacer una demanda exógena. Ellas compran los permisos $A_i$ al subastador a un precio $\pi^a$ para hacer viable, en términos de permisos de emisión de contaminante, su producción. 
 \vspace{2.5mm}
 
-La segunda etapa se distribuye entre el periodo siguiente a la asignación inicial de permisos por parte del subastador hasta el fin del período analizado ($t=1,...,T$). Particularmente en $t=1$, es en el cuál se revela la demanda futura dada por un estado de la naturaleza $w \in W :=\{ 1,..,K\}$, en que su probabilidad de ocurrencia está definida por $P(w)$. Según esta demanda, los productores recalculan sus niveles de generación y financiar nuevamente su capacidad e inversión en permisos faltantes. También tienen la oportunidad de comprar permisos o vender los suyos para adaptar su esperanza de generación en el futuro. Esto les otorga una segunda oportunidad para adaptar sus variables de generación sin ser afectados en gran manera por la incertidumbre de demanda.
+La segunda etapa se distribuye entre el periodo siguiente a la asignación inicial de permisos por parte del subastador hasta el fin del período analizado ($t=1,...,T$). Particularmente en $t=1$,  se revela la demanda futura dada por un estado de la naturaleza $w \in W :=\{ 1,..,K\}$, en que su probabilidad de ocurrencia está definida por $P(w)$. Según esta demanda, los productores recalculan sus niveles de generación y financiar nuevamente su capacidad e inversión en permisos faltantes. También tienen la oportunidad de comprar permisos o vender los suyos para adaptar su esperanza de generación en el futuro. Esto les otorga una segunda oportunidad para adaptar sus variables de generación sin ser afectados, significativamente, por la incertidumbre de demanda.
 \vspace{2.5mm}
 
-\begin{figure}[htp]
+La Figura \ref{fig:nomenclatura1} define todas las variables del modelo original para simplificar la lectura de las ecuaciones que se definen a continuación.
+\vspace{2.5mm}
+
+\begin{figure}[H]
     \centering
     \includegraphics[width=15cm]{docs/DocumentoMemoria/core/images/Tabla amigo.png}
     \caption{Nomenclatura modelo original (Fuente: \protect\citeB{amigo_two_2021})}
     \label{fig:nomenclatura1}
 \end{figure}
 
-La Figura \ref{fig:nomenclatura1} define todas las variables del modelo original para así simplificar la lectura las ecuaciones por definir a continuación.
+El modelo de \textit{cap and trade} propuesto se divide en dos,  que modelan el problema de los agentes (subastador y productores), en el que ellos buscan maximizar sus beneficios y unas restricciones de condiciones de mercado que completan el problema de equilibrio.
 \vspace{2.5mm}
 
-El modelo de \textit{cap and trade} propuesto en el artículo principal es dividido en dos modelos que modelan el problema de los agentes (subastador y productores) en el cual ellos buscan maximizar sus beneficios y unas restricciones de condiciones de mercado que completan el problema de equilibrio.
-\vspace{2.5mm}
-
-Por un lado, está el problema de los productores en \ref{fo:prod}. Este está acotado por restricciones de capacidad en generación en \ref{res:1}, restricción en generación inicial \ref{res:2}, de limites en capacidad \ref{res:3} y venta y compra de permisos \ref{res:4} y \ref{res:5}. 
+Por un lado, está el problema de los productores, mostrado en la ecuación \ref{fo:prod}. Este está acotado por restricciones de capacidad en generación en la restricción \ref{res:1}, restricción en generación inicial en \ref{res:2}, de límites en capacidad en \ref{res:3} y venta y compra de permisos en \ref{res:4} y \ref{res:5}. 
 
 \begin{align}
 \min_{(x_i,Q_i,A_i,P_i,V_i)\in \mathbb{X}} &  f_i \big( \pi^d(0),Q_i(0)\big)+ A_i \pi^{a} + I_i x_i(0) \nonumber \\ 
@@ -735,10 +735,10 @@ Por un lado, está el problema de los productores en \ref{fo:prod}. Este está a
   x_i(t, \omega) & \geq  0   & \forall  \quad \omega, t >0 & \quad (\varphi_{i,\omega,t})\label{res:capt}
   \end{align}
 
-Es de importancia mencionar que las variables presentes al final de cada restricción (por ejemplo $\varphi_{i,\omega,t}$ en \ref{res:capt}) corresponden a las variables duales de cada una respectivamente.
+Es importante considerar que las variables presentes al final de cada restricción (por ejemplo $\varphi_{i,\omega,t}$ en \ref{res:capt}) corresponden a las variables duales de cada una, respectivamente.
 \vspace{2.5mm}
 
-Por otro lado, el problema del subastador está formulado de la siguiente forma en \ref{eq:sub}. En la sección siguiente se explica con más detalle este modelo y sus restricciones.
+Por otro lado, el problema del subastador está formulado de la siguiente forma en la función objetivo \ref{eq:sub}. En la sección siguiente, se explica con más detalle este modelo y sus restricciones.
 
 \begin{equation}
 \begin{array}{rrclcl}
@@ -756,13 +756,13 @@ Por otro lado, el problema del subastador está formulado de la siguiente forma 
 \end{array}
 \end{equation}
 
-Con la finalidad de lograr que ambos modelos se relacionen y puedan ser resueltos en un único sistema de ecuaciones como MCP, las variables de ambos problemas deben resolver las siguientes condiciones de mercado.
+Con la finalidad de que ambos modelos se relacionen y puedan ser resueltos en un único sistema de ecuaciones como MCP, las variables de ambos problemas deben resolver las siguientes condiciones de mercado.
 
 \begin{align}
    \sum_{i}A_i = \theta  &\quad (\pi^a)\label{rescom:1}
 \end{align}
 
-La anterior restringe que los permisos disponibles en el primer periodo no puede superar a los permisos emitidos por el subastador.
+La anterior restringe que los permisos disponibles en el primer periodo no pueden superar los emitidos por el subastador.
 
 \begin{align}
     \sum_{i}P_{i,\omega} = \sum_{i}V_{i,\omega} \quad& \forall \omega &(\pi^v (w))\label{rescom:2}
@@ -770,7 +770,7 @@ La anterior restringe que los permisos disponibles en el primer periodo no puede
     
 
 
-Esta explica que debe habe equilibrio en el mercado de compra y ventas de permisos.
+Esta explica que debe haber equilibrio en el mercado de compra y ventas de permisos.
 
 \begin{align}
   \sum_{i}Q_i(0) = D(0) \quad (\pi^d (0))\label{rescom:3}  
@@ -783,36 +783,34 @@ La demanda energética debe ser abastecida en la primera etapa.
     \sum_{i}Q_i(t,\omega) = D(t,\omega) \quad& \forall  \omega,t & (\pi^d (\omega,t))\label{rescom:4}
 \end{align}
 
-Finalmente \ref{rescom:4} restringe que la demanda sea igual a la producción en todos los periodos y escenarios de la segunda etapa.
+Finalmente, la restricción \ref{rescom:4} restringe que la demanda sea igual a la producción en todos los periodos y escenarios de la segunda etapa.
 \vspace{2.5mm}
 
-Evaluando de forma general este modelo, el sistema le permite a los generadores modificar sus sistemas en la segunda etapa para así poder obtener más utilidad al poder ajustar sus emisiones.
+Al evaluar, en general, este modelo, el sistema permite a los generadores modificar sus sistemas en la segunda etapa con el propósito de obtener mayor utilidad al ajustar sus emisiones.
 \vspace{2.5mm}
 
-Esta oportunidad de reajuste le otorga interesantes oportunidades tanto a las empresas generadoras como al gobierno que quiere disminuir las emisiones. Por un lado, esta instancia les permite a las empresas mejorar sus ganancias acorde a las proyecciones de demanda. Por otro lado, el gobierno o ente regulador tendrá la opción de forzar ventas de permisos a las empresas de carbón para así incentivarles el cambio a opciones más renovables. 
+Esta oportunidad de reajuste otorga interesantes oportunidades, tanto a las empresas generadoras como al gobierno que pretende disminuir las emisiones. Por un lado, esta instancia permite a las empresas mejorar sus ganancias, acorde con las proyecciones de demanda. Por otro lado, el gobierno o ente regulador tendrá la opción de forzar ventas de permisos a las empresas de carbón para incentivar el cambio a opciones más renovables. 
 \vspace{2.5mm}
 
-El trabajo finalmente concluye que con el actual impuesto al carbono utilizado en Chile, no se llegaría a los objetivos de eliminar el carbón como fuente de generación para 2030 ni para ser carbono neutral en el año 2050. Pero proponen que definir un presupuesto de carbono (\textit{CAP}) entre 500-600 $MtCO_2 e$ o menos eliminaría al carbón en 15 años. También que con un \textit{CAP} menos severo (mayor $MtCO_2 e$) aumentaría la producción por energía con fuentes no convencionales(sustentables) a un 60-70\% del total de empresas generadoras pero no eliminaría totalmente al carbón en el tiempo prometido. Y como tercer descubrimiento, se concluye que si se añaden restricciones adicionales a las empresas generadoras (como imponer que estas deben vender sus permisos al llegar al año 2035), los objetivos de eliminar el carbón puede ser obtenible.
+Finalmente, el trabajo concluye que con el actual impuesto al carbono utilizado en Chile, no se llegaría al objetivo de eliminar el carbón como fuente de generación para el 2030 ni para ser carbono neutral en el año 2050. No obstante, proponen que definir un presupuesto de carbono (\textit{CAP}) entre 500-600 $MtCO_2 e$ o menos eliminaría al carbón en 15 años. También que con un \textit{CAP} menos severo (mayor $MtCO_2 e$) aumentaría la producción por energía con fuentes no convencionales(sustentables) a un 60-70\% del total de empresas generadoras, pero no eliminaría totalmente al carbón en el tiempo prometido. Como tercer punto, se concluye que si se añaden restricciones adicionales a las empresas generadoras (como imponer que estas deben vender sus permisos al llegar al año 2035), el objetivo de eliminar el carbón se puede alcanzar.
 \vspace{2.5mm}
 
-En el análisis anterior se reconoce la importancia del subastador en este modelo y en el futuro de la generación eléctrica si se planea utilizar este sistema de \textit{cap and trade}. La cantidad de permisos emitidos según el \textit{CAP} deben estar de acuerdo a un criterio de optimalidad. Es decir, lo más cercanos a la realidad en cuanto al presupuesto determinado y la demanda futura. Es por esto que se decide profundizar en el problema del subastador para hacer más realista su rol en el sistema.
+En el análisis anterior, se reconoce la importancia del subastador en este modelo y en el futuro de la generación eléctrica si se planea utilizar este sistema de \textit{cap and trade}. La cantidad de permisos emitidos según el \textit{CAP} deben estar de acuerdo con un criterio de optimalidad. Es decir, lo más cercanos a la realidad en cuanto al presupuesto determinado y la demanda futura. Por esto, se decide profundizar en el problema del subastador para que su rol en el sistema sea más real.
 \vspace{2.5mm}
 
 \section{Transformación del modelo original de Amigo et al. (2021) a un MCP}
 
-Una de las formas de resolver el modelo original de \citeB{amigo_two_2021}, gracias a su forma, es transformarlo en un MCP. Esto es posible por medio del teorema de Karush-Kuhn-Tucker \ref{descripcionkkt} y sus condiciones resultantes. 
+Una de las maneras de resolver el modelo original de \citeB{amigo_two_2021}, gracias a su estructura, es transformarlo en un MCP. Esto es posible por medio del teorema de Karush-Kuhn-Tucker \ref{descripcionkkt} y sus condiciones resultantes. 
 \vspace{2.5mm}
 
-Por lo tanto, para lograr replicar el modelo original, primero, se realiza esta transformación. Es necesario entender que el modelo creado consiste de dos modelos que optimizan las utilidades de dos grupos de agentes distintos. Por un lado, se optimizan las utilidades de los productores de electricidad \ref{fo:prod} y, por otro lado, está el modelo que optimiza al subastador o ente regulador de permisos de contaminación \ref{eq:sub}. Con el fin de resolver el modelo como un solo problema MCP es necesario juntar ambos en un único problema de tipo MCP. Para lograr esto, además de encontrar las ecuaciones de KKT de cada uno de los grupos de agentes, es necesario incorporar las 4 condiciones de mercado \ref{rescom:1}, \ref{rescom:2},\ref{res:3},\ref{rescom:4} que relacionan ambos grupos de agentes.
-
-Para ver la implementación del siguiente modelo en GAMS con MCP, revisar Anexo \ref{anexo:GAMScomp}.
+Por lo tanto, para lograr replicar el modelo original,  se debe realizar esta transformación. Es necesario entender que el modelo creado consiste de dos modelos que optimizan las utilidades de dos grupos de agentes distintos. Por un lado, se optimizan las utilidades de los productores de electricidad en el modelo \ref{fo:prod} y, por otro lado, está el modelo que optimiza al subastador o ente regulador de permisos de contaminación mostrado en \ref{eq:sub}. Con el fin de resolver el modelo como un solo problema MCP, es necesario agruparlos en un único problema de tipo MCP. Para lograr esto, además de encontrar las ecuaciones de KKT de cada uno de los grupos de agentes, es necesario incorporar las 4 condiciones de mercado \ref{rescom:1}, \ref{rescom:2},\ref{res:3},\ref{rescom:4} que relacionan ambos grupos de agentes.
 
 \subsection{MCP problema del productor}\label{MCPproductor}
 
 Primero, es necesario aplicar el teorema de KKT en el problema del productor \ref{fo:prod} para transformarlo en un MCP.
 \vspace{2.5mm}
 
-El lagrangeano del problema del productor queda: 
+El lagrangeano del problema del productor se presenta de la siguiente manera: 
 
 \begin{footnotesize}
 \begin{align}
@@ -822,8 +820,7 @@ El lagrangeano del problema del productor queda:
 \end{align}
 \end{footnotesize}
 
-
-Realizando las derivadas de primer orden se obtienen:
+Al calcular las derivadas de primer orden, se obtienen:
 
 \subsubsection{Derivada parcial respecto a $x_i(0)$}
 \begin{footnotesize}
@@ -834,7 +831,7 @@ Realizando las derivadas de primer orden se obtienen:
 \end{footnotesize}
 
 
-Donde $\xi_i$ es la variable dual en \ref{res:capi0}. Por lo que esta kkt debe ser complementaria a $x_i(0)$, obteniendo la siguiente complementariedad:
+En la que $\xi_i$ es la variable dual en \ref{res:capi0}. Por lo que esta KKT debe ser complementaria a $x_i(0)$, con lo que se obtiene la siguiente complementariedad:
 
 \begin{footnotesize}
 \begin{align}
@@ -856,7 +853,7 @@ Donde $\xi_i$ es la variable dual en \ref{res:capi0}. Por lo que esta kkt debe s
 \end{footnotesize}
 
 
-Donde $\varphi$ es la variable dual en la restricción \ref{res:capt}, por lo que, para resolver como MCP se tiene la siguiente complementariedad:
+En la que $\varphi$ es la variable dual en la restricción \ref{res:capt}, por lo que, para resolver como MCP, se tiene la siguiente complementariedad:
 
 
 \begin{footnotesize}
@@ -878,7 +875,8 @@ Donde $\varphi$ es la variable dual en la restricción \ref{res:capt}, por lo qu
 
 \end{footnotesize}
 
-$\lambda_i$ es la variable dual de la restricción \ref{res:q0}, por lo que, para resolver como MCP se tiene lo siguiente:
+$\lambda_i$ es la variable dual de la restricción \ref{res:q0}, por lo que, para resolver como MCP, se tiene lo siguiente:
+
 \begin{footnotesize}
 \begin{align}
     \big(a_{i}+b_i Q_{i}(0)\big)-\pi^d(0) + \kappa_i  + \sum_{\omega} \gamma_{i,\omega}\varepsilon_i \geq 0 \qquad \forall \  i  \\
@@ -921,7 +919,7 @@ $\delta_{i,\omega,t}$ es la variable dual de la restricción \ref{res:qt}, al re
 \end{footnotesize}
 
 
-Para resolverlo como MCP se tiene la siguiente complementariedad:
+Para resolverlo como MCP, se tiene la siguiente complementariedad:
 \begin{footnotesize}
 \begin{align}
     \pi^{a} - \sum_{\omega}\beta_{i,\omega} - \sum_{\omega}\gamma_{i,\omega} \geq 0 \qquad \forall  i\\
@@ -942,7 +940,7 @@ Para resolverlo como MCP se tiene la siguiente complementariedad:
 \end{footnotesize}
 
 
-Para resolverlo como MCP se tiene la siguiente complementariedad:
+Para resolverlo como MCP, se tiene la siguiente complementariedad:
 \begin{footnotesize}
 \begin{align}
     -Pr(\omega) \pi^v(\omega) + \beta_{i,\omega}  + \gamma_{i,\omega} \geq 0 \qquad \forall \  i, \omega \\
@@ -963,7 +961,7 @@ Para resolverlo como MCP se tiene la siguiente complementariedad:
 \end{footnotesize}
 
 
-Para resolverlo como MCP se tiene la siguiente complementariedad:
+Para resolverlo como MCP, se tiene la siguiente complementariedad:
 \begin{footnotesize}
 \begin{align}
     Pr(\omega) \pi^v(\omega) -\gamma_{i,\omega} \geq 0 \qquad \forall \  i, \omega \\
@@ -975,7 +973,8 @@ Para resolverlo como MCP se tiene la siguiente complementariedad:
 
 
 \subsubsection{Completando el problema del productor}
-El resto de las complementariedades del problema del productor se producen al complementar las restricciones del modelo original con sus variables duales:
+
+Las demás complementariedades del problema del productor se producen al complementar las restricciones del modelo original con sus variables duales:
 
 \begin{footnotesize}
 \begin{align}
@@ -991,11 +990,11 @@ El resto de las complementariedades del problema del productor se producen al co
 
 \subsection{MCP problema del subastador}
 
-Debido a que esta memoria se centra en la mejora e innovación de este modelo, este MCP se incluye en el siguiente capítulo ( \ref{MCP:subastador}). En el cuál, luego de encontrar las restricciones, se proporciona una reestructuración de este. 
+Debido a que esta memoria se centra en la mejora e innovación de este modelo, este MCP se incluye en el siguiente capítulo ( \ref{MCP:subastador}). En él, luego de encontrar las restricciones, se proporciona una reestructuración del problema del subastador. 
 
 \subsection{Condiciones de mercado}\label{MCPmercado}
 
-Debido a que el modelo de \textit{cap and trade} funciona como un único sistema donde los precios elegidos por el subastador influyen directamente a los generadores y la cantidad de permisos comprados por ellos afecta las ganancias del subastador, estos problemas deben ser resueltos en un solo modelo. Con el fin de lograr esto, los modelos del subastador y productor deben ser resueltos en un solo MCP que considere todas las variables y restricciones del sistema. Esta unión es posible al incluir las restricciones de condiciones de mercado \ref{rescom:1}, \ref{rescom:2},\ref{res:3},\ref{rescom:4}. A partir de estas, se obtienen las siguientes complementariedades:
+Debido a que el modelo de \textit{cap and trade} funciona como un único sistema en el cuál los precios elegidos por el subastador influyen directamente en los generadores y la cantidad de permisos comprados por ellos afecta las ganancias del subastador, estos problemas deben ser resueltos en un solo modelo. Con el fin de lograr esto, los modelos del subastador y productor deben ser resueltos en un solo MCP que considere todas las variables y restricciones del sistema. Esta unión es posible al incluir las restricciones de condiciones de mercado \ref{rescom:1}, \ref{rescom:2},\ref{res:3},\ref{rescom:4}. A partir de estas, se calculan las siguientes complementariedades:
 
 \subsubsection{Restricción de permisos disponibles}
 \begin{footnotesize}
@@ -1008,6 +1007,7 @@ Debido a que el modelo de \textit{cap and trade} funciona como un único sistema
 
 
 \subsubsection{Restricción de equilibrio en el mercado de compra y venta de permisos}
+
 \begin{footnotesize}
 \begin{align}
  \pi^v(\omega) \geq 0 \qquad \forall \omega\\
@@ -1043,26 +1043,29 @@ Debido a que el modelo de \textit{cap and trade} funciona como un único sistema
 
 \section{Costos de información y su aplicación en problemas de maximización de beneficios}\label{marco:costos}
 
-En el contexto de modelos de optimización en economía, por ejemplo la maximización de utilidades, diversos factores pueden afectar su función objetivo. En varios casos se reconoce la existencia de ``ruidos'' que afectan el rendimiento de una inversión. Estos modelos con ``ruidos'' pueden ser complejos de manejar ya que proveen predicciones estocásticas y no deterministicas \citeB{gabaix_behavioral_2019}. Estos ``ruido'' se pueden interpretar como señales que afectan las decisiones de inversión. Estos pueden clasificarse como señales de información erróneas sobre la inversión que pueden afectar el rendimiento del inversionista. Pero, se reconoce que en la realidad existe la posibilidad de gastar dinero en mejorar la información y por ende disminuir el ruido, gasto que se incluye en el modelo que se está evaluando.
+En el contexto de modelos de optimización en economía, por ejemplo la maximización de utilidades, diversos factores pueden afectar su función objetivo. En varios casos, se reconoce la existencia de ``ruidos'' que afectan el rendimiento de una inversión. Estos modelos con ``ruidos'' pueden ser complejos de manejar ya que proveen predicciones estocásticas y no deterministicas \citeB{gabaix_behavioral_2019}. Además, se pueden interpretar como señales que afectan las decisiones de inversión. Estos pueden clasificarse como señales de información erróneas sobre la inversión que pueden afectar el rendimiento del inversionista. No obstante, se reconoce que en la realidad existe la posibilidad de gastar dinero en mejorar la información y, por ende, disminuir el ruido, gasto que se incluye en el modelo que se está evaluando.
 \vspace{2.5mm}
 
-Existe una parte de la información que es disponible, es definida en varios trabajos como información pública, de la cuál no se debe pagar y toda persona racional puede acceder. Luego, si se quiere aumentar la información beneficiosa y disminuir el ruido, se incurre en un costo asociado a obtener esa información (por ejemplo, el costo de contratar servicios de consultoría financiera). El trabajo \citeB{verrecchia_information_1982} fue de los primeros en explorar el incentivo de inversionistas de pagar para obtener información en los mercados financieros y mejorar sus inversiones. En otras palabras, demuestra que los agentes pagan para obtener mejor información y así obtener mejores señales y disminuir el ruido. 
+La proporción de la información que está disponible, es definida en como información pública. Por ella no se debe pagar. Por lo tanto, si se quiere aumentar la información beneficiosa y disminuir el ruido, se incurre en un costo asociado para obtener esa información (por ejemplo, el costo de contratar servicios de consultoría financiera). \citeB{verrecchia_information_1982} fue de los primeros en explorar el incentivo de inversionistas de pagar para obtener información en los mercados financieros y mejorar sus inversiones. En otras palabras, demuestra que los agentes pagan para obtener mejor información y así obtener señales claras para disminuir el ruido. 
 \vspace{2.5mm}
 
-\citeB{gabaix_behavioral_2019} propone un modelo de optimización donde se considera la precisión de la señal sujeta a su costo de mejorarla. En esta se explica el costo de inatención que tenemos como personas al tomar decisiones y su falta de representación en los modelos económicos.
+\citeB{gabaix_behavioral_2019} propone un modelo de optimización en el que se considera la precisión de la señal sujeta a su costo por mejorarla. En esta, se explica el costo de inatención que tienen las personas al tomar decisiones y su falta de representación en los modelos económicos.
 \vspace{2.5mm}
 
-Trabajos más contemporáneos proponen formas de caracterizar la forma en que estos costos de información toman en la realidad. Entender la forma de como caracterizarlos es necesario para modelar de forma exitosa su efecto. \citeB{dewan_estimating_2020} hace exactamente esto. En este trabajo, primero, se propone la función objetivo del tomador de decisión de la siguiente forma: 
+Trabajos más contemporáneos proponen maneras de caracterizar la forma en que estos costos de información se presentan en la realidad. Por ejemplo, \citeB{dewan_estimating_2020} proponen la función objetivo del tomador de decisión de la siguiente forma: 
 
-$$\max_{P}\quad rP-C(P)$$
+\begin{align}
+    \max_{P}\quad rP-C(P)
+\end{align}
 
-Donde $P \in [0,1]$ representa el \textit{performance} (rendimiento en castellano) elegido por el tomador de decisión. A mayor rendimiento, mayor será el total de \textit{reward} (premio en castellano) $r$ que el tomador obtendrá de la inversión o decisión tomada. $C(P)$ es el costo asociado a ese rendimiento. 
+
+En la que $P \in [0,1]$ representa el \textit{performance} (rendimiento en castellano) elegido por el tomador de decisión. A mayor rendimiento, más elevado será el total de \textit{reward} (premio en castellano) $r$ que el tomador obtendrá de la inversión o decisión tomada. $C(P)$ es el costo asociado con ese rendimiento. 
 \vspace{2.5mm}
 
-El modelado de este costo es lo que permite la resolución del problema del tomador de decisión. Este costo debe ser diferenciable\footnote{Una función diferenciable es aquella derivable por lo menos de primer orden} y bien comportada\footnote{\textit{well-behaved:} un costo continuo y convexo es bien comportado. \citeB{dewan_estimating_2020}}. Con esto, se llega a la \textbf{Proposición 4} del modelo de \citeB{dewan_estimating_2020} donde se demuestra que con el costo convexo, entonces la función $\max_{P}\, rP-C(P)$ es cóncava, por lo que existe un máximo local que es también global máximo que resuelve el modelo.
+El modelado de este costo permite la resolución del problema del tomador de decisión. Este costo debe ser diferenciable\footnote{Una función diferenciable es aquella derivable por lo menos de primer orden} y bien comportado\footnote{\textit{well-behaved:} un costo continuo y convexo es bien comportado. \citeB{dewan_estimating_2020}}. Con esto, se llega a la \textbf{Proposición 4} del modelo de \citeB{dewan_estimating_2020} en que se demuestra que con el costo convexo, la función $\max_{P}\, rP-C(P)$ es cóncava. Por lo tanto, existe un máximo local que es también global máximo que resuelve el modelo.
 \vspace{2.5mm}
 
- \citeB{dewan_estimating_2020} se toma como ejemplo un costo $C(P)$ cuadrático, presentado en \ref{costocuad}, donde $d \in [0,1]$ representa la información libre y gratis para todos (información pública) y $c$ el costo marginal de información. 
+ Estos autores consideran como ejemplo un costo $C(P)$ cuadrático, presentado en \ref{costocuad}, en el que $d \in [0,1]$ representa la información libre y gratis para todos (información pública) y $c$ el costo marginal de información. 
 
 \begin{equation}
 \begin{array}{rrclcl}
@@ -1071,10 +1074,10 @@ El modelado de este costo es lo que permite la resolución del problema del toma
 \end{equation}
 \vspace{2.5mm}
 
-\ref{costocuad} muestra que a mientras el rendimiento sea mayor a la información pública, se incurrirá un costo de obtención de un \textit{performance} mayor posible gracias a la obtención de información adicional.
+\ref{costocuad} muestra que si el rendimiento es mayor a la información pública, se incurrirá un costo de obtención de un \textit{performance} mayor posible gracias a la obtención de información adicional.
 \vspace{2.5mm}
 
-Finalmente, aplicando la \textbf{Proposición 4} se llega a que el rendimiento óptimo según el premio $r$ previamente definido, será dependiente de los costos asociados a la información y su magnitud en comparación con el premio. También, como estaba antes definido, $P$ no puede superar a 1 ya que no se puede obtener un premio mayor al ofrecido.
+Finalmente, al aplicar la \textbf{Proposición 4} se determina que el rendimiento óptimo, según el premio $r$ previamente definido, será dependiente de los costos asociados con información y su magnitud en comparación con el premio. Además, como se definió previamente, $P$ no puede superar a 1 ya que no se puede obtener un premio mayor al ofrecido.
 
 \begin{equation}
 \begin{array}{rrclcl}

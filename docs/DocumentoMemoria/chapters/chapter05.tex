@@ -1,21 +1,29 @@
 \chapter{Conclusiones y Recomendaciones}
 \label{c5} % la etiqueta para referencias
 
-UNA DE LAS REOMENDACIONES DE COMO MEJORAR EL MODELO ES CONSIDERARE EL EFECTO O LAS POSIBILIDADES DE LOS DISTINTOS ESCENARIOS DE DEMANDA AL CREAR EL MODELO DEL SUBASTADOR.
+Los resultados muestran que existe potencial para incorporar el concepto de atención racional en el modelo de \textit{cap and trade} de dos etapas, con el fin de aumentar el bienestar social. La comparación entre los modelos realizada en el capítulo anterior evidencian que los modelo nuevos entregan menores permisos, menores precios de venta de permisos y electricidad en varios presupuestos de carbono establecidos por el gobierno.
+\vspace{2.5mm}
+
+Con el análisis anterior se concluye que se cumplió el objetivo general de este trabajo. Se reformuló el sistema de \textit{cap and trade} de dos etapas creado por \citeB{amigo_two_2021} al incluir el concepto de atención racional satisfactoriamente, entregando resultados coherentes y con pruebas de potencialidad para crear un modelo reproducible en la realidad.
+\vspace{2.5mm}
+
+Sumado a lo anterior, se cumplieron todos los objetivos específicos y, adicionalmente, se incorporó y cumplió el objetivo de traducir el modelo al lenguaje de programación Julia. Esta traducción permitirá agilizar nuevas mejoras al modelo. 
+\vspace{2.5mm}
+
+El concepto de atención racional se incorporó al subastador ya que este toma el rol de planificador social en el sistema. Él es el que finalmente será responsable de las emisiones generadas por las empresas eléctricas por lo que tiene la capacidad de encontrar la cantidad de permisos emitidos que más bienestar social produce.
+\vspace{2.5mm}
+
+Las dos versiones del modelo: Profit Oriented y Enfocado en Bienestar Social (modelo Tasa cuadrada y Precisión) demuestran que si el subastador incorpora la atención racional en su perfil de administrador, este buscará disminuir las emisiones de permisos en comparación a las propuestas por el gobierno (CAP), en especial mientras mayor sea el CAP. 
+\vspace{2.5mm}
+
+En el modelo original del subastador, este emite la cantidad de permisos que el CAP permite, sin tener un papel real en el modelo. Esta primera aproximación de incorporación de atención racional, no solo cambia su perfil sino que afecta sus utilidades al incorporar un gasto de inversión en información. Una recomendación para mejorar los modelos es que al subastador se le incorporen gastos de operación asociadas a fiscalizar a las empresas emisoras y que este tenga un papel de compra de permisos y, tal vez, venta de nuevos permisos en el largo plazo si el escenario lo amerita.
+\vspace{2.5mm}
+
+Los trabajos realizados por \citeB{andres_new_2014} y \citeB{ballantyne_audit_2015} muestran que existe un error asociado al cálculo del presupuesto de carbono establecido por Chile. Demuestran que este error se repite en la mayoría de los países pero con algunas diferencias en su magnitud.
+\vspace{2.5mm}
+
+Debido a lo anterior, se realiza la recomendación principal de este trabajo: mejorar los modelos propuestos focalizando la atención racional en como los errores de cálculo de presupuestos pueden ser disminuidos. Con esto se debe, primero, entender como se puede disminuir este error y que costos significan. Segundo, incorporarlo al modelo del subastador y formular el modelo donde la inversión en información produzca una disminución en el error. Finalmente, en esta formulación,  el subastador evaluará cuanto gastar en información, cuantos permisos emitir y el bienestar social producto de estas decisiones.
 
 
-Calibrar modelo para determinar adecuadamentes los precios de venta de permisos en el mercado de permisos
 
-
-El estudio del cálculo en Chile para la determinación de su presupuesto de carbono y porque no existe una referencia clara a como se cálculo este valor en cada NDC.
-
-
-Agregar costos de operacion del subastador para incorporar un papel de regulador de emisiones en el futuro.
-
-Estudiar con más profundidad el costo marginal de atencion racional
-
-estudiar una distribucion de probabilidad para el error de los permisos y agregarla al problema.
-
-
-Investigar como chile podría disminuir el error de calculo de CAP, para así incluirlo como el mecanismo o encontrar el verdadero costo marginal que eliminaria el ruido (disminuiria el error)
 

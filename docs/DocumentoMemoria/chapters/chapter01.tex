@@ -22,12 +22,15 @@ Encontrar un modelo óptimo y eficiente para implementar en la industria de ener
 El ECLP dicta que Chile tiene como objetivo ser carbono neutral\footnote{Carbono neutral no significan 0 toneladas de dióxido de carbono emitidas, sino que las emisiones sean iguales a las absorciones por agentes como el sector forestal.} como fecha límite para el año 2050. A la fecha, el país tiene como estrategia para disminuir las emisiones de la industria eléctrica aplicar un ``impuesto verde'' descrito en la ley 20.780 promulgada en el año 2014. Diversos estudios (mencionados en el marco teórico de este trabajo) argumentan que esto no es suficiente y su aplicabilidad no es sustentable y no incentiva el cambio a energías renovables. En efecto, los autores \citeB{amigo_two_2021} demuestran y concluyen que, en primer lugar, el objetivo de carbono neutralidad es lograble y, en segundo lugar, que el \emph{National Determined Contribution}  (NDC por sus siglas en inglés)\footnote{National Determined Contribution: Aporte del país en la propuesta del acuerdo de París}  propuesto para el acuerdo de París\footnote{En el acuerdo de París se estableció como objetivo no superar un aumento global de temperatura de 2 °C para finales de este siglo.}, que consiste en que, para el año 2030, el nivel de $CO_2 e$ (dióxido de carbono emitido) no supere los 131 $MtCO_2 e$ en Chile, es una meta fácil de lograr y, por lo tanto, ineficiente. Ellos proponen la implementación de una versión de su modelo de \emph{cap and trade}, con la cuál se pueden alcanzar objetivos mucho más ambiciosos en la reducción de emisiones y sobre el cambio a una generación de energía con fuentes sustentables.
 \vspace{2.5mm}
 
-Entonces, el propósito de este trabajo es aportar en la investigación, testeo y complementación del modelo para así demostrar que existe un sistema mejor al actualmente utilizado. La finalidad es combatir el problema del cambio climático y que las empresas generadoras puedan seguir funcionando, que sean rentables y que aporten en el desarrollo de las nuevas tecnologías no convencionales.
+Entonces, el propósito de este trabajo es aportar en la investigación, testeo y complementación del modelo por medio de la incorporación del concepto de atención racional.
+\vspace{2.5mm}
+
+La finalidad es entender su efecto en el modelo y concluir si este presenta potencialidad para disminuir las emisiones de carbono y así aumentar el bienestar social.
 
 
 \section{Objetivos}
 \subsection{Objetivo general}
-El objetivo general de este trabajo es mejorar la racionalidad del planificador social por medio de la incorporación de nuevos factores en su función objetivo. Por ejemplo, mediante restricciones que influencien el valor óptimo de permisos que este debe emitir con la finalidad de introducir incentivos para que este se convierta en un actor económico que busca cumplir criterios medioambientales asumiendo costos de investigación. En otras palabras, se busca formular penalizaciones en las utilidades del subastador que le incentiven producir una mejor emisión de permisos.
+El objetivo general de este trabajo es reformular el modelo de \textit{cap and trade} de dos etapas creado por \citeB{amigo_two_2021}  por medio de la incorporación del concepto de atención racional  y evaluar su efecto en las emisiones de carbono en la industria eléctrica . 
 
 \subsection{Objetivos específicos}
 Los objetivos específicos necesarios para lograr el objetivo general son:
@@ -36,40 +39,55 @@ Los objetivos específicos necesarios para lograr el objetivo general son:
 \item Identificar modelos de equilibrio y modelos de equilibrio en capacidad.
 \item Identificar métodos de resolución de MCP.
 \item Programar problemas MCP en GAMS.
-\item Replicar modelo original de Amigo.
-\item Implementar mejora en problema del subastador o \emph{auctioneer}.
-\item Simular el nuevo modelo y analizar resultados.
+\item Replicar el modelo original de \citeB{amigo_two_2021}.
+\item Implementar atención racional en el modelo.
+\item Resolver el nuevo modelo y analizar resultados.
 \end{enumerate}
 
 
 \section{Alcances}
-Los alcances de este trabajo se circunscriben a resultados teóricos encontrados implementando el nuevo modelo en un \emph{solver}. Entonces, el alcance está definido según lo realizado para encontrar esos resultados en el \emph{solver}, que incluye la replicación del modelo original, la mejora del modelo y luego encontrar sus soluciones para finalmente evaluar estas soluciones.
+
+Los alcances de este trabajo son: estudiar con profundidad los modelos de equilibrio en capacidad. Resolver problemas complejos de tipo MCP como mínimo en un lenguaje de programación y un \textit{solver}. Replicar el modelo de \textit{cap and trade} propuesto por \citeB{amigo_two_2021}. Como alcance final, se tiene, implementar el concepto de atención racional en el modelo como mínimo en una reformulación del modelo y proporcionar su resolución y compración con el modelo original. 
 \vspace{2.5mm}
 
-Primero, se lleva a cabo la replicación del modelo original de Amigo. Para esto es necesario entender el modelo propuesto y saber como resolverlo. Uno de los métodos más eficientes para resolver un problema de esta complejidad y encontrar soluciones para sus variables es resolviendo el problema como un MCP. Pero primero es necesario definir el modelo acorde a lo que un MCP solicita para su realización. Por lo que fue necesario aplicar las condiciones de KKT que como resultado otorgan las condiciones necesarias para resolver el problema como MCP. Por lo que el alcance en esta etapa del proyecto es encontrar las mismas soluciones que el \textit{paper}.
-\vspace{2.5mm}
-
-Segundo, la mejora del problema del subastador representa un alcance de entregar una descripción más acertada de como un subastador en un modelo de \textit{cap and trade} debería funcionar y como sus decisiones pueden ser representadas en un problema de optimización.
-\vspace{2.5mm}
-
-REVISAR ESTO ANTES SI SERÁ FINALMENTE ASÍ Finalmente, programar el nuevo modelo y encontrar sus soluciones tienen como objetivo lograr que el modelo mejore o sea más certero a si este sistema se implementa en la realidad. No se espera necesariamente encontrar mejores resultados respecto a que se logre acotar aún más las emisiones de carbono o eliminar eliminar la producción con carbón antes de lo encontrado en el modelo original. Entonces el modelo nuevo tiene como objetivo mejorar la interpretación y predicción teórica de lo que se podría realizar en la realidad pero queda fuera de alcance la implementación real del sistema.  
+Debido a que este este es un concepto novedoso, queda fuera del alcance de este trabajo la proporción de un modelo con atención racional de implementación real en Chile. Se espera obtener resultados suficientes para incentivar su mejora y posterior versión con implicaciones reales.
 
 \section{Metodología}
-Este trabajo se divide en las siguientes etapas mencionadas anteriormente, pero se detallan con profundidad de la siguiente forma:
+Con el fin de cumplir los objetivos y alcances de este trabajo se lleva a cabo la siguiente metodología:
 
 \begin{enumerate}
 \item Identificar modelos de equilibrio y modelos de equilibrio en capacidad: con bibliografía recomendad por el profesor guía y bibliografía metódicamente filtrada según estándares descritos según publicador y otras características, se lleva a cabo un estudio de los modelos de equilibrio.
+
 \item Identificar métodos de resolución de MCP : para resolver los problemas de equilibrio es posible transformarlos en MCP al aplicar las condiciones de KKT. Se estudió principalmente de un curso realizado por Felipe Feijoo en el verano del año 2022 llamado "Computo de modelos de equilibrio", organizado por Sebastián Cea y la facultad de ingeniería de la Universidad de los Andes.   
-\item Programar problemas MCP: es necesario aprender sobre distintos solvers de MCP y softwares que lo soporten. Primero, se realizan ensayos de programación con problemas de similar naturaleza al de Amigo en \citeB{d__aertrycke_risk_2017}. Finalmente, se busca profundizar con el curso de Felipe Feijoo sobre MCP. 
+
+\item Programar problemas MCP: es necesario aprender sobre distintos solvers de MCP y softwares que lo soporten. Primero, se realizan ensayos de programación con problemas de similar naturaleza al de \citeB{amigo_two_2021} en \citeB{d__aertrycke_risk_2017}. Finalmente, se busca profundizar con el curso de Felipe Feijoo sobre MCP. 
+
 \item Replicar modelo original de Amigo: se desarrollan las condiciones de kkt y formulación de MCP para resolver el modelo original. Luego, se ejecuta el código original con los parámetros utilizados en el \textit{paper} para visualizar resultados y entender el funcionamiento.
-\item Implementar mejora en problema del subastador o \textit{autioneer}: se encuentra una reestructuración del problema del subastador por medio de estudio sobre costos asociados al incentivo de mejora en \textit{performance}.
+
+\item Implementar el concepto de atención racional al modelo: se reformula el modelo incoporando el concepto de atención racional.
+
 \item Evaluar nuevo modelo en \textit{solver} y analizar resultados: se evalúa el nuevo modelo al ejecutarlo en un \textit{solver} y se analizan las variables óptimas encontradas.
 \end{enumerate}
 
 
 \section{Estructura del documento}
 
+La estructura del documento se divide en cinco capítulos: introducción, marco teórico, desarrollo metodológico, análisis de resultados y conclusiones.
+\vspace{2.5mm}
 
+La introducción tiene como objetivo contextualizar al lector sobre las implicaciones de este trabajo como también un resumen de todo lo realizado.
+\vspace{2.5mm}
+
+El marco teórico presenta todo el estudio realizado anterior a la implementación del concepto de atención racional en el modelo. En este se definen los problemas de equilibrio, MCP y la condiciones de KKT. Se presenta un tutorial para resolver problemas no lineales en distintos lenguajes de programación y \textit{solvers}. También se explica el trabajo realizado por \citeB{amigo_two_2021} y el concepto de atención racional.
+\vspace{2.5mm}
+
+En el desarrollo metodológico se replica el modelo original y luego se reformula en dos versiones nuevas. En adición a esto, se realiza la traducción del problema original al lenguaje de programación Julia con el fin de agilizar futuras resoluciones.
+\vspace{2.5mm}
+
+El capítulo 4 muestra los resultados de la replicación del modelo original y de los nuevos modelos formulados en el capítulo anterior. Se proporciona un análisis de estos y su comparación con el modelo original.
+\vspace{2.5mm}
+
+Finalmente, en el capítulo 5, se concluye si las nuevas versiones del modelo, que incorporan el concepto de atención racional, presenta resultados suficientes para su posterior mejora y presentación de un modelo de implementación real en Chile.
 
 
 

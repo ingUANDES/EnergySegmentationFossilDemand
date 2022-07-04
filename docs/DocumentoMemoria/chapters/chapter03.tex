@@ -5,14 +5,14 @@
 
 \section{Replicación del modelo original y resolución por medio de MCP}
 
-Una de las formas de resolver el problema original de \citeB{amigo_two_2021}, debido a que este es un problema de equilibrio con varios modelos involucrados, es transformar cada modelo en MCP y resolverlos juntos. Gracias a las variables duales, estos modelos se relacionan. La transformación a MCP es posible gracias al teorema de Karush-Kuhn-Tucker \ref{descripcionkkt} y sus condiciones resultantes. 
+Una de las formas de resolver el problema original de \citeB{amigo_two_2021}, debido a que este es un problema de equilibrio con varios modelos involucrados, es transformar cada modelo en MCP y resolverlos juntos. Gracias a las variables duales, estos modelos se relacionan. La transformación a MCP es posible gracias al teorema de Karush-Kuhn-Tucker, explicado en el Capítulo \ref{descripcionkkt}, y sus condiciones resultantes. 
 \vspace{2.5mm}
 
-Por lo tanto, para replicar el modelo original, se realiza esta transformación para el problema del subastador (el MCP de los productores se desarrolló en \ref{MCPproductor} y el MCP condiciones de mercado en \ref{MCPmercado}). Finalmente esta es traducida en un \textit{solver} para evaluar y comparar sus resultados con el original.
+Por lo tanto, para replicar el modelo original, se realiza esta transformación para el problema del subastador (el MCP de los productores se desarrolló en el Capítulo \ref{MCPproductor} y el MCP condiciones de mercado en el Capítulo \ref{MCPmercado}). Finalmente, esta es traducida en un \textit{solver} para evaluar y comparar sus resultados con el original.
 
 \subsection{MCP problema del subastador} \label{MCPsubastador}
 
-En adición a lo realizado con el problema del productor y las restricciones condiciones de mercado que relacionan a los productores con el subastador, se debe transformar el problema de este último \ref{eq:sub} en un MCP.  Para comenzar, se obtiene el lagrangeano del problema:
+Además de lo realizado con el problema del productor y las restricciones de las condiciones de mercado, que relacionan a los productores con el subastador, se debe transformar el problema de este último (mostrado en el modelo \ref{eq:sub}) en un MCP.  Para comenzar, se obtiene el lagrangeano del problema:
 
 \begin{footnotesize}
 \begin{align}
@@ -23,7 +23,7 @@ En adición a lo realizado con el problema del productor y las restricciones con
 
 \subsubsection{Derivada parcial respecto a $\theta$}
 
-Debido a que $\theta$ es la única variable del modelo, se debe realizar solamente la derivada del lagrangeano respecto a esta. Obteniendo lo siguiente:
+Debido a que $\theta$ es la única variable del modelo, se debe realizar solamente la derivada del lagrangeano respecto a esta. Se obtiene lo siguiente:
 
 \begin{footnotesize}
 \begin{align}
@@ -33,7 +33,7 @@ Debido a que $\theta$ es la única variable del modelo, se debe realizar solamen
 
 \end{footnotesize}
 
-Donde $\varrho$ es la variable dual de la naturaleza de $\theta$ (\ref{res:sub1}). Obteniendo la siguiente complementariedad:
+En que $\varrho$ es la variable dual de la naturaleza de $\theta$ (\ref{res:sub1}). Se obtiene la siguiente complementariedad:
 
 \begin{footnotesize}
 \begin{align}
@@ -44,7 +44,7 @@ Donde $\varrho$ es la variable dual de la naturaleza de $\theta$ (\ref{res:sub1}
 
 \end{footnotesize}
 
-Para finalizar el MCP del subastador es necesario considerar la complementariedad de la restricción \ref{res:sub2}, obteniendo: 
+Para finalizar el MCP del subastador es necesario considerar la complementariedad de la restricción \ref{res:sub2} y se obtenine lo siguiente: 
 
 \begin{footnotesize}
 \begin{align}
@@ -55,29 +55,29 @@ Para finalizar el MCP del subastador es necesario considerar la complementarieda
 \end{footnotesize}
 
 
-Para conocer los resultados de la replicación del problema ver \ref{replicaciongams}.
+En el Capítulo \ref{replicaciongams} se presentan los resultados de la replicación del problema.
 
 \section{Traducción del modelo al lenguaje Julia}
 
-Una de las inquietudes de Sebastian Cea (profesor guía y coautor del modelo original) y Felipe Feijoo(encargado de codificar el modelo en GAMS y coautor del modelo original) sobre la continuación de su trabajo publicado en 2021, era relacionado al programa GAMS. Este fue el programa con el que encontraron los resultados originales y basaron su trabajo. Pero, GAMS parece estar quedando atrás en cuanto a adaptación de nuevas librerías y \textit{solvers} para resolver problemas más complejos. Debido a esto existía la motivación de cambiar de \textit{solver} y programa.
+Una de las inquietudes de \citeB{amigo_two_2021}, sobre la continuación de su trabajo, estaba relacionado con el programa GAMS. Con este programa se encontraron los resultados originales y basaron su trabajo. Sin embargo, GAMS parece estar quedando atrás en cuanto a su adaptación a las nuevas librerías y \textit{solvers} para resolver problemas más complejos. Debido a esto, se origina la motivación de cambiar de \textit{solver} y programa.
 \vspace{2.5mm}
 
-Debido a lo anterior, se tomó como objetivo paralelo a reestructurar el modelo, traducir este a Julia. Julia fue el lenguaje elegido ya que, como se explica en el marco teórico \ref{mtjulia}, este es uno de lenguajes de programación con mayor crecimiento en el mercado, presenta excelente soporte \textit{online} y reconocido como uno de los más eficientes entre su competencia. El problema es que, debido a su relativamente corta existencia (primera aparición pública en 2012\footnote{https://www.forbes.com/sites/suparnadutt/2017/09/20/this-startup-created-a-new-programming-language-now-used-by-the-worlds-biggest-companies/?sh=1f0b44627de2}), existe poca documentación que contenga ejercicios o problemas resueltos o trabajos publicados con su utilización en internet. Entonces, en especial con un tema tan específico como problemas de equilibrio resueltos por MCP, realizar su traducción no es trivial.
+Por lo anterior, se tomó como objetivo paralelo a reestructurar el modelo, traducir este a Julia. Este fue el lenguaje elegido ya que, como se explica en el marco teórico \ref{mtjulia}, es uno de los lenguajes de programación con mayor crecimiento en el mercado, presenta excelente soporte \textit{online} y es reconocido como uno de los más eficientes entre su competencia. El problema se origina en su relativamente corta existencia (primera aparición pública en 2012\footnote{https://www.forbes.com/sites/suparnadutt/2017/09/20/this-startup-created-a-new-programming-language-now-used-by-the-worlds-biggest-companies/?sh=1f0b44627de2}), por lo tanto, existe poca documentación que contenga ejercicios, problemas resueltos o trabajos publicados con su utilización en internet. Entonces, en especial con un tema tan específico como problemas de equilibrio resueltos por MCP, su traducción no es trivial.
 \vspace{2.5mm}
 
-Los primeros pasos a realizar para la traducción fue comenzar a familiarizarse con el lenguaje y sus librerías comunes como \textit{JUMP} (\url{https://jump.dev/JuMP.jl/stable/}). Para conocer su funcionamiento de resolución de problemas de optimización se practicó con la codificación de ejercicios como \ref{ejerciciojulia}. Estos ayudaron como preparación para la replicación del modelo de \citeB{amigo_two_2021}.
+El primer paso realizado para la traducción fue familiarizarse con el lenguaje y sus librerías comunes como \textit{JUMP} (\url{https://jump.dev/JuMP.jl/stable/}). Con el objetivo de conocer su funcionamiento de resolución de problemas de optimización, se practicó con la codificación de ejercicios como los que se presentan en el Capítulo \ref{ejerciciojulia}. Estos ayudaron como preparación para la replicación del modelo de \citeB{amigo_two_2021}.
 \vspace{2.5mm}
 
-Primero, se intentó resolver el problema con el \textit{solver} Gurobi. Pero, debido a que este presenta limitaciones para problemas no lineales, no fue posible la resolución de este problema ya que este es un MCP que convierte el problema en no lineal.
+En primer lugar, se intentó resolver el problema con el \textit{solver} Gurobi. No obstante, debido a que este presenta limitaciones para problemas no lineales, no fue posible la resolución de este problema ya que este es un MCP que convierte el problema en no lineal.
 \vspace{2.5mm}
 
-Segundo, se intentó formular el MCP con la librería Complementarity.jl (\url{https://github.com/chkwon/Complementarity.jl}), pero al finalizar la traducción y luego de algunos días de \textit{debugging}, se entendió que el problema nunca se podría solucionar con esa librería. A pesar de que esta librería es especial para problemas MCP,  esta no soporta complementariedades con igualdades en las restricciones. Entonces, por ejemplo, la complementariedad de condiciones de mercado \ref{complementariedadcondicion1} no era soportada por esta librearía. 
+En segundo lugar, se trató de formular el MCP con la librería Complementarity.jl (\url{https://github.com/chkwon/Complementarity.jl}), pero al finalizar la traducción y luego de algunos días de \textit{debugging}, se entendió que el problema nunca se podría solucionar con esa librería. A pesar de que esta es especial para problemas MCP, no soporta complementariedades con igualdades en las restricciones. Entonces, por ejemplo, la complementariedad de condiciones de mercado \ref{complementariedadcondicion1} no era soportada por esta librearía. 
 \vspace{2.5mm}
 
- Finalmente, se decidió utilizar el \textit{solver} PATH (\url{https://pages.cs.wisc.edu/~ferris/path.html}) junto con la librería \textit{JUMP} ya que es la combinación con más problemas MCP resueltos encontrados en documentación \textit{online}. 
+ Finalmente, se decidió utilizar el \textit{solver} PATH (\url{https://pages.cs.wisc.edu/~ferris/path.html}) junto con la librería \textit{JUMP} ya que es la combinación con más problemas MCP resueltos encontrados en documentación \textit{online}.
  \vspace{2.5mm}
  
-Esta codificación funciona con el siguiente formato, el cuál presenta ventajas para incluir sumatorias y variables indexadas: 
+Esta codificación funciona con el formato que se presenta posteriormente, el cual presenta ventajas para incluir sumatorias y variables indexadas: 
 
 \begin{itemize}
  
@@ -121,7 +121,7 @@ Esta codificación funciona con el siguiente formato, el cuál presenta ventajas
   @variable(modelo, x[i in 1:tecnologias]>=0)
    \end{lstlisting}
    \end{footnotesize}
-   Si la variable tiene complementariedad con una restricción de igualdad agregarla de la siguiente forma:
+   Si la variable tiene complementariedad con una restricción de igualdad, se debe agregar de la siguiente forma:
    \begin{footnotesize}
    \begin{lstlisting}
   @variable(modelo, y)
@@ -129,7 +129,7 @@ Esta codificación funciona con el siguiente formato, el cuál presenta ventajas
    \end{footnotesize}
    
   
-  \item Definir las complementariedades: se codifican las complementariedades. Para un problema MCP, todas las variables deben presentar complementariedad para poder ser resueltas. $\perp$ representa la complementariedad:
+  \item Definir las complementariedades: se codifican las complementariedades. En un problema MCP, todas las variables deben presentar complementariedad para ser resueltas. $\perp$ representa la complementariedad:
   
   \begin{footnotesize}
   \begin{lstlisting}[mathescape=true]
@@ -162,9 +162,9 @@ end # 0 es el valor fijado
  
 \end{itemize}
 
-\section{Analizando el problema del subastador}
+\section{Análisis del problema del subastador}
 
-Este problema de optimización (el del subastador) considera como única variable la cantidad de permisos de contaminación $\theta$, los cuales están en unidades $tCO_2 e$ (toneladas de dióxido de carbono emitidas). Estos son los permisos comprados por las empresas generadoras en la primera etapa del modelo. \citeB{amigo_two_2021} definen que el presupuesto de carbono denotado $CAP$, el cual establece el nivel de emisiones en la segunda etapa, sigue una distribución normal de varianza cero, donde $\theta$ no puede sobrepasar probabilística mente el presupuesto de emisión, como se denota en \ref{res:subastador0} donde $\varepsilon$ representa el margen de permisos de emisión total. \ref{res:sub1} nace de esta condición donde $\varphi^-1$ es la inversa de la acumulada de la distribución normal de CAP. Es acá donde surge la posibilidad de investigación y mejora para este trabajo. 
+Este problema de optimización (el del subastador) considera como única variable la cantidad de permisos de contaminación $\theta$, los cuales están en unidades $tCO_2 e$ (toneladas de dióxido de carbono emitidas). Estos son los permisos comprados por las empresas generadoras en la primera etapa del modelo. \citeB{amigo_two_2021} definen que el presupuesto de carbono denotado $CAP$, el cual establece el nivel de emisiones en la segunda etapa, sigue una distribución normal de varianza cero, en la que $\theta$ no puede sobrepasar probabilísticamente el presupuesto de emisión, como se denota en la ecuación \ref{res:subastador0}, en que $\varepsilon$ representa el margen de permisos de emisión total. La restricción \ref{res:sub1} se genera de esta condición en que $\varphi^-1$ es la inversa de la acumulada de la distribución normal de CAP. En este punto, se presenta la posibilidad de investigación y de  mejora para este trabajo. 
 \vspace{2.5mm}
 
 \begin{equation}
@@ -174,40 +174,40 @@ Este problema de optimización (el del subastador) considera como única variabl
 \end{equation}
 \vspace{2.5mm}
 
-\citeB{amigo_two_2021} comentan que existe espacio para desarrollar y perfeccionar el problema del subastador. El problema del productor está desarrollado de forma extensa con muchas restricciones que la definen, pero el subastador tiene un papel tan importante como el de los productores ya que este será el que tome las decisiones iniciales con las cuales la generación de energía se verá influenciada por mucho tiempo.  Es por esto que surge la oportunidad de encontrar una forma más completa de representar a este agente, formular las restricciones y cambios en la función objetivo si es necesario y luego evaluar la reformulación del modelo en un \textit{solver}.
+\citeB{amigo_two_2021} comentan que existe espacio para desarrollar y perfeccionar el problema del subastador. El problema del productor está desarrollado de forma extensa con muchas restricciones que lo definen, pero el subastador cumple un papel tan importante como el de los productores ya que este será el que tome las decisiones iniciales con las cuales la generación de energía se verá influenciada por mucho tiempo.  Por esto, surge la oportunidad de encontrar una forma más completa de representar a este agente, formular las restricciones y cambios en la función objetivo si es necesario y luego evaluar la reformulación del modelo en un \textit{solver}.
 \vspace{2.5mm}
 
-Uno de los problemas del modelo original del subastador \ref{eq:sub} es que para simplificar su cálculo en el \textit{solver} y KKT, la distribución normal asociada al $CAP$ presentaba desviación estándar $\sigma$ igual a cero y el único valor representativo del presupuesto era la media $\mu$, dejando de ser realmente una entrada estocástica. 
+Uno de los problemas del modelo original del subastador, presentado en la ecuación \ref{eq:sub}, es que para simplificar su cálculo en el \textit{solver} y KKT, la distribución normal asociada con $CAP$ presentaba desviación estándar $\sigma$ igual a cero y el único valor representativo del presupuesto era la media $\mu$, por lo que deja de ser una entrada estocástica. 
 \vspace{2.5mm}
 
-También, el subastador es representado como un planificador que minimiza el negativo de la utilidad, siendo $-\theta \pi^a$ el ingreso negativo por ventas de los permisos y $F(\theta)$ una función de costo asociado a la producción de energía por carbón. El problema en esto es que parece no explicar con totalidad la importancia del subastador en el problema. Ya que este debe ser un ente que busca maximizar sus beneficios tal cual  lo son las empresas generadoras de electricidad en el sistema pero debe tener restricciones que lo incentiven a emitir la cantidad de permisos correctos, o sea, la cantidad de permisos más cercana al presupuesto de carbono $CAP$ estocástico del sistema.
+Además, el subastador es representado como un planificador que minimiza el negativo de la utilidad, y es $-\theta \pi^a$ el ingreso negativo por ventas de los permisos y $F(\theta)$ una función de costo asociado con la producción de energía por carbón. El problema radica en que parece no explicar con totalidad la importancia del subastador en el problema, ya que este debe ser un ente que busca maximizar sus beneficios tal cual  lo son las empresas generadoras de electricidad en el sistema. Sin embargo, debe tener restricciones que lo incentiven a emitir la cantidad de permisos correctos, o sea, la cantidad de permisos más cercana al presupuesto de carbono $CAP$ estocástico del sistema.
 \vspace{2.5mm}
 
-Entonces, esta es un área de exploración para determinar cuál sería una reformulación del problema del subastador donde exista un incentivo por emitir los permisos adecuados y así los generadores no tengan que pagar precios muy elevados de permisos, sin perjudicar a las personas que consumen la energía y que tampoco exista una sobre emisión de contaminante.
+Entonces, esta es un área de exploración para determinar cuál sería una reformulación del problema del subastador en que exista un incentivo por emitir los permisos adecuados y, de esta manera, los generadores no tengan que pagar precios muy elevados de permisos, sin perjudicar a las personas que consumen la energía y que tampoco exista una sobre emisión de contaminante.
 \vspace{2.5mm}
 
-El camino a seguir para la reformualación de este problema es incluir el efecto de atención (inatención) racional, estudiado por \citeB{dewan_estimating_2020} (para un resumen de esta y otras literaturas del tema ver \ref{marco:costos}).
+El camino por seguir para la reformualación de este problema es incluir el efecto de atención (inatención) racional, estudiado por \citeB{dewan_estimating_2020} (para un resumen de esta y otras literaturas del tema ver \ref{marco:costos}).
 \vspace{2.5mm}
 
-La propuesta inicial es la de incluir la probabilidad de encontrar un $\theta$ adecuado, la cual afecte el ingreso del subastador (la ganancia no se calcularía como $p\cdot q$ sino que como $p\cdot q\cdot P$, donde $P$ es una probabilidad entre $[0,1]$ que representa la precisión). Y que esta probabilidad esté determinada por la cantidad invertida en acercarse al presupuesto lo más posible, medido como gasto en información.
+La propuesta inicial es la de incluir la probabilidad de encontrar un $\theta$ adecuado, que afecte el ingreso del subastador (la ganancia no se calcularía como $p\cdot q$ sino que como $p\cdot q\cdot P$, en que $P$ es una probabilidad entre $[0,1]$ que representa la precisión). Además, que esta probabilidad esté determinada por la cantidad invertida en acercarse al presupuesto lo más posible, medido como gasto en información.
 
 \section{Racionalidad del Planificador}
 
-En el modelo original el planificador debe elegir el número de permisos $\theta$ a vender en el mercado en $t=0$ a precio $\pi^a$. Para esto es lógico pensar que la elección del número de permisos se debe basar en el beneficio que genera la venta de los permisos. Los ingresos se calculan $\pi^a\cdot\theta$. Los costos son dados por una función $\mathcal{F}(\theta)$, que representa, el Costo Social del Carbon. Adicionalmente, el subastador dispone de un presupuesto de emisiones de $CO_2$ el cual es definido como $CAP\in\mathbb{R}_+$ La cuál, como se mencionó anteriormente, era inicialmente considerada como una variable aleatoria en el trabajo de \citeB{amigo_two_2021}, pero al momento de su implementación se añadió como parámetro del modelo. 
+En el modelo original, el planificador debe elegir el número de permisos $\theta$ por vender en el mercado en $t=0$ a precio $\pi^a$. Por esto, es lógico que la elección del número de permisos se debe basar en el beneficio que genera la venta de los permisos. Los ingresos se calculan $\pi^a\cdot\theta$. Los costos son dados por una función $\mathcal{F}(\theta)$, que representa el Costo Social del Carbon. Adicionalmente, el subastador dispone de un presupuesto de emisiones de $CO_2$ que es definido como $CAP\in\mathbb{R}_+$ que, como se mencionó era, inicialmente, considerada como una variable aleatoria en el trabajo de \citeB{amigo_two_2021}, pero al momento de su resolución se añadió como parámetro del modelo. 
 \vspace{2.5mm}
 
-En consecuencia de lo anterior, el planificador debiera maximizar sus beneficios, $\pi^a\cdot\theta-\mathcal{F}(\theta)$, restringido a vender una cantidad de permisos inferior al presupuesto, $\theta\leq CAP$.
+Como consecuencia de lo anterior, el planificador debiera maximizar sus beneficios, $\pi^a\cdot\theta-\mathcal{F}(\theta)$, restringido a vender una cantidad de permisos inferior al presupuesto: $\theta\leq CAP$.
 \vspace{2.5mm}
 
 
-En el nuevo modelo el objetivo principal del planificador social cambia a el grado de precisión con el que se cumple la restricción presupuestaria $\theta\leq CAP$. De esta forma el planificador(subastador) maximizará:
+En el nuevo modelo, el objetivo principal del planificador social cambia a el grado de precisión con el que se cumple la restricción presupuestaria $\theta\leq CAP$. De esta forma, el planificador(subastador) maximizará:
 
 \begin{align}
 P\cdot Pr(\theta\leq CAP)-\tilde{\mathcal{F}}(Pr(\theta\leq CAP)) \label{nuevafposible}    
 \end{align}
 
 
-Donde $P$ es la valor de cumplir exactamente con el presupuesto, en este caso es el ingreso total de venta de los permisos ($r = \theta \pi^a$) y $\tilde{\mathcal{F}}$ es una función de costo por desempeño de cumplimiento que puede tomar una forma cuadrática:
+En que $P$ es rendimiento, cuál afecta el ingreso total de venta de los permisos ($ingreso = P\theta \pi^a$) y $\tilde{\mathcal{F}}$ es una función de costo por desempeño de cumplimiento que puede tomar una forma cuadrática:
 
 \begin{equation}
 \begin{array}{rrclcl}
@@ -215,25 +215,25 @@ Donde $P$ es la valor de cumplir exactamente con el presupuesto, en este caso es
 \end{array}
 \end{equation}
 
-En el cuál $d$ es el umbral de desempeño con información pública (proporción de la información gratis) y $c$ es el costo marginal de adquirir información para mejorar el desempeño en cumplimiento.
+En que $d$ es el umbral de desempeño con información pública (proporción de la información gratis) y $c$ es el costo marginal de adquirir información para mejorar el desempeño en cumplimiento.
 \vspace{2.5mm}
 
 
 \section{Nuevo problema del subastador}
 
- Para implementar el concepto de atención racional, \textit{performance} y su efecto en los costos y las variables del problema en el subastador, se busca aplicar lo aprendido sobre sus efectos y manera de inclusión en los modelos de optimización.
+ Con el fin de implementar el concepto de atención racional, \textit{performance} y su efecto en los costos y las variables del problema en el subastador, se busca aplicar lo aprendido sobre sus efectos y manera de inclusión en los modelos de optimización.
 \vspace{2.5mm} 
 
-Esta propuesta, inicialmente fue atacada con la perspectiva presente en el Anexo \ref{}, a base de estos y aprendiendo sobre errores en su implementación, se llega a las dos versiones del modelo, propuestos a continuación.
+Esta propuesta, inicialmente se abordó con la perspectiva presente en el Anexo \ref{anexo:rendimiento}, sobre esta base y aprendiendo con errores en su implementación, se llega a las dos versiones del modelo. Estas se presentan a continuación.
 
 \section{Problema del subastador como \textit{profit oriented}}\label{profit}
 
 
 
-Para comenzar, se evaluó el comportamiento del modelo al incluir \ref{nuevafposible} en la función objetivo del subastador.
+Para comenzar, se evaluó el comportamiento del modelo al incluir la fórmula \ref{nuevafposible} en la función objetivo del subastador.
 \vspace{2.5mm}
 
-Antes de incluir el rendimiento y atención racional con mayor profundidad, se realizó un estudio del problema al incorporar lo anterior en la función objetivo \ref{fo:perfornorest11}, sin añadir nuevas restricciones. Esto, con el objetivo de entender el posible efecto que el rendimiento pueda tener en la maximización de beneficios y tener una primera aproximación de los resultados. El desarrollo de esto se puede ver en detalle en el Anexo \ref{anexo:rendimiento}. \vspace{2.5mm}
+Antes de incluir el rendimiento y atención racional con mayor profundidad, se realizó un estudio del problema al incorporar lo anterior en la función objetivo \ref{fo:perfornorest11}, sin añadir nuevas restricciones. El objetivo de esto es entender el posible efecto que el rendimiento pueda tener en la maximización de beneficios y disponer de una primera aproximación de los resultados. El desarrollo de esto se puede ver en detalle en el Anexo \ref{anexo:rendimiento}. \vspace{2.5mm}
 
 \begin{equation}
 \begin{array}{rrclcl}
@@ -241,10 +241,10 @@ Antes de incluir el rendimiento y atención racional con mayor profundidad, se r
 \end{array}
 \end{equation}
 
-Primero, se modeló el problema del subastador únicamente con la función objetivo y la naturaleza de la variable $\theta$, sin incorporar otra restricción. Este, junto con el modelo del productor y las condiciones de mercado, fueron resueltas como un único problema MCP. Al observar los valores de las variables $\theta$(permisos de contaminación emitidos por el subastador) y $\pi^a$(valor de venta de cada permiso por parte del subastador) en la tabla \ref{tabla:sinrestr}, se observa que al no existir una restricción que acote los permisos, estos rápidamente se disparan a cantidades muy altas donde, debido al exceso de oferta, sus precios tienden a 0.
+En primer lugar, se modeló el problema del subastador únicamente con la función objetivo y la naturaleza de la variable $\theta$, sin incorporar otra restricción. Este, junto con el modelo del productor y las condiciones de mercado, fueron resueltas como un único problema MCP. Al observar los valores de las variables $\theta$(permisos de contaminación emitidos por el subastador) y $\pi^a$(valor de venta de cada permiso por parte del subastador) en la tabla \ref{tabla:sinrestr}, se observa que al no existir una restricción que acote los permisos, estos rápidamente aumentan, debido al exceso de oferta, sus precios tienden a 0.
 \vspace{2.5mm}
 
-Segundo, se modeló la misma función objetivo incorporando la restricción \ref{res:sub1} del modelo original. Con el objetivo de acotar los permisos y observar cómo el rendimiento, sin incorporar una restricción de factibilidad de los costos, afecta el precio de venta de los permisos. De esto, se encontró que el subastador ignora los costos de rendimiento, ya que los valores encontrados para $\theta$ y  $\pi^a$, con el rendimiento sobre 5\%, son iguales a si no se considera un rendimiento. Sobre esto se entendió que falta incorporar alguna restricción de factibilidad para que el subastador considere su efecto en la función objetivo.
+En segundo lugar, se modeló la misma función objetivo incorporando la restricción \ref{res:sub1} del modelo original. Con el objetivo de acotar los permisos y observar cómo el rendimiento, sin incorporar una restricción de factibilidad de los costos, afecta el precio de venta de los permisos. De esto, se concluyó que el subastador ignora los costos de rendimiento, ya que los valores encontrados para $\theta$ y  $\pi^a$, con el rendimiento sobre 5\%, son iguales al caso donde no se considera un rendimiento. Sobre esto, se entendió que falta incorporar alguna restricción de factibilidad para que el subastador considere su efecto en la función objetivo.
 \vspace{2.5mm}
 
 Finalmente, al considerar este primer entendimiento, se lleva a cabo una reestructuración del problema del subastador.
