@@ -54,7 +54,7 @@ Los autores \citeB{hu_2_2014}  discuten que usando un grupo de ecuaciones matem�
 Esta memoria se focaliza en los modelos de equilibrio en capacidad, relacionados con el mercado de generación eléctrica. En estos, por una parte, presentan un equilibrio entre la demanda de energía de los consumidores y la oferta de los productores y, por otra parte, un equilibrio entre la capacidad instalada de los productores y los permisos para emitir contaminantes. Este problema se formula como la minimización anual de inversión en las plantas generadoras de energía.
 \vspace{2.5mm}
 
-Los modelos de equilibrio en capacidad han sido históricamente estudiados, como por \citeB{ehrenmann_generation_2011}, \citeB{d__aertrycke_risk_2017}, \citeB{gabriel_complementarity_2012}, \citeB{ralph_risk_2015}, entre otros.
+Los modelos de equilibrio en capacidad han sido estudiados por \citeB{ehrenmann_generation_2011}, \citeB{d__aertrycke_risk_2017}, \citeB{gabriel_complementarity_2012}, \citeB{ralph_risk_2015}, entre otros.
 \vspace{2.5mm}
 
 A continuación, en base al trabajo de \citeB{d__aertrycke_risk_2017}, se explica un problema de equilibrio en capacidad con riesgo asociado de dos etapas y uno de riesgo neutral.
@@ -64,31 +64,32 @@ A continuación, en base al trabajo de \citeB{d__aertrycke_risk_2017}, se explic
 En este tipo de problemas, existe una variable o vector de variables de diseño denotada como  $x \in \mathbb{R}^{n}$, la cual describe la inversión en activos riesgosos tales como plantas de producción de energía que llevan consigo poderes de producción determinados y proporcionales al grado de inversión en mercados con incertidumbre de demanda.
 \vspace{2.5mm}
 
-Es importante entender que estos son problemas de optimización estocásticos. Es decir, existe aleatoriedad respecto a los parámetros de entrada. En este caso, la aleatoriedad se ve reflejada en los escenarios estocásticos posibles con $w \in K$  perteneciente a cada escenario $\{1,...,K\}$ de costos. Entonces, existe una entrada de costos y parámetros $C^{w}$ que corresponden a cada escenario $w$. 
+Es importante entender que estos son problemas de optimización estocásticos. Es decir, existe aleatoriedad respecto a los parámetros de entrada. En este caso, la aleatoriedad se ve reflejada en los escenarios estocásticos posibles con $w \in \Omega:=\{1,...,K\}$. Entonces, por ejemplo, existen costos $C^{w}$ que corresponden a cada escenario $w$. 
 \vspace{2.5mm}
 
-La probabilidad de ocurrencia de cada escenario depende de una distribución de probabilidad $\Theta$, la cuál debe ser definida en el problema estudiado y una de sus aplicaciones es con la notación $E_{\Theta}[Z]$. Esta corresponde a la suma ponderada con una probabilidad de ocurrencia para $z_{w} \in Z$ . En otras palabras, $E_{\Theta}[Z]$ es una suma ponderada de los valores de una variable en todos los escenarios multiplicados por la probabilidad de ocurrencia de cada escenario. En el Anexo \ref{ej:sumapond} se presenta un ejemplo de lo anterior.
+La probabilidad de ocurrencia de cada escenario depende de una distribución de probabilidad $\Theta$, la cuál debe ser definida en el problema estudiado y una de sus aplicaciones es con la notación de valor esperado $E_{\Theta}[Z]$. Esta corresponde a la suma ponderada con una probabilidad de ocurrencia para una realización particular $z_{w}$ de la variable aleatoria $Z$ . En otras palabras, $E_{\Theta}[Z]$ es una suma ponderada de los valores de una variable en todos los escenarios multiplicados por la probabilidad de ocurrencia de cada escenario. En el Anexo \ref{ej:sumapond} se presenta un ejemplo de lo anterior.
 \vspace{2.5mm}
 
-Generalmente, estos modelos, tienen dos etapas de decisión $i={0,1}$ para los agentes diseñados en el problema. En la primera etapa $i=0$, el productor (monopolio) o grupo de productores (mercado competitivo) decide su inversión en capacidad x. Luego, en la segunda etapa $i=1$, se decide la producción $Y_{w}$ (si existe más de un escenario de ocurrencia, estos presentan distintas demandas o costos. La variable de producción también dependerá del escenario w, teniendo $Y_{w}$ para cada uno).
+Generalmente, estos modelos, tienen dos etapas de decisión $s\in\{0,1\}$ para los agentes diseñados en el problema. En la primera etapa $s=0$, el productor (monopolio) o grupo de productores (mercado competitivo) decide su inversión en capacidad $x$. Luego, en la segunda etapa $s=1$, se decide la producción $Y$ (si existe más de un escenario de ocurrencia, estos presentan distintas demandas o costos). Es decir, la variable de producción también puede depender del escenario $w$, teniendo $Y_{w}$ para cada uno).
 \vspace{2.5mm}
 
- \citeB{d__aertrycke_risk_2017}, identifican estos problemas como aquellos en los que existe una función $f$ convexa y continua, $g$ convexa y continua en los que para cada $x$ :
+ \citeB{d__aertrycke_risk_2017}, identifican estos problemas como aquellos en los que existe una función $f$ convexa y continua, $g$ convexa y continua en los que para cada $x$:
 
 \begin{align}
 \min f(x,y)\quad\text{sujeta a}\quad g(x,y)\leq 0
 \end{align}
 
 
-Este problema de optimización busca minimizar los costos asociados al problema y $g(x,y)$ puede ser una o un grupo de restricciones tecnológicas o de equilibrio del sistema.
+Este problema de optimización busca minimizar los costos asociados al problema y $g(x,y)$ puede ser una o un grupo de restricciones tecnológicas o de equilibrio del sistema.\footnote{Ver página 11 en \citeB{d__aertrycke_risk_2017}.} 
 \vspace{2.5mm}
 
-Con el fin de contrarrestar los costos asociados a escenarios con incertidumbre, por ejemplo, sub o sobre inversión, según cada escenario, cada agente $i$ se dota de una medida de riesgo $r_{i}$ que mide su costo de incertidumbre $\Xi_{i}(x_{i},x_{-i})$ como $r_{i}=(\Xi_{i}(x_{i},x_{-i}))$. Esta configuración logra que el agente $i$ tenga que tomar otra decisión de inversión. El agente debe decidir qué productos financieros  $W_i$ perteneciente a $W$ elegir para compensar el riesgo de incertidumbre. Estos productos tienen un precio asociado $P^{\tau}[W]$. Este precio es determinado por la condición de que todos los productos financieros deben balancearse y lograr que:
+Con el fin de contrarrestar los costos asociados a escenarios con incertidumbre, por ejemplo, sub o sobre inversión, según cada escenario, cada agente $i$ se dota de una medida de riesgo $r_{i}$ que mide el costo de la incertidumbre respecto de una variable incierta (variable aleatoria o estocástica). Para mitigar ese costo por riesgo, el agente puede decidir qué productos financieros $W_i\in\mathbb{R}^K$ elegir para compensar el riesgo de incertidumbre en cada escenario. Estos productos tienen un precio asociado $P^{r}[W_i]$. Este precio es determinado por la condición de que todos los productos financieros deben balancearse y, suponiendo que $N>0$ agentes componen el mercado, lograr que:
 
-\begin{align}
-\sum_{i=1}^{N}W_{i} = 0    
-\end{align}
+\begin{eqnarray}
+\sum_{i=1}^{N}W_{i} &=& 0\label{eq:fin-eq}    
+\end{eqnarray}
 
+En otras palabras, si un agente necesita un contrato o producto financiero que asegure un determinado valor en el escenario $w$, la condición de equilibrio o balance (\ref{eq:fin-eq}) anterior asegura que existe otro agente dispuesto a entregar (o prestar) ese valor. Esa entrega o préstamo tiene un valor determinado endógenamente por $P^r$.\vspace{2.5mm}
 
 En cada una de las dos etapas de este sistema, existen importantes consideraciones.
 \vspace{2.5mm}
@@ -103,7 +104,7 @@ En la segunda etapa, se conoce la demanda del periodo y la empresa generadora mi
 Este es el caso en el que todos los agentes involucrados en el problema conocen sus costos estocásticos del problema con la probabilidad $\Theta$ anteriormente explicada de cada escenario $w$. Esto significa que aquellos costos asociados a la producción respetan esta probabilidad, sin embargo los costos de inversión en capacidad no son estocásticos, por lo tanto, no son afectados directamente por esta. En el caso neutral al riesgo, existe solamente el riesgo en inversión de capacidad, pero no un riesgo de compra de activos financieros ya que los agentes, en este caso, son neutrales al riesgo de intercambio o compra de activos financieros. 
 \vspace{2.5mm}
 
-Como se mencionó anteriormente, este estudio explora la aplicación de estos modelos en el mercado de empresas generadoras de electricidad, en que existen dos tipos de agentes: empresas generadoras únicamente de electricidad y demandantes de la energía producida. Este es un caso de mercado competitivo, en el que las empresas no actúan estratégicamente para influenciar los precios. 
+Como se mencionó anteriormente, este estudio explora la aplicación de estos modelos en el mercado de empresas generadoras de electricidad, en que existen dos tipos de agentes: empresas generadoras únicamente de electricidad y demandantes de la energía producida. Este es un caso que puede ser tomado como de mercado competitivo, en el que las empresas no actúan estratégicamente para influenciar los precios. 
 \vspace{2.5mm}
 
 Bajo estas circunstancias, se tiene que este es un problema competitivo de equilibrio en capacidad con riesgo neutral si es que existe un grupo de variables $(x_{1}, Y, x_{2}, Q)$ que resuelva lo siguiente: 
@@ -126,7 +127,7 @@ Q_{w}\le e^{\tau}Y_{w}\text{  }\text{ para todo w}
 
 \subsection{Resolución Problemas de equilibrio mediante MCP}\label{descripcionkkt}
 
-La mayoría de los estudios sobre modelos de equilibrio, mencionados anteriormente, explican que la mejor forma de resolver los problemas de este tipo, en especial aquellos con gran cantidad de variables o aquellos no lineales, es transformarlos en problemas de complementaridad mixta o \textit{Mixed Complementarity Problems} (MCP por sus siglas en inglés).
+La mayoría de los estudios sobre modelos de equilibrio, mencionados anteriormente, explican que la mejor forma de resolver los problemas de este tipo, en especial aquellos con gran cantidad de variables o aquellos no lineales, es transformarlos en problemas de complementaridad mixta o \textit{Mixed Complementarity Problems} (MCP por sus siglas en inglés, ver objetivo específico b) en el capítulo introductorio).
 \vspace{2.5mm}
 
 \citeB{gabriel_complementarity_2012} explican que para realizar esto, es necesario estructurar el problema de equilibrio de la siguiente forma:

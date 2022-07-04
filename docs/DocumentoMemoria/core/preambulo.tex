@@ -15,7 +15,7 @@
 
 % Encoding
 
-\usepackage[utf8]{inputenc}
+%\usepackage[utf8]{inputenc} % unnecessary when compiling through xelatex
 \usepackage[T1]{fontenc}
 
 % Carga librerias utiles con simbolos y estructuras
@@ -31,7 +31,9 @@
 \usepackage{pgfplots}
 \usepackage{eurosym}
 
+% Logo Julia
 
+%\usepackage{core/julialogo}
 
 % Librerías adicionales para diagramas tikz
 
@@ -66,7 +68,7 @@
 
 
 % Declaraciones especificas de pdfLaTeX
-\usepackage[pdftex,
+\usepackage[%pdftex, % commented to compile with Xelatex
         colorlinks=false,         % true or false (for final version)
         urlcolor=rltblue,         % \href{...}{...} external (URL)
 	    anchorcolor=rltbrightblue,
@@ -86,8 +88,8 @@
 \usepackage{graphicx}
 
 
-\pdfcompresslevel=9
-\pdfadjustspacing=1
+%\pdfcompresslevel=9 %commented to use Xelatex
+%\pdfadjustspacing=1 %commented to use xelatex
 % Definicion de colores
 \usepackage{color}
 \definecolor{rltbrightred}{rgb}{1,0,0}
