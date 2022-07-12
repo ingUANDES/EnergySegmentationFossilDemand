@@ -103,11 +103,16 @@ una memoria conducente al título de Ingeniero.
   \cleardoublepage \addcontentsline{toc}{section}{Agradecimientos}
   \begin{center} \Large \textbf{Agradecimientos} \end{center}
 
-Un primer agradecimiento se lo dedico a mi familia, por su contante apoyo tanto emocional como económico a lo largo de toda mi carrera universitaria. Agradezco la motivación y ganas de mejorar que me traspasaron durante los años.
+Un primer agradecimiento se lo dedico a mi familia, por su constante apoyo tanto emocional como económico a lo largo de toda mi carrera universitaria. Agradezco la motivación y deseos de mejorar que me traspasaron durante todos estos años.
 \vspace{2.5mm}
 
-Un segundo agradecimiento se lo dedico al profesor Sebastián Cea que me ofreció la oportunidad de desarrollar la memoria con él y trabajar juntos en la mejora de su modelo. Su apoyo constante, reuniones recurrentes y el perfil personalizado con el cuál me guió durante el último año me permitió aprender mucho y avanzar de forma ordenada en mi memoria. 
+Un segundo agradecimiento es para el profesor Sebastián Cea que me ofreció la oportunidad de desarrollar la memoria con él y trabajar juntos en la mejora de su modelo. Su apoyo constante, reuniones continuas y el perfil personalizado con el cual me guió durante el último año, me permitió aprender y avanzar de forma ordenada en mi memoria. 
 \vspace{2.5mm}
+
+Un tercer agradecimiento se lo dedico a Felipe Feijoo por el taller que realizó sobre la resolución de problemas de equilibrio y su ayuda en el área computacional de este trabajo.
+\vspace{2.5mm}
+
+Finalmente, un agradecimiento a Orlando Contreras, tutor del Centro de Escritura, quien me apoyó con la redacción de este documento. Su ayuda tuvo un rol fundamental en el orden de mis ideas y el de este documento para realizar la mejor escritura posible.
 
 
 % Genera resumen leyendo definicion de resumen
@@ -116,19 +121,25 @@ Un segundo agradecimiento se lo dedico al profesor Sebastián Cea que me ofreci�
   \cleardoublepage
   \refstepcounter{dummy} \addcontentsline{toc}{section}{Resumen}
   \begin{center} \Large \textbf{Resumen} \end{center}
-La presente memoria estudia la incorporación de atención racional en el modelo de \textit{cap and trade} de dos etapas creado por \citeB{amigo_two_2021}. Este modelo es una alternativa para fiscalizar las emisiones de dióxido de carbono de las empresas generadoras de electricidad, en el cual, un subastador (también llamado planificador social) emite permisos que luego le vende a las empresas generadoras y con los cuales ellas se limitan a contaminar.
+La presente memoria estudia la incorporación de atención racional en el modelo de \textit{cap and trade} de dos etapas creado por \citeB{amigo_two_2021}. Este modelo es una alternativa para fiscalizar las emisiones de dióxido de carbono de las empresas generadoras de electricidad, en que un subastador (también llamado planificador social) emite permisos que luego vende a las empresas generadoras y con los cuales ellas se limitan a contaminar.
 \vspace{2.5mm}
 
-La inclusión de atención racional en el modelo se realiza ya que esta presenta la oportunidad de minimizar el costo social por medio de la inversión en información. La incorporación de este concepto es dificultoso en este modelo ya que este es un problema de optimización de equilibrio en capacidad con dos agentes representados en dos modelos distintos. Para resolver el problema se deben convertir en uno solo de tipo \textit{Mixed Complementarity Problem} (MCP en sus siglas en inglés). Esto es dificultoso ya que se convierte en un modelo altamente no lineal.
+La atención limitada guarda relación con la incapacidad de procesar toda la información disponible en la toma de decisiones. La inclusión de atención racional en el modelo se realiza porque la fijación del límite de emisiones implica un costo de adquirir o estimar esa información. La incorporación de este concepto es dificultoso en este modelo ya que este es un problema de optimización de capacidad con varios agentes y restricciones de equilibrio. Con el fin de resolver el problema, se deben transformar varios problemas en uno solo del tipo \textit{Mixed Complementarity Problem} (MCP, por sus siglas en inglés). La dificultad implícita es que el problema resultante es altamente no lineal.
 \vspace{2.5mm}
 
-En esta memoria se explica qué son los modelos de equilibrio,  las condiciones de KKT, los MCP, se proporciona ejemplos de como resolverlos en distintos lenguajes de programación, se replica el modelo original y finalmente se realiza la implementación de atención racional y se resuelve.
+En esta memoria se explica qué son los modelos de equilibrio, las condiciones de optimalidad, los MCP, se proporcionan ejemplos de cómo resolverlos en distintos lenguajes de programación y se replica el modelo original. Por último, se realiza la implementación de atención racional.
 \vspace{2.5mm}
 
-La implementación se realiza, finalmente, en el modelo del subastador. Se realizan dos versiones: \textit{Profit Oriented}, en el cuál el subastador sufre perdidas dependiendo de su rendimiento encontrado y la versión Enfocado en Bienestar Social (sobre la cuál se realizaron dos formulaciones), esta se enfoca en el beneficio social más que en las utilidades. 
+La implementación se realiza en el modelo del subastador. Se realizan dos versiones: \textit{Profit oriented}, en la cuál el subastador experimenta pérdidas según el rendimiento determinado y otra \emph{Welfare oriented} enfocada en el bienestar social (sobre la cual se realizaron dos formulaciones). Esta última optimiza el beneficio social en lugar de las utilidades económicas. 
 \vspace{2.5mm}
 
-Finalmente, se resolvieron los nuevos modelos y se compraron con el original. En esto se encontró que la implementación aumenta el bienestar social y que existe potencial para perfeccionar ambas versiones y proponer un sistema en la vida real.
+Se resolvieron los nuevos modelos y se compararon con el original. Por un lado, los resultados del modelo \textit{Profit oriented} evidencian el impacto significativo del rendimiento en las variables óptimas del subastador. Este produjo, los precios de electricidad más bajos entre todos los modelos.
+\vspace{2.5mm}
+
+Por otro lado, el modelo Tasa Cuadrada (primera formulación \emph{Welfare oriented}) emite la menor cantidad de permisos para altos presupuestos de carbono. El Modelo con Precisión (segunda formulación \emph{Welfare oriented}) proporciona, junto al \textit{Profit oriented}, los precios de permisos de emisión más bajos para todos los presupuestos.
+\vspace{2.5mm}
+
+De acuerdo con lo anterior, se concluye que la propuesta aumenta el bienestar social y que existe potencial para perfeccionar ambas versiones y proponer una mejora al sistema.
 
 
 

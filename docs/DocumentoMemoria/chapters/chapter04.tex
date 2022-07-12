@@ -4,7 +4,12 @@
 \label{c4} % la etiqueta para referencias
 
 
+En este capítulo se lleva a cabo el análisis de resultados de las soluciones encontradas en los modelos explicados en el capítulo anterior. Para estos, cada uno es resuelto como un único problema MCP utilizando el \textit{solver} PATH.
+
+
 \section{Resultados Replicación modelo original}\label{replicaciongams}
+
+Por medio de la codificación de la replicación del MCP del problema original, se encuentra, para cada CAP, los siguientes resultados para los permisos emitidos $\theta$, los precios de venta de esos permisos $\pi^a$, los ingresos resultantes, el año en el cuál se elimina el carbón como fuente de generación eléctrica y el precio promedio de venta de permisos $\pi^v$ en el mercado de permisos :
 
 \begin{table}[H]
     \centering
@@ -22,37 +27,36 @@
         900,000,000  & 900,000,000  &  \$52.44  &  \$47,194,995,047.68  & 2050 &  \$52.44   \\ \hline
         1,000,000,000  & 1,000,000,000  &  \$46.66  &  \$46,660,328,771.21  & 2050 &  \$46.66   \\ \hline
     \end{tabular}
-    \caption{{\footnotesize Resultados Modelo Original}}
+    \caption{{\footnotesize Resultados Modelo Original (Fuente: realización propia)}}
     \label{resultadosmodelooriginal}
 \end{table}
 
 \section{Determinación parámetros de los modelos nuevos}\label{introresultados}
 
-En el capítulo anterior se aplica el concepto de atención racional en el modelo del subastador. Basada en \cite{dewan_estimating_2020}, se agrega un rendimiento de obtención de ingreso (en este caso el ingreso del subastador es la venta de permisos en la primera etapa), dependiente de cuanto dinero gasta en información adicional. Finalmente, se aplica el concepto de atención (inatención) racional en dos versiones: \textit{Profit Oriented} \ref{profit} y Bienestar Social \ref{bienestarsocial}. 
+En el capítulo anterior, se aplica el concepto de atención racional en el modelo del subastador. Sobre la base de \citeB{dewan_estimating_2020}, se agrega un rendimiento de obtención de ingreso (en este caso el ingreso del subastador es la venta de permisos en la primera etapa), dependiente de cuánto dinero gasta en información adicional. Finalmente, se aplica el concepto de atención (inatención) racional en dos versiones: \textit{Profit Oriented} \ref{profit} y Bienestar Social \ref{bienestarsocial}. 
 \vspace{2.5mm}
 
-Para completar los modelos, se deben agregar los parámetros de estos, los cuales están definidos en la Figura \ref{fig:nomenclatura1}, sobre costos, capacidades instaladas, demanda energética en cada periodo, factores de contaminación por tecnología, entre otros. Para esta nueva estructuración del modelo de \textit{cap and trade}, se repetirán los valores de los parámetros aplicados en el modelo original de \cite{amigo_two_2021}. Sus valores específicos se encuentran en el Anexo \ref{anexo:parametros}.
+Con el fin de completar los modelos, se deben agregar los parámetros de estos, que están definidos en la Figura \ref{fig:nomenclatura1}: costos, capacidades instaladas, demanda energética en cada periodo, factores de contaminación por tecnología, entre otros. En esta esta nueva estructuración del modelo de \textit{cap and trade}, se repetirán los valores de los parámetros aplicados en el modelo original de \citeB{amigo_two_2021}.
 \vspace{2.5mm}
 
-Para utilización de los nuevos parámetros $d$ y $c$ (información pública y costo marginal de información ) se hacen los siguientes supuestos para cada uno de ellos.
+Con el fin de utilizar los nuevos parámetros $d$ y $c$ (información pública y costo marginal de información) se proponen los siguientes supuestos para cada uno de ellos.
 \vspace{2.5mm}
 
-Por un lado,  el parámetro $d$ de información disponible se determina considerando que esta información es equivalente al error de cálculo de los presupuestos de carbono realizados para el NDC chileno. Este supuesto se hizo ya que tiene sentido en cuanto al trabajo que debe realizar el subastador para aumentar sus ganancias y encontrar un beneficio social mayor. Invertir por disminuir el ruido (o error) de determinación de presupuesto de carbono, para generar un mayor beneficio social y económico, es necesario invertir en la obtención de información que disminuya este ruido. \vspace{2.5mm}
+Por un lado, el parámetro $d$ de información disponible se determina considerando que esta información es equivalente al error de cálculo de los presupuestos de carbono realizados para el NDC chileno. Este supuesto se hizo en virtud del trabajo que debe realizar el subastador para aumentar sus ganancias y encontrar un beneficio social mayor. Con la finalidad de disminuir el ruido (o error) de cálculo de presupuesto de carbono, para generar un mayor beneficio social y económico, es necesario invertir en la obtención de información que disminuya este ruido. \vspace{2.5mm}
 
-Para determinar este error, debido a que no se encontró información sobre cómo se calculó el presupuesto de $1.100\quad MTCO_{2}e$ establecido en el NDC actualizado de Chile para el periodo 2020-2030 por el Ministerio del Medio Ambiente de Chile, se utilizó un estudio sobre el cálculo de estos presupuestos.
+Con el objetivo de determinar este error, debido a que no se encontró información sobre cómo se calculó el presupuesto de $1.100\quad MTCO_{2}e$ establecido en el NDC actualizado de Chile para el periodo 2020-2030 por el Ministerio del Medio Ambiente de Chile, se utilizó un estudio sobre el cálculo de estos presupuestos.
 \vspace{2.5mm}
 
-Los autores de \citeB{andres_new_2014} y \citeB{ballantyne_audit_2015} estudian este cálculo y la existencia de un error en ellos. Proponen, debido a diferentes circunstancias y características de cada país, un error estimado del cálculo de estos parámetros. Señalando que existe un error en Chile de 0,202. Con esto, se toma un valor de información pública o información disponible $d=0,798$, el cuál representa el total del valor del presupuesto de carbono determinado por Chile que sí es confiable o sí representa una estimación real del presupuesto que se debe considerar.   
+Los autores \citeB{andres_new_2014} y \citeB{ballantyne_audit_2015} estudian este cálculo y la existencia de un error en ellos. Proponen, debido a diferentes circunstancias y características de cada país, un error estimado del cálculo de estos parámetros. Señalan que, en Chile el error es de $0.202$. Con esto, se toma un valor de información pública o información disponible $d=0.798$, que representa el total del valor del presupuesto de carbono determinado por Chile que es confiable o representa una estimación real del presupuesto que se debe considerar.   
 \vspace{2.5mm}
 
-A partir de este presupuesto, es trabajo del subastador minimizar el ruido y encontrar un presupuesto que maximice sus ganancias y, consecuentemente, maximice el bienestar social.
+A partir de este presupuesto, es trabajo del subastador minimizar el ruido y encontrar uno que maximice sus ganancias y, consecuentemente, maximice el bienestar social.
 \vspace{2.5mm}
 
-
-Por otro lado, el valor del parámetro $c$, se determina por medio de una calibración de cada modelo, variando este parámetro hasta calibrar cada uno con el modelo original. En otras palabras, se toma como referencia la solución del modelo original para un presupuesto de carbono (parámetro exógeno al modelo)  dado de 100 millones de toneladas de $CO_{2}e$. Se toma el óptimo encontrado de la variable $\pi_a$ para calibrar el modelo. Entonces, se varía el parámetro $c$ en los modelos nuevos hasta obtener un precio de venta de permisos por parte del subastador (representado por la variable $\pi_a$ en los modelos) similar o igual al del modelo original para el mismo presupuesto de carbono.
+Por otro lado, el valor del parámetro $c$, se determina por medio de una calibración de cada modelo. El parámetro se varía hasta calibrar cada uno con el modelo original. En otras palabras, se toma como referencia la solución del modelo original para un presupuesto de carbono de $100$ millones de toneladas de $CO_{2}e$. Se toma el óptimo encontrado de la variable $\pi_a$ para calibrar el modelo. Entonces, se varía el parámetro $c$ en los modelos nuevos hasta obtener un precio de venta de permisos por parte del subastador (representado por la variable $\pi_a$ en los modelos) similar o igual al del modelo original para el mismo presupuesto de carbono.
 \vspace{2.5mm}
 
-El modelo original, con un presupuesto de 100$MtCO_{2}e$, encuentra un óptimo con la variable $\pi^a= \$315.83$.
+El modelo original, con un presupuesto de $100\, MtCO_{2}e$, encuentra un óptimo de la variable $\pi^a= \$ 315.83$.
 \vspace{2.5mm}
 
 A continuación, se calibran, resuelven, evalúan y analizan ambas versiones reestructuradas del modelo original.
@@ -70,7 +74,9 @@ El modelo propuesto en el capítulo \ref{profit} se traduce en el siguiente prob
     0 \leq Q_i(0) \perp ( \big(a_{i}+b_i Q_{i}(0)\big)-\pi^d(0) + \kappa_i  + \sum_{\omega} \gamma_{i,\omega}\varepsilon_i) \geq 0\\
     0 \leq Q_i(t,\omega) \perp (Pr(\omega)  \frac{1}{(1+R)^t} \bigg( TC_i(t) \big(a_{i}+b_i Q_i(t,\omega)\big ) -\pi^d(t,\omega) \bigg) + \alpha_{i,\omega,\tau} + \gamma_{i,\omega} \varepsilon_{i}) \geq 0 \qquad \forall \ i, \omega, t > 0\\
     0 \leq A_i \perp (\pi^{a} - \sum_{\omega}\beta_{i,\omega} - \sum_{\omega}\gamma_{i,\omega}) \geq 0 \qquad \forall  i\\
-    0 \leq \cdot  V_i(w) \perp (-Pr(\omega) \pi^v(\omega) + \beta_{i,\omega}  + \gamma_{i,\omega})\geq 0 \qquad \forall \  i, \omega\\ 
+    0 \leq \cdot  V_i(w) \perp (-Pr(\omega) \pi^v(\omega) + \beta_{i,\omega}  + \gamma_{i,\omega})\geq 0 \qquad \forall \  i, \omega
+        \end{align}
+    \begin{align}
    0 \leq  P_i(w) \perp (Pr(\omega) \pi^v(\omega) -\gamma_{i,\omega}) \geq  0  \qquad \forall \  i, \omega \\
      0 \leq \big(CF_i \cdot \tau \big) \Bigg[\bar{Q}_i + \sum_{t\leq t^{\prime}} x_i(t,\omega) + x_i(0) \Bigg] - Q_i(t,\omega)  \perp \alpha_{i,\omega,\tau} \geq 0 \qquad \forall \ i, \omega, t  > 0\\
      0 \leq \Big(CF_i\cdot\tau \Big)\bar{Q}_i(0)-Q_{i}(0) \perp \kappa_i \geq 0 \qquad \forall \ i \\
@@ -102,10 +108,10 @@ El modelo propuesto en el capítulo \ref{profit} se traduce en el siguiente prob
 
 \subsection{Calibración del modelo}
 
-Para realizar la calibración del modelo, se resuelve repetidas veces en el \textit{solver} variando únicamente el costo $c$ hasta encontrar un valor óptimo de $\pi^a $ similar al del modelo original para el CAP de 100 millones de $CO_{2}e$.     
+Con el fin de ejecutar la calibración del modelo, se resuelve repetidas veces en el \textit{solver} al variar únicamente el costo $c$ hasta encontrar un valor óptimo de $\pi^a $, similar al del modelo original para el CAP de $100$ millones de $tCO_{2}e$.     
 \vspace{2.5mm}
 
-En el Cuadro \ref{calibracionPO}, se observa que no se encuentran valores mayores a \$100. Esto es debido a las altas cantidades de permisos emitidos por el subastador. A mayor cantidad de permisos, menor será el precio debido a la ley de oferta y demanda.
+En el Cuadro \ref{calibracionPO}, se observa que no se encuentran valores mayores a $\$100$. Esto se debe a las altas cantidades de permisos emitidos por el subastador. A mayor cantidad de permisos, menor será el precio debido a la ley de oferta y demanda.
 \vspace{2.5mm}
 
 \begin{table}[H]
@@ -133,105 +139,17 @@ En el Cuadro \ref{calibracionPO}, se observa que no se encuentran valores mayore
          \$5,000,000,000,000  &  \$-  & 1.29E+09 &  \$315.83  & 1.00E+08 &  \$-315.83   \\ \hline
          \$50,000,000,000,000  &  \$-  & 5.87E+09 &  \$315.83  & 1.00E+08 &  \$-315.83   \\ \hline
     \end{tabular}
-    \caption{{\footnotesize Calibración modelo Profit Oriented}}
+    \caption{{\footnotesize Calibración modelo Profit Oriented (Fuente: realización propia)}}
     \label{calibracionPO}
 \end{table}
 
-Para entender por qué se emiten tantos permisos para cada costo, basta con observar que falta restringir la cantidad de permisos que se pueden emitir. El subastador busca únicamente maximizar sus utilidades, por lo que siempre emitirá la mayor cantidad de permisos posibles para así vender más y producir más ganancias. La única restricción que tienen estos permisos es la de no producir más permisos que los necesarios para abastecer la demanda de electricidad en el futuro. Entonces, con este formato, se emitirá la cantidad de permisos necesarios para abastecer esta demanda con la contaminación que esta produce.
+Con el fin de entender por qué se emiten tantos permisos para cada costo, basta con observar que falta restringir la cantidad de permisos que se pueden emitir. El subastador busca únicamente maximizar sus utilidades, por lo que siempre emitirá la mayor cantidad de permisos posibles para vender más y aumentar las ganancias. La única restricción que tienen estos permisos es la de no producir más permisos que los necesarios para abastecer la demanda de electricidad en el futuro. Entonces, con este formato, se emitirá la cantidad de permisos necesarios para abastecer esta demanda con la contaminación que esta produce.
 \vspace{2.5mm}
 
-En consecuencia a lo analizado y debido a que producir con fuentes no renovables es más rentable, el modelo hace que se emita la cantidad de permisos que las empresas de generación contaminantes necesitarán para abastecer la demanda. 
+Como consecuencia de lo analizado y debido a que producir con fuentes no renovables es más rentable, el modelo genera la cantidad de permisos que las empresas de generación contaminantes necesitarán para abastecer la demanda. 
 \vspace{2.5mm}
 
-Con el fin de resolver el problema anterior, ya que el objetivo de este trabajo es encontrar un modelo que minimice las emisiones de carbono y aumente la inversión en energías renovables, se debe restringir la cantidad de permisos a emitir respecto al CAP.
-
-
-\subsection{Resultados}
-
-NO CREO QUE DEBA INCUIR ESTO 
-
-A pesar de lo anterior, se utiliza este modelo para tener una idea inicial de cómo responde el subastador al cambio exógeno del rendimiento.
-
-Con esto, al correr el modelo en el \textit{solver}, cambiando únicamente el valor del rendimiento ($P$), se encontraron los siguientes resultados:
-
-\begin{table}[H]
-\centering
-\begin{tabular}{|l|l|l|}
-\hline
-\textbf{P($\%$)} & \textbf{$\theta$ (millones)} & \textbf{$\pi^a$($\frac{\$}{\theta}$)} \\ \hline
-20 & 3203 & 0 \\ \hline
-25 & 190 & 103.196 \\ \hline
-30 & 204.63 & 73.335 \\ \hline
-35 & 219.81 & 77.973 \\ \hline
-40 & 219.79 & 60.880 \\ \hline
-45 & 235.31 & 60.448 \\ \hline
-50 & 379.72 & 77.507 \\ \hline
-55 & 221.79 & 52.927 \\ \hline
-60 & 230.75 & 48.799 \\ \hline
-65 & 239.28 & 46.123 \\ \hline
-70 & 248.33 & 49.598 \\ \hline
-75 & 225.99 & 47.855 \\ \hline
-80 & 235.93 & 62.802 \\ \hline
-85 & 263.95 & 42.426 \\ \hline
-90 & 272.16 & 41.955 \\ \hline
-95 & 275.08 & 39.492 \\ \hline
-100 & 328.44 & 38.110 \\ \hline
-\end{tabular}
-\caption{{\footnotesize Resultados modelo con restricción de rendimiento}}
-\label{tabla:conrestrrend}
-\end{table}
-
-\begin{tikzpicture}
-\begin{axis}[
-    title={Efecto del rendimiento en los precios ofrecidos por subastador de permisos de contaminación},
-    xlabel={Rendimiento [$P$]},
-    ylabel={$\pi^a$[USD]]},
-    xmin=0, xmax=120,
-    ymin=0, ymax=120,
-    xtick={0,20,40,60,80,100,120},
-    ytick={0,20,40,60,80,100,120},
-    legend pos=south east,
-    ymajorgrids=true,
-    grid style=dashed,
-]
-
-\addplot[
-    color=red,
-    mark=square,
-    ]
-    coordinates {
-    (20,0)(25,103.196)(30,73.335)(35,77.973)(40,60.880)(45,60.448)(50,77.507)(55,52.927)(60,48.799)(65,46.123)(70,49.598)(75,47.855)(80,62.802)(85,42.426)(90,41.955)(95,39.492)(100,38.110)
-    };
-    \legend{$\pi^a$}
-    
-\end{axis}
-\end{tikzpicture}
-
-\begin{tikzpicture}
-\begin{axis}[
-    title={Efecto del rendimiento en los permisos de contaminación},
-    xlabel={Rendimiento [$P$]},
-    ylabel={Permisos $\theta$[millones]]},
-    xmin=0, xmax=120,
-    ymin=0, ymax=400,
-    xtick={0,20,40,60,80,100,120},
-    ytick={0,60,120,180,240,300,360},
-    legend pos=south east,
-    ymajorgrids=true,
-    grid style=dashed,
-]
-
-\addplot[
-    color=blue,
-    mark=square,
-    ]
-    coordinates {
-    (25,190)(30,204.63)(35,219.81)(40, 219.79)(45, 235.31)(50,379.72)(55,221.79)(60, 230.75)(65,239.28)(70,248.33)(75,225.99)(80,235.93 )(85,263.95)(90,272.16)(95,275.08)(100,328.44)
-    };
-    \legend{Millones de $\theta$}
-    
-\end{axis}
-\end{tikzpicture}
+Con el fin de resolver el problema anterior, ya que el objetivo de este trabajo es encontrar un modelo que minimice las emisiones de carbono y aumente la inversión en energías renovables, se debe restringir la cantidad de permisos por emitir respecto al CAP.
 
 \subsection{Adaptación modelo \textit{Profit Oriented}}
 
@@ -261,14 +179,14 @@ Con esto, al correr el modelo en el \textit{solver}, cambiando únicamente el va
 La incorporación de la restricción \ref{profit2:r2}, tiene como fin restringir la emisión de permisos incorporando el CAP. Los permisos se acotan a que estos no pueden superar el CAP mas su error de cálculo explicado anteriormente.
 \vspace{2.5mm}
 
-$\hat{\theta}$ toma el valor del presupuesto de emisiones (CAP) impuesto por el gobierno. En esta misma restricción, se utiliza el valor error, el cuál representa el error de cálculo de este presupuesto, estimado por \cite{andres_new_2014}. Definiendo un $error=0,202$. 
+$\hat{\theta}$ toma el valor del presupuesto de emisiones (CAP) impuesto por el gobierno. En esta misma restricción, se utiliza el valor $error$, el cuál representa el error de cálculo de este presupuesto, estimado por \citeB{andres_new_2014}. Finalmente, se define un $error=0.202$. 
 \vspace{2.5mm}
 
 Con esta nueva formulación, se calibra el modelo y posteriormente se resuelve.
 
 \subsection{Calibración}
 
-Para calibrar, se realiza el mismo procedimiento explicado anteriormente. 
+Con el fin de calibrar, se realiza el mismo procedimiento explicado anteriormente. 
 
 \begin{table}[H]
     \centering
@@ -295,11 +213,11 @@ Para calibrar, se realiza el mismo procedimiento explicado anteriormente.
          \$3,000,000,000,000  &  \$1,087.10  & 1.13E+08 &  \$315.83  & 1.00E+08 &  \$771.27   \\ \hline
          \$4,000,000,000,000  &  \$2,218.81  & 7.38E+07 &  \$315.83  & 1.00E+08 &  \$1,902.98   \\ \hline
     \end{tabular}
-    \caption{{\footnotesize Calibración modelo Profit Oriented 2}}
+    \caption{{\footnotesize Calibración modelo Profit Oriented 2 (Fuente: realización propia)}}
     \label{calibracionPO2}
 \end{table}
 
-En el Cuadro \ref{calibracionPO2} se observa que existe un efecto lineal entre el costo $c$ y los precios $\pi^a$ a partir de los $\$50.000.000.000$ en costos. Esto se explica gracias a como este modelo está formulado: a mayor costo, se incurrirá a un mayor precio en los permisos para tener utilidades positivas. Antes del precio mencionado, los costos no son lo suficientemente altos como para afectar las ganancias.
+En el Cuadro \ref{calibracionPO2} se observa que existe un efecto lineal entre el costo $c$ y los precios $\pi^a$ a partir de los $\$50,000,000,000$ en costos. Esto se explica gracias a la formulación de este modelo: a mayor costo, se incurrirá a un mayor precio en los permisos para tener utilidades positivas. Antes del precio mencionado, los costos no son lo suficientemente altos como para afectar las ganancias.
 \vspace{2.5mm}
 
 Finalmente, con un costo $c= \$ 920,000,000,000$ se tiene la mejor aproximación al $\pi^a$ original. 
@@ -323,15 +241,15 @@ En este modelo se incorpora el rendimiento como parámetro, por lo que se estudi
         0.99  & 100,000,000 & 114,916,396 & 1.15  &  \$298.11   \\ \hline
         1  & 100,000,000 & 118,332,486 & 1.18  &  \$317.24   \\ \hline
     \end{tabular}
-    \caption{{\footnotesize Efecto de $P$ en $\theta$ y $\pi^a$}}
+    \caption{{\footnotesize Efecto de $P$ en $\theta$ y $\pi^a$ (Fuente: realización propia)}}
     \label{efectopenthetapia}
 \end{table}
 
 
-En el Cuadro \ref{efectopenthetapia} se mantiene el presupuesto constante para entender el efecto del rendimiento en los permisos emitidos ($\theta$) y los precios establecidos por el subastador ($\pi^a$) al mantener constante el presupuesto de carbono (CAP). 
+En el Cuadro \ref{efectopenthetapia} se mantiene el presupuesto constante para entender el efecto del rendimiento en los permisos emitidos ($\theta$) y los precios establecidos por el subastador ($\pi^a$). 
 \vspace{2.5mm}
 
-Por un lado, estos resultados muestran un efecto triangular en los permisos emitidos, con bajos rendimientos, se emite el máximo de permisos ($CAP + error$), en los rendimientos medios (0.85,0.9) se encuentra un mínimo de permisos emitidos y finalmente, con el rendimiento máximo, los permisos vuelven a subir cercano a $CAP + error$.
+Por un lado, estos resultados muestran un efecto triangular en los permisos emitidos. Con bajos rendimientos, se emite el máximo de permisos ($CAP + error$), en los rendimientos medios (0.85,0.9) se encuentra un mínimo de permisos emitidos y, finalmente, con el rendimiento máximo, los permisos vuelven a subir cercano a $CAP + error$.
 \vspace{2.5mm}
 
 Por otro lado, existe un efecto similar en los precios $\pi^a$, encontrando valores máximos en los extremos del rendimiento.
@@ -359,7 +277,7 @@ Los resultados para todos los presupuesto de carbono se encuentran en el Cuadro 
         0.8 & 900,000,000 & 605,279,899 & 0.67 &  \$42.26   \\ \hline
         0.8 & 1,000,000,000 & 605,279,899 & 0.61 &  \$35.98   \\ \hline
     \end{tabular}
-    \caption{{\footnotesize Efecto del $CAP$ en $\theta$ y $\pi^a$}}
+    \caption{{\footnotesize Efecto del $CAP$ en $\theta$ y $\pi^a$ (Fuente: realización propia)}}
     \label{efectocapthetapia}
 \end{table}
 \vspace{2.5mm}
@@ -367,7 +285,7 @@ Los resultados para todos los presupuesto de carbono se encuentran en el Cuadro 
 En el Cuadro \ref{efectocapthetapia} se muestra, manteniendo el rendimiento constante, el efecto del cambio del parámetro CAP en los permisos emitidos y los precios de permisos $\pi^a$.  Se observa que a mayor CAP existe un menor número de permisos emitidos relativos al CAP. En otras palabras, $\frac{\theta}{CAP}$ disminuye mientras mayor es el CAP establecido por el gobierno.
 \vspace{2.5mm}
 
-En adición a lo anterior, los precios $\pi^a$ tienen un comportamiento sinusoidal, tal vez ruido blanco, respecto al cambio en el CAP. Por un lado, se puede observar una tendencia a la baja para el precio mientras sube la cantidad de permisos (la ley de oferta y demanda espera esto ), pero, existen saltos extraños como en el CAP$=800MtCO_2$, donde se emiten muchos permisos y los precios aumentan. Estas anomalías pueden ser debido a que en estas ocasiones se invirtió más en información, traspasando los costos a la empresas que compran los permisos.
+En adición a lo anterior, los precios $\pi^a$ tienen un comportamiento sinusoidal, tal vez ruido blanco, respecto al cambio en el CAP. Por un lado, se puede observar una tendencia a la baja para el precio mientras sube la cantidad de permisos (ley de oferta y demanda). Por otro lado, existen saltos extraños como en el CAP$=800MtCO_2$, donde se emiten muchos permisos y los precios aumentan. Estas anomalías pueden ser debido a que en estas ocasiones se invirtió más en información, traspasando los costos a la empresas que compran los permisos.
 \vspace{2.5mm}
 
 Los resultados para todos los rendimientos se encuentran en el Cuadro \ref{efectopenthetapiatodoCAP} del Anexo \ref{anexoPO}.
@@ -450,14 +368,14 @@ La Figura \ref{rendcap} muestra la relación entre la variación del CAP y el co
 
 \end{tikzpicture}
 }
-\caption{{\footnotesize Rendimiento por CAP \textit{Profit Oriented}}}
+\caption{{\footnotesize Rendimiento por CAP \textit{Profit Oriented} (Fuente: realización propia)}}
 \label{rendcap}
 \end{figure}
 
-Esta muestra que a mayor rendimiento mayor es la desviación de los permisos emitidos respecto al CAP. También se observa que a menor CAP, menor será la desviación de los permisos emitidos. 
+Esta muestra que a mayor rendimiento mayor es la desviación de los permisos emitidos respecto al CAP. También, se observa que a menor CAP, menor será la desviación de los permisos emitidos. 
 \vspace{2.5mm}
 
-Con lo anterior se concluye que mientras más se invierta en investigación, menor será la cantidad de permisos emitidos, esto puede ser respuesta a que el la información le indica que las emisiones deben disminuir. También, se cumple que mientras no exista inversión en información $P=d=0.798$, se emitirá el máximo de permisos posibles. Esto debido a que el subastador intentará maximizar sus ganancias.
+Con lo anterior se concluye que mientras más se invierta en investigación, menor será la cantidad de permisos emitidos, esto puede ser respuesta de que la información le indica al subastador que las emisiones deben disminuir. También, se cumple que mientras no exista inversión en información $P=d=0.798$, se emitirá el máximo de permisos posibles. Lo anterior, debido a que el subastador intenta maximizar sus ganancias.
 \vspace{2.5mm}
 
 \begin{figure}[H]
@@ -475,16 +393,16 @@ Con lo anterior se concluye que mientras más se invierta en investigación, men
   \end{minipage}
 \end{figure}
 
-Para entender como este modelo afecta los permisos comprados por cada tecnología emisora de contaminante (al igual que el modelo original se consideran que estas son las empresas que usan Carbón, Gas y Petroleo como generador de electricidad), se grafican sus compras para cada cantidad de permisos emitidos (variando el CAP, manteniendo el rendimiento constante en $P=0.8$) en las figuras \ref{petapaPO} y \ref{setapaPO}.
+Con el fin de entender como este modelo afecta los permisos comprados por cada tecnología emisora de contaminante (al igual que el modelo original se consideran que estas son las empresas que usan Carbón, Gas y Petroleo como generador de electricidad), se grafican sus compras para cada cantidad de permisos emitidos (variando el CAP, manteniendo el rendimiento constante en $P=0.8$) en las figuras \ref{petapaPO} y \ref{setapaPO}.
 \vspace{2.5mm}
 
 En primer lugar, se grafica las distribuciones en la primera etapa, o sea, antes de que se revele el escenario de demanda energética en el futuro, en el cuál las empresas le compran los permisos al subastador. En segundo lugar, se grafica la nueva distribución para cada cantidad de permisos emitidos. Esta nueva distribución ocurre en la segunda etapa, donde las empresas forman un mercado de compra y venta de permisos entre ellas.
 \vspace{2.5mm}
 
-Por ejemplo, para un $CAP=100MtCO_2$, se emitieron 120 millones de permisos de contaminación. De los cuales el Gas compró un $61\%$ de esto, el Carbón un $32\%$ y el Petro Diesel un $7\%$. Luego, en la segunda etapa, estas tecnologías negociaron entre ellas (compras y ventas) y reajustaron su inversión en capacidad, llegando, finalmente, a que el GAS tiene un $67\%$ del total de permisos, el carbón un $33\%$ y el Petro Diesel vendió todos sus permisos. 
+Por ejemplo, para un $CAP=100MtCO_2$, se emitieron 120 millones de permisos de contaminación. De los cuales el Gas compró un $61\%$ de esto, el Carbón un $32\%$ y el Petro Diesel un $7\%$. Luego, en la segunda etapa, estas tecnologías negociaron entre ellas (compras y ventas) y reajustaron su inversión en capacidad, en la cuál, finalmente, el GAS tiene un $67\%$ del total de permisos, el Carbón un $33\%$ y el Petro Diesel vendió todos sus permisos. 
 \vspace{2.5mm}
 
-Estos resultados muestran que la dominancia (en cuanto a cantidad de permisos comprados) se mantiene estable entre etapas, siendo para casi todo presupuesto de carbono el Gas el mayor comprador. En adición a lo anterior, se ecuentra que para una emisión de 920 millones de permisos, existe una venta casi total de permisos. Esto no debería suceder ya que existe la restricción de condiciones de mercado \ref{rescom:2}, lo que puede significar que la alta no linealidad del modelo puede estar presentando errores para algunos valores o que existe la posibilidad de inclusión de recompra de permisos por parte del subastador, lo que permite disminuir las emisiones a pesar de existir una gran cantidad de permisos.
+Estos resultados muestran que la dominancia (en cuanto a cantidad de permisos comprados) se mantiene estable entre etapas, siendo el Gas el mayor comprador para casi todo presupuesto de carbono. En adición a lo anterior, se concluye que para una emisión de $920$ millones de permisos, existe una venta cercana al total de permisos emitidos. Lo anterior no debería suceder ya que existe la restricción de condiciones de mercado \ref{rescom:2}, lo que puede significar que la alta no linealidad del modelo puede estar presentando errores para algunos valores o existe la posibilidad de inclusión de recompra de permisos por parte del subastador, lo que permite disminuir las emisiones a pesar de existir una gran cantidad de permisos.
 \vspace{2.5mm}
 
 \begin{table}[H]
@@ -496,15 +414,15 @@ Estos resultados muestran que la dominancia (en cuanto a cantidad de permisos co
         $\theta$  & 120M & 240M & 361M & 455M & 601M & 605M & 605M & 961M & 605M & 605M \\ \hline
         $\pi^d$  &  \$264.03   &  \$119.37   &  \$136.85   &  \$95.39   &  \$102.94   &  \$83.32   &  \$83.32   &  \$174.56   &  \$83.32   &  \$83.32   \\ \hline
     \end{tabular}
-    \caption{{\footnotesize Precio de electricidad ($\pi^d$) por CAP y $P=80\%$}}
+    \caption{{\footnotesize Precio de electricidad ($\pi^d$) por CAP y $P=80\%$ (Fuente: realización propia)}}
     \label{POpidporcap}
 \end{footnotesize}
 \end{table}
 
-Una de las variables indirectas al modelo del subastador pero sobre la cual es importante estudiar el efecto de la reformulación del subastador es el precio de venta de electricidad que las empresas le cobran a las personas en el periodo 2018-2050. Su estudio puede entregar información valiosa sobre el bienestar social que estos nuevos modelos produzcan.
+Una de las variables indirectas del modelo del subastador, pero sobre la cual es importante estudiar el efecto de la reformulación, es el precio de venta de electricidad que las empresas le cobran a las personas en el periodo 2018-2050. Su estudio puede entregar información valiosa sobre el bienestar social que estos nuevos modelos producen.
 \vspace{2.5mm}
 
-En el Cuadro \ref{POpidporcap} se encuentran los precios de electricidad $\pi^d$ ofrecido por las empresas generadoras de electricidad en el año 2018 (primera etapa) para todos los CAP y sus permisos emitidos resultantes. Los resultados muestran que mayores CAP resultan en menores precios de electricidad, a excepción del $CAP= 800MtCO_2$, en el cuál el precio es el segundo mayor de la tabla. Esto puede deberse a que, según lo mostrado en la Figura \ref{setapaPO}, las empresas generadoras contaminadoras, venden todos sus permisos en la segunda etapa, entonces, estas suben sus precios de venta de electricidad en la primera etapa.
+En el Cuadro \ref{POpidporcap} se encuentran los precios de electricidad $\pi^d$ ofrecido por las empresas generadoras de electricidad en el año 2018 (primera etapa) para todos los CAP y sus permisos emitidos resultantes. Los resultados muestran que mayores CAP resultan en menores precios de electricidad, a excepción del $CAP= 800MtCO_2$, en el cuál, el precio es el segundo mayor de la tabla. Esto puede deberse a que, según lo mostrado en la Figura \ref{setapaPO}, las empresas generadoras contaminadoras, venden todos sus permisos en la segunda etapa, entonces, estas suben sus precios de venta de electricidad en la primera etapa.
 \vspace{2.5mm}
 
 \begin{figure}[H]
@@ -568,11 +486,11 @@ En el Cuadro \ref{POpidporcap} se encuentran los precios de electricidad $\pi^d$
 \end{tikzpicture}
 }
 
-\caption{{\footnotesize Promedio de precios de electricidad (2019-2050)  por escenario}}
+\caption{{\footnotesize Promedio de precios de electricidad (2019-2050)  por escenario (Fuente: realización propia)}}
 \label{pidcap}
 \end{figure}
 
-Finalmente, se comparan los precios promedio de electricidad en la segunda etapa (años 2019-2050) para cada uno de los escenarios del modelo en la Figura \ref{pidcap}, los cuales siguen la lógica de mayor precio por mayor demanda energética, pero se distingue una caída pronunciada en los precios para todos los escenarios cuando el $CAP=800MtCO_2$ . Esto puede deberse, como se muestra en el Cuadro \ref{efectocapthetapia}, a la alta emisión de permisos en ese periodo, resultando en una mayor producción por parte de las empresas contaminantes en comparación a las renovables.
+Finalmente, se comparan los precios promedio de electricidad en la segunda etapa (años 2019-2050) para cada uno de los escenarios del modelo en la Figura \ref{pidcap}, los cuales siguen la lógica de mayor precio por mayor demanda energética, pero, se distingue una caída pronunciada en los precios para todos los escenarios cuando el $CAP=800MtCO_2$ . Esto puede deberse, como se muestra en el Cuadro \ref{efectocapthetapia}, a la alta emisión de permisos en ese periodo, resultando en una mayor producción por parte de las empresas contaminantes en comparación a las renovables.
 \vspace{2.5mm}
 
 Los escenarios, que pronostican la demanda eléctrica en los años mencionados anteriormente, son los mismos que en el modelo original, mostradas en la Figura \ref{fig:demandaescenarios}. 
@@ -644,7 +562,7 @@ Al igual que el productor, este es el mismo MCP de las condiciones de mercado pr
          \$150,000,000,000  &  \$164.89  & 1.51E+08 &  \$315.83  & 1.00E+08 &  \$150.93   \\ \hline
          \$200,000,000,000  &  \$143.18  & 1.49E+08 &  \$315.83  & 1.00E+08 &  \$172.65   \\ \hline
     \end{tabular}
-    \caption{{\footnotesize Precio de electricidad ($\pi^d$) por CAP}}
+    \caption{{\footnotesize Precio de electricidad ($\pi^d$) por CAP (Fuente: realización propia)}}
     \label{calibracioncuadrado}
 \end{table}
 
@@ -682,11 +600,11 @@ Considerando lo anterior, se tienen los siguientes resultados:
         900,000,000 & 609,127,279  & 0.896  & 0.677  &  \$31.21   \\ \hline
         1,000,000,000 & 698,676,376  & 0.909  & 0.699  &  \$30.00   \\ \hline
     \end{tabular}
-    \caption{{\footnotesize Resultados modelo tasa al cuadrado}}
+    \caption{{\footnotesize Resultados modelo tasa al cuadrado (Fuente: realización propia)}}
     \label{resultadostasacuadrada}
 \end{table}
 
-El Cuadro \ref{resultadostasacuadrada}, muestra que este modelo entrega rendimientos variados para la mayoría de los CAP. A pesar de lo anterior, en los primeros cuatro CAP, el subastador prefiere no invertir en información $(P-d=0)$. También, presenta una caída sostenible de los precios mientras mayor es el CAP, existiendo eso si una anomalía en el cuarto CAP donde existe un precio de venta de permisos $pi^a=0$. Esto probablemente es debido a una falla en el modelo por su alta no linealidad o se debe buscar otra formulación del modelo para encontrar mejores resultados.
+El Cuadro \ref{resultadostasacuadrada}, muestra que este modelo entrega rendimientos variados para la mayoría de los CAP. A pesar de lo anterior, en los primeros cuatro CAP, el subastador prefiere no invertir en información $(P-d=0)$. También, presenta una caída sostenible de los precios mientras mayor es el CAP, existiendo eso si una anomalía en el cuarto CAP donde existe un precio de venta de permisos $pi^a=0$. Lo anterior puede ser producto de una falla en el modelo por su alta no linealidad.
 \vspace{2.5mm}
 
 \begin{figure}[H]
@@ -716,14 +634,14 @@ El Cuadro \ref{resultadostasacuadrada}, muestra que este modelo entrega rendimie
     
 \end{axis}
 \end{tikzpicture}
-\caption{{\footnotesize Efecto del CAP sobre P}}
+\caption{{\footnotesize Efecto del CAP sobre P (Fuente: realización propia)}}
 \label{rendcapTC}
 \end{figure}
 
 Cuando se grafica el cambio del rendimiento en la Figura \ref{rendcapTC}, se observa un aumento de rendimiento entre los CAP 400 y 700, los cuales representan los escenarios donde existe una caída significativa a menor cociente $\frac{\theta}{CAP}$ según lo mostrado en la Figura \ref{rendcapTC2}.
 \vspace{2.5mm}
 
-Lo anterior, puede deberse a que mientras el subastador más invierte en información,entiende que menos se permisos de deben emitir para disminuir el costo social.
+Lo anterior, puede deberse a que mientras el subastador invierte más en información, entiende que menos permisos se deben emitir, para así, disminuir el costo social.
 \vspace{2.5mm}
 
 \begin{figure}[H]
@@ -753,7 +671,7 @@ Lo anterior, puede deberse a que mientras el subastador más invierte en informa
     
 \end{axis}
 \end{tikzpicture}
-\caption{{\footnotesize Efecto del CAP sobre $\frac{\theta}{CAP}$}}
+\caption{{\footnotesize Efecto del CAP sobre $\frac{\theta}{CAP}$ (Fuente: realización propia)}}
 \label{rendcapTC2}
 \end{figure}
 
@@ -790,7 +708,7 @@ Los precios de electricidad en la primera etapa resultantes, en el Cuadro \ref{T
        $\theta$[Millones]  & 145  & 290  & 435  & 580  & 654  & 620  & 661  & 611  & 609  & 699  \\ \hline
         $\pi^d$  &  \$232.54   &  \$155.49   &  \$123.21   &  \$93.90   &  \$87.48   &  \$90.44   &  \$105.74   &  \$95.05   &  \$93.38   &  \$94.53   \\ \hline
     \end{tabular}
-    \caption{{\footnotesize Precio de electricidad ($\pi^d$) en el año 2018 por CAP }}
+    \caption{{\footnotesize Precio de electricidad ($\pi^d$) en el año 2018 por CAP (Fuente: realización propia)}}
     \label{TCpidporcap}
 \end{footnotesize}
 \end{table}
@@ -857,7 +775,7 @@ Finalmente, se comparan los promedios de precios de electricidad entre los años
 \end{axis}
 \end{tikzpicture}
 }
-\caption{{\footnotesize Precios de electricidad (2019-2050)  por escenario}}
+\caption{{\footnotesize Precios de electricidad (2019-2050)  por escenario (Fuente: realización propia)}}
 \label{TCrendcap}
 \end{figure}
 
@@ -914,7 +832,7 @@ Al igual que del productor, este es el mismo MCP de la condiciones de mercado pr
          \$5,000,000,000  &  \$270.13  & 1.20E+08 &  \$315.83  & 1.00E+08 & 45.699  \\ \hline
          \$50,000,000,000  &  \$237.74  & 1.20E+08 &  \$315.83  & 1.00E+08 & 78.09  \\ \hline
     \end{tabular}
-    \caption{{\footnotesize Calibración modelo Precisión }}
+    \caption{{\footnotesize Calibración modelo Precisión (Fuente: realización propia)}}
     \label{calibracionprecision}
 \end{table}
 
@@ -949,14 +867,14 @@ Considerando lo anterior, se tienen los siguientes resultados:
         900,000,000 & 851,903,151  & 0.798  & 0.947  &  \$35.74   \\ \hline
         1,000,000,000 & 947,173,004  & 0.798  & 0.947  &  \$35.74   \\ \hline
     \end{tabular}
-    \caption{{\footnotesize Resultados modelo Precisión}}
+    \caption{{\footnotesize Resultados modelo Precisión (Fuente: realización propia)}}
     \label{resultadosprecision}
 \end{table}
 
-En el Cuadro \ref{resultadosprecision} se distingue el rendimiento constante a lo largo de todos los CAP. Esto significa que el subastador encuentró como óptimo no invertir en información para disminuir el ruido. Para mejorar esto se debe formular de mejor forma la necesidad del subastador de sí invertir en información para aumentar el bienestar social. Esto se repite en todos lo modelos en diferentes niveles.
+En el Cuadro \ref{resultadosprecision} se distingue el rendimiento constante a lo largo de todos los CAP. Esto significa que el subastador encontró como óptimo no invertir en información para disminuir el ruido. Para mejorar esto se debe formular de mejor forma la necesidad del subastador de sí invertir en información para aumentar el bienestar social. Esto se repite en todos lo modelos en diferentes niveles.
 \vspace{2.5mm}
 
-Como resultado de lo anterior, se entiende que existe espacio para mejorar los modelos y en especial para formular la atención racional enfocada en el subastador de una forma que este busque con mayor nivel el bienestar social. Una idea a seguir es la de encontrar la forma en que el error de cálculo de presupuesto se puede disminuir y asignarle esta tarea al subastador. Entonces mientras más se invierta en información, se estaría invirtiendo en disminuir el error de cálculo de presupuesto, lo que estaría buscando un mejor bienestar social.
+Como resultado de lo anterior, se entiende que existe espacio para mejorar los modelos y en especial para formular la atención racional enfocada en el subastador de una forma que este busque con mayor nivel el bienestar social. Una idea a seguir es la de encontrar la forma en que el error de cálculo de presupuesto se puede disminuir y asignarle esta tarea al subastador. Entonces, mientras más se invierta en información, se estaría invirtiendo en disminuir el error de cálculo de presupuesto, lo que estaría buscando un mejor bienestar social.
 \vspace{2.5mm}
 
 La conclusión anterior se desarrolla con mayor detalle en los siguientes capítulos.
@@ -990,14 +908,14 @@ La conclusión anterior se desarrolla con mayor detalle en los siguientes capít
     
 \end{axis}
 \end{tikzpicture}
-\caption{{\footnotesize Efecto del CAP sobre P}}
+\caption{{\footnotesize Efecto del CAP sobre P (Fuente: realización propia)}}
 \label{rendcapMP}
 \end{figure}
 
 La consistencia en los rendimientos, graficados en la Figura \ref{rendcapMP}, producen una disminución sostenida en los precios de los permisos $\pi^a$, sin saltos repentinos, pero si encontrando un límite inferior con un $CAP=700$.
 \vspace{2.5mm}
 
-En este modelo, como los otros, el cociente $\frac{\theta}{CAP}$, graficado en la Figura \ref{rendcapMP2}, disminuye mientras mayor es el CAP. Emitiendo cantidades similares a sus CAP ($\frac{\theta}{CAP} = 1$), producto de que el subastador no invierte en información, entonces este produce cercano al CAP propuesto.
+En este modelo el cociente $\frac{\theta}{CAP}$, graficado en la Figura \ref{rendcapMP2}, disminuye mientras mayor es el CAP. Emitiendo cantidades similares a los CAP ($\frac{\theta}{CAP} = 1$). Lo anterior sucede ya que el subastador no invierte en información, entonces este produce cercano al CAP propuesto.
 \vspace{2.5mm}
 
 
@@ -1028,14 +946,14 @@ En este modelo, como los otros, el cociente $\frac{\theta}{CAP}$, graficado en l
     
 \end{axis}
 \end{tikzpicture}
-\caption{{\footnotesize Efecto del CAP sobre $\frac{\theta}{CAP}$}}
+\caption{{\footnotesize Efecto del CAP sobre $\frac{\theta}{CAP}$ (Fuente: realización propia)}}
 \label{rendcapMP2}
 \end{figure}
 
-La distribución de permisos entre las empresas contaminantes (figuras \ref{distriMP1} y \ref{distriMP3}) es similar al del modelo anterior, mostrando una dominancia del Gas.
+La distribución de permisos entre las empresas contaminantes (figuras \ref{distriMP1} y \ref{distriMP3}) es similar al del modelo anterior, existiendo una dominancia del Gas.
 \vspace{2.5mm}
 
-Mientras que, en la segunda etapa, de forma progresiva, existen menos permisos que en el periodo anterior. Esto muestra que el modelo disminuye las emisiones a largo plazo.
+En la segunda etapa, de forma progresiva, existen menos permisos que en el periodo anterior. Esto muestra que el modelo disminuye las emisiones a largo plazo.
 
 \begin{figure}[H]
   \centering
@@ -1052,7 +970,7 @@ Mientras que, en la segunda etapa, de forma progresiva, existen menos permisos q
   \end{minipage}
 \end{figure}
 
-Los precios de electricidad en la primera (mostrados en el Cuadro \ref{Ppidporcap}), presentan una baja varianza entre los CAP 300 y 1000. Junto con el análisis realizado sobre la distribución de permisos, se anticipa que estos precios pueden no bajar cambiar mucho en la segunda etapa debido a que las empresas contaminadoras, las cuales producen electricidad más barata, venden gran parte de sus permisos.
+Los precios de electricidad en la primera etapa (mostrados en el Cuadro \ref{Ppidporcap}), presentan una baja varianza entre los CAP 300 y 1000. Junto con el análisis realizado sobre la distribución de permisos, se anticipa que estos precios pueden no bajar cambiar mucho en la segunda etapa debido a que las empresas contaminadoras, las cuales producen electricidad más barata, venden gran parte de sus permisos.
 \vspace{2.5mm}
 
 
@@ -1065,7 +983,7 @@ Los precios de electricidad en la primera (mostrados en el Cuadro \ref{Ppidporca
           $\theta$[Millones] & 120 & 240 & 355 & 436 & 590 & 721 & 674 & 757 & 852 & 947 \\ \hline
     $\pi^d$  &  \$264.03   &  \$169.98   &  \$106.88   &  \$98.92   &  \$110.36   &  \$93.00   &  \$105.33   &  \$99.07   &  \$97.95   &  \$92.09   \\ \hline
     \end{tabular}
-    \caption{{\footnotesize Precio de electricidad ($\pi^d$) en el año 2018 por CAP }}
+    \caption{{\footnotesize Precio de electricidad ($\pi^d$) en el año 2018 por CAP (Fuente: realización propia)}}
     \label{Ppidporcap}
 \end{footnotesize}
 \end{table}
@@ -1133,16 +1051,16 @@ La Figura \ref{MPrendcap} confirma el análisis anterior, ya que los precios mue
 \end{axis}
 \end{tikzpicture}
 }
-\caption{{\footnotesize Precios de electricidad (2019-2050)  por escenario}}
+\caption{{\footnotesize Precios de electricidad (2019-2050)  por escenario (Fuente: realización propia)}}
 \label{MPrendcap}
 \end{figure}
 
 \section{Comparación de Modelos}
 
-Finalmente, se realiza una comparación entre todos los modelos creados en este trabajo y el modelo original de \citeB{amigo_two_2021}. La idea de esto es entender el efecto del subastador en sus utilidades,  en el bienestar social y entender si utilizar el efecto de atención racional mejora estos efectos. También, es una medida para entender el efecto particular de cada modelo. 
+Finalmente, se realiza una comparación entre todos los modelos creados en este trabajo y el modelo original de \citeB{amigo_two_2021}. La idea de esto es entender el efecto del subastador en sus utilidades,  en el bienestar social y entender si utilizar el concepto de atención racional mejora estos parámetros. En adición a lo anterior, esta es una medida para entender el efecto particular de cada modelo en la industria de generación eléctrica. 
 \vspace{2.5mm}
 
-Esta es una primera aproximación de inclusión de atención racional en el subastador. Por lo tanto, para juzgar si la reformulación del modelo es efectiva en cuanto al aumento de bienestar social, se espera que una de estas versiones del modelo presente precios más bajos para las personas ($\pi^d$) en $40\%$ o más de los CAP o menos permisos emitidos en $40\%$ o más de los CAP.
+Esta es una primera aproximación de la inclusión de atención racional en el subastador. Por lo tanto, para juzgar si la reformulación del modelo es efectiva en cuanto al aumento de bienestar social, se espera que una de estas versiones del modelo presente precios más bajos para las personas ($\pi^d$) en un $40\%$ o más de los CAP o presente menos permisos emitidos en un $40\%$ o más de los CAP.
 \vspace{2.5mm}
 
 
@@ -1150,17 +1068,17 @@ Esta es una primera aproximación de inclusión de atención racional en el suba
 \begin{figure}[H]
     \centering
     \includegraphics[width=12cm]{docs/DocumentoMemoria/core/images/utilidad de todos lo modelos.png}
-    \caption{Utilidad del subastador por modelo }
+\caption{{\footnotesize Utilidad del subastador por modelo (Fuente: realización propia)}}
     \label{utilidades}
 \end{figure}
 
-Las utilidades del subastador presentadas en la Figura \ref{utilidades}, muestran que en un $70\%$ de los presupuestos de carbono establecidos por el gobierno, el modelo original presenta las más altas ganancias. 
+Las utilidades del subastador, presentadas en la Figura \ref{utilidades}, muestran que en un $70\%$ de los presupuestos de carbono establecidos por el gobierno, el modelo original presenta las más altas ganancias. 
 \vspace{2.5mm}
 
-Por un lado, es importante mencionar que no se consideraron gastos para el subastador en este modelo ya que su función objetivo solo consideraba un costo llamado Costo Social del Carbón. El cuál fue despreciado en la solución del modelo de equilibrio ya que se consideró independiente de los permisos emitidos ($\theta$) por los autores originales. 
+Por un lado, es importante mencionar que no se consideraron gastos para el subastador en este modelo ya que su función objetivo solo consideraba un costo llamado Costo Social del Carbón. El anterior fue despreciado en la solución del modelo de equilibrio ya que se consideró independiente de los permisos emitidos ($\theta$) por los autores originales. 
 \vspace{2.5mm}
 
-Por otro lado, los modelos reformulados toman los valores de los costos de información adicional por medio de la calibración del ellos con el original. Por lo que tomar en cuenta las utilidades del subastador para estos, tampoco es el indicador más importante a considerar. En un trabajo posterior, se espera calcular estos costos de forma real. 
+Por otro lado, los modelos reformulados toman los valores de los costos de información adicional $c$ por medio de la calibración del ellos con el original. Por lo que tomar en cuenta las utilidades del subastador para estos modelos tampoco es el indicador más importante a considerar. En un trabajo posterior, se espera calcular estos costos de forma real. 
 \vspace{2.5mm}
 
 
@@ -1222,11 +1140,11 @@ Por otro lado, los modelos reformulados toman los valores de los costos de infor
 \end{axis}
 \end{tikzpicture}
 }
-\caption{{\footnotesize Precio de venta de permisos $\pi^a$ por CAP}}
+\caption{{\footnotesize Precio de venta de permisos $\pi^a$ por CAP (Fuente: realización propia)}}
 \label{piapormodelo}
 \end{figure}
 
-Los precios de venta de permisos son un indicador de la cantidad de permisos emitidos ya que estos obedecen a la ley de demanda. También, son un indicador de los costos asociados a la producción de permisos. La Figura \ref{piapormodelo} muestra que el modelo original presenta los mayores precios para todos los CAP. Esto puede ser un indicador de que los nuevos modelos buscan con mayor efecto el bienestar social, ya que, a pesar de que estos presentan costos de producción, igualmente no transfieren estos costos a los permisos, produciendo potencialmente menores costos de electricidad. 
+Los precios de venta de permisos son un indicador de la cantidad de permisos emitidos ya que estos obedecen a la ley de demanda. También, son un indicador de los costos asociados a la producción de permisos. La Figura \ref{piapormodelo} muestra que el modelo original presenta los mayores precios para todos los CAP. Esto puede ser un indicador de que los nuevos modelos buscan con mayor efecto el bienestar social, ya que, a pesar de que estos presentan costos de producción, de igual forma no transfieren estos costos a los permisos, produciendo potencialmente, menores costos de electricidad. 
 \vspace{2.5mm}
 
 Por el contrario, estos precios pueden ser producto de más permisos emitidos, y por ende, más emisiones en el medio ambiente.
@@ -1287,14 +1205,14 @@ Por el contrario, estos precios pueden ser producto de más permisos emitidos, y
 \end{axis}
 \end{tikzpicture}
 }
-\caption{{\footnotesize Permisos emitidos por CAP}}
+\caption{{\footnotesize Permisos emitidos por CAP (Fuente: realización propia)}}
 \label{permisospormodelo}
 \end{figure}
 
 La Figura \ref{permisospormodelo} muestra que el análisis anterior no es efectivo para todos los casos. En los primeros 5 CAP establecidos, el subastador en el modelo original emite menos permisos que las nuevas versiones, pero, en $CAP=600$ el modelo de Tasa Cuadrada emite una cantidad muy similar de permisos y en los siguientes,  emite menos permisos, resultando en menores emisiones. También, los otros dos modelos (Precisión y Profit Oriented) emiten menos permisos en 3 y 4 de los últimos 5 CAP respectivamente. 
 \vspace{2.5mm}
 
-Con lo anterior se cumple con los criterios mencionados al inicio de este sub capítulo para validar el uso de atención racional en este sistema ya que uno de los modelos tiene menos permisos emitidos en más de un $40\%$ de los CAP, pero lo más destacado es que todos los modelos presentan 3 o más CAP con menores emisiones.
+Con lo anterior, se cumple con los criterios mencionados al inicio de este sub capítulo para validar el uso de atención racional en este sistema ya que uno de los modelos tiene menos permisos emitidos en más de un $40\%$ de los CAP, pero lo más destacado es que todos los modelos presentan 3 o más CAP con menores emisiones.
 \vspace{2.5mm}
 
 \begin{figure}[H]
@@ -1354,7 +1272,7 @@ Con lo anterior se cumple con los criterios mencionados al inicio de este sub ca
 \end{axis}
 \end{tikzpicture}
 }
-\caption{{\footnotesize Promedio precios de electricidad (2019-2050) $\pi^d$ por CAP}}
+\caption{{\footnotesize Promedio precios de electricidad (2019-2050) $\pi^d$ por CAP (Fuente: realización propia)}}
 \label{pidpormodelo}
 \end{figure}
 
