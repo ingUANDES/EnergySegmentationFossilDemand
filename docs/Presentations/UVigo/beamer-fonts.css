@@ -1,0 +1,22 @@
+@import url(https://cdn.rawgit.com/dreampulse/computer-modern-web-font/master/fonts.css);
+@import url(https://cdn.rawgit.com/dreampulse/computer-modern-web-font/master/fonts.css);
+@import url(https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700);
+/* Importing the fonts is necessary because the Edge browser does not have CMU Sans Serif installed. Source: https://github.com/dreampulse/computer-modern-web-font */
+
+body {
+  font-family: 'Computer Modern Sans', 'Palatino Linotype', 'Book Antiqua', Palatino, 'Microsoft YaHei', 'Songti SC', serif;
+  font-weight: normal;
+}
+
+h1, h2, h3 {
+  font-family: 'Computer Modern Sans';
+  font-weight: normal;
+}
+
+.remark-code, .remark-inline-code {
+  font-family: 'Source Code Pro', 'Lucida Console', Monaco, monospace;
+}
+
+.remark-slide-number {
+  font-family: "Computer Modern Sans";
+}

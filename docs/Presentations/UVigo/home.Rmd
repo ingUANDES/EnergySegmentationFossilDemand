@@ -1,37 +1,129 @@
 ---
 title: "Cap-and-trade in Energy Capacity Investment when the planner is inattentive"
+# subtitle: "Subtitle"
 author: "Cea-Echenique, Feijoo and Muñoz"
-date: "July 2022 version `r Sys.Date()`"
-output: 
-  beamer_presentation: 
-    toc: yes
-    slide_level: 2
-    keep_tex: yes
+institute: "U. Andes, PUCV"
+date: "July 2022<br/><br/> last update `r Sys.Date()`"
+# last update: `r Sys.Date()`
+# format(Sys.time(), '%e %B %Y')
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: [beamer.css, beamer-fonts.css]
+    nature:
+      highlightStyle: github
+      highlightLines: TRUE
+      countIncrementalSlides: FALSE
+      ratio: '16:9'
+# Note: You can save the slides in .pdf format by uncommenting the line below
+#knit: pagedown::chrome_print
+# Note: Remark is designed such that if using incremental slides, they need to be separated by --, followed by a line break. Official documentation: https://github.com/gnab/remark/wiki/Markdown.
+# Note:
+## Xaringan can only include .png figures. You can include figures with:
+## ```{r out.width = "60%"} # Change figure size
+## knitr::include_graphics("Figures/Figure.png")
+## ```
+## Further instructions:
+## - https://community.rstudio.com/t/size-of-image-in-xaringan-slides/21319
+## - https://www.zevross.com/blog/2017/06/19/tips-and-tricks-for-working-with-images-and-figures-in-r-markdown-documents/#arguments-out.width-and-out.height-apply-to-both-existing-images-and-r-generated-figures
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+# Suppress the version number in the subdirectory name
+options(htmltools.dir.version = FALSE)
+
+# Define how figures are displayed
+knitr::opts_chunk$set(
+  echo = FALSE,
+  warning = FALSE,
+  message = FALSE,
+  fig.align = "center"
+)
+
+# Add option of showing tile overview by pressing "o"
+xaringanExtra::use_tile_view()
+
+# Add option to write over slides
+xaringanExtra::use_scribble()
+
+# Biblio setup
+library(RefManageR)
+BibOptions(check.entries = FALSE,
+           bib.style = "authoryear",
+           cite.style = "authoryear",
+           style = "markdown",
+           hyperlink = TRUE,
+           dashed = FALSE
+           )
+# mybib <- ReadBib("~/Dropbox/Investigacion/NGOEfficiency/biblio.bib", check = FALSE)
+zoterokey<- Sys.getenv("zoterokey")
+zoteroID<- Sys.getenv("zoteroID")
+# mybib <- ReadZotero(user = zoteroID, .params=list(key = zoterokey, q="Samuelson")) + ReadZotero(user = zoteroID, .params=list(key = zoterokey, q="Cornes")) + ReadZotero(user = zoteroID, .params=list(key = zoterokey, q="Austen"))  + ReadZotero(user = zoteroID, .params=list(key = zoterokey, q="Gradstein")) + ReadZotero(user = zoteroID, .params=list(key = zoterokey, q="Nocetti"))  + ReadZotero(user = zoteroID, .params=list(key = zoterokey, q="Nitzan"))
+# mybib <- mybib + ReadZotero(user = zoteroID, .params=list(key = zoterokey, q="Cumming"))
+# mybib <- mybib + ReadZotero(user = zoteroID, .params=list(key = zoterokey, q="Bergstrom"))
+# mybib <- mybib + ReadZotero(user = zoteroID, .params=list(key = zoterokey, q="Eichberger"))
+# mybib <- mybib + ReadZotero(user = zoteroID, .params=list(key = zoterokey, q="Keenan"))
+# mybib <- mybib + ReadZotero(user = zoteroID, .params=list(key = zoterokey, q="Tamai"))
+# mybib <- mybib + ReadZotero(user = zoteroID, .params=list(key = zoterokey, q="Gravel"))
+# mybib <- mybib + ReadZotero(user = zoteroID, .params=list(key = zoterokey, q="Chetty"))
+# mybib <- mybib + ReadZotero(user = zoteroID, .params=list(key = zoterokey, q="Eichberger"))
+# mybib <- mybib + ReadZotero(user = zoteroID, .params=list(key = zoterokey, q="Chetty"))
+# WriteBib(mybib, file="referencesPres.bib")
+mybib <- ReadBib("referencesPres.bib")
 ```
 
+
+# Outline
+
+.pull-left[
+- [Motivation](#motivation)
+- [Why revisiting](#why)
+- [Literature Review](#litrev)
+- [Motivating example](#example)
+- [Model](#model)
+  - [Equilibrium](#equilibrium)
+  <!-- - [Assumptions](#assumptions) -->
+  - [Results](#results)
+- [Discussion](#discussion)
+]
+
+.pull-right[
+Extra
+  - [Log case](#logcase)
+  - [Beliefs](#resultsBeliefs)
+]  
+
+???
+
+This is the outline of the presentation. First, I would like to explain why we think we are revisiting this problem. Then, I will provide a motivation regarding some contingent discussion in order to prepare the theoretical literature revision.
+
+Before the model is presented I will give you an example we worked in earlier versions of the manuscript that should carry the first idea we had.
+
+Then, we revise little notations and the results in order to open a discussion to understand the meaning of the results.
+
+I have some extra material regarding some comparative statict for some of you that may be interested in the role of beliefs.
+
+Let us start with the argument behind revisiting this classical problem.  
+---
+name: motivation
 # Motivation
-## Motivation
+--
 
-- Bullet 1
-- Bullet 2
-- Bullet 3
+- Boom of .beamer[ESG] investments: 
 
+.center[externalities, public goods, cleantech]
+--
 
-# Model
-## Model
+- (Technological) Uncertainty: risk aversion, asymmetric information
 
-```{r cars, echo = TRUE}
-summary(cars)
-```
+`r Citet(mybib, "cumming_cleantech_2016")`: uncertainty as a relevant driver
+   
+ <!-- .blue[emphasis] -->
 
-# Results
-## Results
+--
 
-```{r pressure}
-plot(pressure)
-```
+- Example:
+
+$$\downarrow\text{ Energy efficiency} + \uparrow\text{ Energy Use} \nRightarrow\downarrow\text{ Emissions}$$  
+<!-- .red[emphasis] -->
 
