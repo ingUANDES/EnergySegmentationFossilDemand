@@ -4,6 +4,7 @@
     <title>Cap-and-trade in Energy Capacity Investment when the planner is inattentive</title>
     <meta charset="utf-8" />
     <meta name="author" content="Cea-Echenique, Feijoo and Muñoz" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/tile-view/tile-view.css" rel="stylesheet" />
     <script src="libs/tile-view/tile-view.js"></script>
     <script src="libs/fabric/fabric.min.js"></script>
@@ -27,7 +28,7 @@ class: center, middle, inverse, title-slide
 ### U. Andes, PUCV
 ]
 .date[
-### July 2022<br/><br/> last update 2022-07-14
+### July 2022<br/><br/> last update 2022-07-15
 ]
 
 ---
@@ -56,39 +57,111 @@ Extra
   - [Beliefs](#resultsBeliefs)
 ]  
 
-???
 
-This is the outline of the presentation. First, I would like to explain why we think we are revisiting this problem. Then, I will provide a motivation regarding some contingent discussion in order to prepare the theoretical literature revision.
-
-Before the model is presented I will give you an example we worked in earlier versions of the manuscript that should carry the first idea we had.
-
-Then, we revise little notations and the results in order to open a discussion to understand the meaning of the results.
-
-I have some extra material regarding some comparative statict for some of you that may be interested in the role of beliefs.
-
-Let us start with the argument behind revisiting this classical problem.  
 ---
 name: motivation
 # Motivation
---
 
-- Boom of .beamer[ESG] investments: 
+- Decarbonization
+  - Contrast Tax versus Cap-and-trade
+  - Carbon pricing
+- Environment resposability as an attention problem
 
-.center[externalities, public goods, cleantech]
---
+---
+name: literature
+# Literature
 
-- (Technological) Uncertainty: risk aversion, asymmetric information
+- 2-stage stochastic capacity investment problems
 
-: uncertainty as a relevant driver
-   
- &lt;!-- .blue[emphasis] --&gt;
+([Ehrenmann and Smeers, 2011b](#bib-ehrenmann_stochastic_2011); [Abada, de Maere d ' Aertrycke, and Smeers, 2017](#bib-abada_multiplicity_2017); [de Maere d ' Aertrycke, Ehrenmann, Ralph, et al., 2017](#bib-de_maere_d__aertrycke_risk_2017))
+- Re-trading: [Amigo, Cea-Echenique, and Feijoo (2021)](#bib-amigo_two_2021)
+- Investment segmentation: [Cea-Echenique and Torres-Martínez (2018)](#bib-cea-echenique_general_2018)
+- Rational Inattention: [Dewan and Neligh (2020)](#bib-dewan_estimating_2020)
+---
+name: model
+# Model
 
---
+&lt;img src="Fig1.png" width="80%" style="display: block; margin: auto;" /&gt;
 
-- Example:
 
-`$$\downarrow\text{ Energy efficiency} + \uparrow\text{ Energy Use} \nRightarrow\downarrow\text{ Emissions}$$`  
-&lt;!-- .red[emphasis] --&gt;
+
+---
+name: references
+# References
+
+.pull-left[
+.small[
+&lt;a name=bib-abada_multiplicity_2017&gt;&lt;/a&gt;[Abada, I., G. de
+Maere d ' Aertrycke, and Y.
+Smeers](#cite-abada_multiplicity_2017) (2017). "On the
+multiplicity of solutions in generation capacity investment
+models with incomplete markets: a risk-averse stochastic
+equilibrium approach". En. In: _Mathematical Programming_
+165.1, pp. 5-69. ISSN: 1436-4646. DOI:
+[10.1007/s10107-017-1185-9](https://doi.org/10.1007%2Fs10107-017-1185-9).
+URL:
+[https://doi.org/10.1007/s10107-017-1185-9](https://doi.org/10.1007/s10107-017-1185-9)
+(visited on may. 26, 2020).
+
+&lt;a name=bib-amigo_two_2021&gt;&lt;/a&gt;[Amigo, P., S. Cea-Echenique,
+and F. Feijoo](#cite-amigo_two_2021) (2021). "A two stage
+cap-and-trade model with allowance re-trading and capacity
+investment: The case of the Chilean NDC targets". En. In:
+_Energy_ 224, p. 120129. ISSN: 03605442. DOI:
+[10.1016/j.energy.2021.120129](https://doi.org/10.1016%2Fj.energy.2021.120129).
+URL:
+[https://linkinghub.elsevier.com/retrieve/pii/S0360544221003789](https://linkinghub.elsevier.com/retrieve/pii/S0360544221003789)
+(visited on mar. 10, 2021).
+
+&lt;a name=bib-cea-echenique_general_2018&gt;&lt;/a&gt;[Cea-Echenique, S.
+and J. P. Torres-Martínez](#cite-cea-echenique_general_2018)
+(2018). "General equilibrium with endogenous trading
+constraints". In: _PLoS ONE_ 13.9. ISSN: 1932-6203. DOI:
+[10.1371/journal.pone.0203814](https://doi.org/10.1371%2Fjournal.pone.0203814).
+URL:
+[https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6141088/](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6141088/)
+(visited on mar. 09, 2020).
+]
+]
+
+.pull-right[
+.small[
+
+&lt;a name=bib-de_maere_d__aertrycke_risk_2017&gt;&lt;/a&gt;[de Maere d '
+Aertrycke, G., A. Ehrenmann, D. Ralph, et
+al.](#cite-de_maere_d__aertrycke_risk_2017) (2017). _Risk
+trading in capacity equilibrium models_. En. Working Paper.
+University of Cambridge. DOI:
+[10.17863/CAM.17552](https://doi.org/10.17863%2FCAM.17552).
+URL:
+[https://www.repository.cam.ac.uk/handle/1810/270625](https://www.repository.cam.ac.uk/handle/1810/270625)
+(visited on may. 27, 2020).
+
+&lt;a name=bib-dewan_estimating_2020&gt;&lt;/a&gt;[Dewan, A. and N.
+Neligh](#cite-dewan_estimating_2020) (2020). "Estimating
+information cost functions in models of rational
+inattention". En. In: _Journal of Economic Theory_ 187, p.
+105011. ISSN: 00220531. DOI:
+[10.1016/j.jet.2020.105011](https://doi.org/10.1016%2Fj.jet.2020.105011).
+URL:
+[https://linkinghub.elsevier.com/retrieve/pii/S002205311830396X](https://linkinghub.elsevier.com/retrieve/pii/S002205311830396X)
+(visited on mar. 23, 2021).
+
+&lt;a name=bib-ehrenmann_stochastic_2011&gt;&lt;/a&gt;[Ehrenmann, A. and
+Y. Smeers](#cite-ehrenmann_stochastic_2011) (2011b).
+"Stochastic Equilibrium Models for Generation Capacity
+Expansion". En. In: _Stochastic Optimization Methods in
+Finance and Energy: New Financial Products and Energy Market
+Strategies_. Ed. by M. Bertocchi, G. Consigli and M. A. H.
+Dempster. International Series in Operations Research &amp;
+Management Science. New York, NY: Springer, pp. 273-310.
+ISBN: 978-1-4419-9586-5. DOI:
+[10.1007/978-1-4419-9586-5_13](https://doi.org/10.1007%2F978-1-4419-9586-5_13).
+URL:
+[https://doi.org/10.1007/978-1-4419-9586-5_13](https://doi.org/10.1007/978-1-4419-9586-5_13)
+(visited on abr. 11, 2020).
+]
+]
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

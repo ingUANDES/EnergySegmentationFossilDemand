@@ -58,16 +58,10 @@ BibOptions(check.entries = FALSE,
 # mybib <- ReadBib("~/Dropbox/Investigacion/NGOEfficiency/biblio.bib", check = FALSE)
 zoterokey<- Sys.getenv("zoterokey")
 zoteroID<- Sys.getenv("zoteroID")
-# mybib <- ReadZotero(user = zoteroID, .params=list(key = zoterokey, q="Samuelson")) + ReadZotero(user = zoteroID, .params=list(key = zoterokey, q="Cornes")) + ReadZotero(user = zoteroID, .params=list(key = zoterokey, q="Austen"))  + ReadZotero(user = zoteroID, .params=list(key = zoterokey, q="Gradstein")) + ReadZotero(user = zoteroID, .params=list(key = zoterokey, q="Nocetti"))  + ReadZotero(user = zoteroID, .params=list(key = zoterokey, q="Nitzan"))
-# mybib <- mybib + ReadZotero(user = zoteroID, .params=list(key = zoterokey, q="Cumming"))
-# mybib <- mybib + ReadZotero(user = zoteroID, .params=list(key = zoterokey, q="Bergstrom"))
-# mybib <- mybib + ReadZotero(user = zoteroID, .params=list(key = zoterokey, q="Eichberger"))
-# mybib <- mybib + ReadZotero(user = zoteroID, .params=list(key = zoterokey, q="Keenan"))
-# mybib <- mybib + ReadZotero(user = zoteroID, .params=list(key = zoterokey, q="Tamai"))
-# mybib <- mybib + ReadZotero(user = zoteroID, .params=list(key = zoterokey, q="Gravel"))
-# mybib <- mybib + ReadZotero(user = zoteroID, .params=list(key = zoterokey, q="Chetty"))
-# mybib <- mybib + ReadZotero(user = zoteroID, .params=list(key = zoterokey, q="Eichberger"))
-# mybib <- mybib + ReadZotero(user = zoteroID, .params=list(key = zoterokey, q="Chetty"))
+# mybib <- ReadZotero(user = zoteroID, .params=list(key = zoterokey, q="Amigo")) + ReadZotero(user = zoteroID, .params=list(key = zoterokey, q="Dewan")) + ReadZotero(user = zoteroID, .params=list(key = zoterokey, q="smeers"))
+# mybib <- mybib + ReadZotero(user = zoteroID, .params=list(key = zoterokey, q="cea-echenique"))
+# + ReadZotero(user = zoteroID, .params=list(key = zoterokey, q="Gradstein")) + ReadZotero(user = zoteroID, .params=list(key = zoterokey, q="Nocetti"))  + ReadZotero(user = zoteroID, .params=list(key = zoterokey, q="Nitzan"))
+
 # WriteBib(mybib, file="referencesPres.bib")
 mybib <- ReadBib("referencesPres.bib")
 ```
@@ -93,37 +87,53 @@ Extra
   - [Beliefs](#resultsBeliefs)
 ]  
 
-???
 
-This is the outline of the presentation. First, I would like to explain why we think we are revisiting this problem. Then, I will provide a motivation regarding some contingent discussion in order to prepare the theoretical literature revision.
-
-Before the model is presented I will give you an example we worked in earlier versions of the manuscript that should carry the first idea we had.
-
-Then, we revise little notations and the results in order to open a discussion to understand the meaning of the results.
-
-I have some extra material regarding some comparative statict for some of you that may be interested in the role of beliefs.
-
-Let us start with the argument behind revisiting this classical problem.  
 ---
 name: motivation
 # Motivation
---
 
-- Boom of .beamer[ESG] investments: 
+- Decarbonization
+  - Contrast Tax versus Cap-and-trade
+  - Carbon pricing
+- Environment resposability as an attention problem
 
-.center[externalities, public goods, cleantech]
---
+---
+name: literature
+# Literature
 
-- (Technological) Uncertainty: risk aversion, asymmetric information
+- 2-stage stochastic capacity investment problems
 
-`r Citet(mybib, "cumming_cleantech_2016")`: uncertainty as a relevant driver
-   
- <!-- .blue[emphasis] -->
+`r Cite(mybib, c("ehrenmann_stochastic_2011","abada_multiplicity_2017","de_maere_d__aertrycke_risk_2017"))`
+- Re-trading: `r Citet(mybib, "amigo_two_2021")`
+- Investment segmentation: `r Citet(mybib, "cea-echenique_general_2018")`
+- Rational Inattention: `r Citet(mybib, "dewan_estimating_2020")`
+---
+name: model
+# Model
 
---
+```{r timeline, out.width='80%'}
+knitr::include_graphics("Fig1.png")
+```
 
-- Example:
 
-$$\downarrow\text{ Energy efficiency} + \uparrow\text{ Energy Use} \nRightarrow\downarrow\text{ Emissions}$$  
-<!-- .red[emphasis] -->
 
+---
+name: references
+# References
+
+.pull-left[
+.small[
+```{r refsI, echo=FALSE, results="asis"}
+PrintBibliography(mybib, .opts = list(check.entries = TRUE), start=1, end=3)
+```
+]
+]
+
+.pull-right[
+.small[
+
+```{r refsII, echo=FALSE, results="asis"}
+PrintBibliography(mybib, .opts = list(check.entries = TRUE), start=4, end=6)
+```
+]
+]
