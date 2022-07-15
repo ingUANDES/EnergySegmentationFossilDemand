@@ -238,29 +238,102 @@ name: attention
 
 Following `r Citet(mybib, "dewan_estimating_2020")` we consider a quadratic cost function
 
-$$C(P)=\begin{cases}0,&P\leq d\\c(P-d)^2,&P>d\end{cases},$$
+$$C(P)=\begin{cases}0,&Perf\leq d\\c(Perf-d)^2,&Perf>d\end{cases},$$
 
-where $P\in[0,1]$ is a performance metric, $c$ an associated marginal cost and $d$ the performance level wiht public information.
+where $Perf\in[0,1]$ is a performance metric, $c$ an associated marginal cost and $d$ the performance level wiht public information.
 
 We drop the chance constraint approach, by using
 
-- $\min_{(\theta,P)\in[0,(1+\epsilon)CAP]\times[0,1]}-\theta\pi^aP+c(P-d)^2$ profit oriented
+- $\min_{(\theta,Perf)\in[0,(1+\epsilon)CAP]\times[0,1]}-\theta\pi^aPerf+c(Perf-d)^2$ profit oriented
 - $\min_{\theta\in[0,CAP]}-\theta\pi^a+c\left(1-\frac{|\theta-CAP|}{CAP}-d\right)^2$ welfare oriented
 ---
 name: results
 # Results: Profit oriented
-
+.pull-left[
 - Calibration wrt `r Citet(mybib, "amigo_two_2021")`
   - CAP: $100 MtCO_2$
   - $\pi^a=315.83$
   - $\epsilon=0.202$ Andres et alii (2014)
 $$\Rightarrow c=920M$$ 
+]
+.pull-right.center[
+$CAP=100$
+
+| Perf | $\theta$    | $\frac{\theta}{CAP}$ | $\pi^a$  |
+|---------|-------------|----------------------|----------|
+| 0.798   | 120,200,000 | 1.20                 | 270.13 |
+| 0.8     | 120,200,000 | 1.20                 | 270.13 |
+| 0.85    | 113,654,321 | 1.14                 | 25.75  |
+| 0.9     | 113,568,965 | 1.14                 | 93.65  |
+| 0.95    | 118,470,479 | 1.18                 | 188.86 |
+| 0.99    | 114,916,396 | 1.15                 | 298.11 |
+| 1       | 118,332,486 | 1.18                 | 317.24 |
+]
 
 ---
+# Results: Profit oriented and multiple CAPs, $Perf=0.8$
+
+| CAP           | $\theta$    | $\frac{\theta}{CAP}$ | $\pi^a$  |
+|---------------|-------------|----------------------|----------|
+| 100,000,000   | 120,200,000 | 1.20                 | 270.13 |
+| 200,000,000   | 240,400,000 | 1.20                 | 60.57  |
+| 300,000,000   | 360,600,000 | 1.20                 | 119.47 |
+| 400,000,000   | 454,798,037 | 1.14                 | 95.83  |
+| 500,000,000   | 601,000,000 | 1.20                 | 79.31  |
+| 600,000,000   | 605,279,899 | 1.01                 | 66.57  |
+| 700,000,000   | 605,279,899 | 0.86                 | 56.37  |
+| 800,000,000   | 961,600,000 | 1.20                 | 152.50 |
+| 900,000,000   | 605,279,899 | 0.67                 | 42.26  |
+| 1,000,000,000 | 605,279,899 | 0.61                 | 35.98  |
+---
+# Results: Profit oriented, allowances distributions
+
+.pull-left[
+```{r dist1, out.width="100%"}
+knitr::include_graphics("diststage1.png")
+```
+]
+
+.pull-right[
+```{r dist2, out.width="100%"}
+knitr::include_graphics("diststage2.png")
+```
+]
+
+
+---
+name: resultsW
+# Results: Welfare oriented
+.pull-left[
+- Calibration wrt `r Citet(mybib, "amigo_two_2021")`
+  - CAP: $100 MtCO_2$
+  - $\pi^a=315.83$
+
+$$\Rightarrow c=9920M$$ 
+]
+.pull-right.center[
+| CAP  (M)         | $\theta$    | Perf | $\frac{\theta}{CAP}$ | $\pi^a$  |
+|---------------|-------------|---------|----------------------|----------|
+| 100   | 144,944,410 | 0.798   | 1.449                | 232.82 |
+| 200   | 289,888,820 | 0.798   | 1.449                | 141.56 |
+| 300   | 434,833,230 | 0.798   | 1.449                | 103.33 |
+| 400   | 579,777,640 | 0.798   | 1.449                |    |
+| 500   | 653,754,577 | 0.905   | 1.308                | 37.27  |
+| 600   | 619,939,821 | 0.999   | 1.033                | 40.43  |
+| 700   | 661,258,561 | 0.997   | 0.945                | 36.42  |
+| 800   | 610,913,181 | 0.944   | 0.764                | 31.28  |
+| 900   | 609,127,279 | 0.896   | 0.677                | 31.21  |
+| 1,000 | 698,676,376 | 0.909   | 0.699                | 30.00  |
+]
+---
+class: middle
 name: remarks
 # Final Remarks
 
+- Respect of aggregate demand law
+- Unclear relation of inattention
 - Multiple solutions and comparative statics
+
 
 ---
 name: references
@@ -269,7 +342,7 @@ name: references
 .pull-left[
 .small[
 ```{r refsI, echo=FALSE, results="asis"}
-PrintBibliography(mybib, .opts = list(check.entries = TRUE), start=1, end=3)
+PrintBibliography(mybib, .opts = list(check.entries = TRUE), start=1, end=2)
 ```
 ]
 ]
@@ -278,7 +351,19 @@ PrintBibliography(mybib, .opts = list(check.entries = TRUE), start=1, end=3)
 .small[
 
 ```{r refsII, echo=FALSE, results="asis"}
-PrintBibliography(mybib, .opts = list(check.entries = TRUE), start=4, end=6)
+PrintBibliography(mybib, .opts = list(check.entries = TRUE), start=3, end=5)
 ```
 ]
 ]
+
+
+---
+name: references2
+# References II
+
+
+```{r refsIII, echo=FALSE, results="asis"}
+PrintBibliography(mybib, .opts = list(check.entries = TRUE), start=6, end=7)
+```
+
+

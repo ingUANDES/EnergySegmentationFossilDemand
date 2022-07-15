@@ -206,29 +206,98 @@ name: attention
 
 Following [Dewan and Neligh (2020)](#bib-dewan_estimating_2020) we consider a quadratic cost function
 
-`$$C(P)=\begin{cases}0,&amp;P\leq d\\c(P-d)^2,&amp;P&gt;d\end{cases},$$`
+`$$C(P)=\begin{cases}0,&amp;Perf\leq d\\c(Perf-d)^2,&amp;Perf&gt;d\end{cases},$$`
 
-where `\(P\in[0,1]\)` is a performance metric, `\(c\)` an associated marginal cost and `\(d\)` the performance level wiht public information.
+where `\(Perf\in[0,1]\)` is a performance metric, `\(c\)` an associated marginal cost and `\(d\)` the performance level wiht public information.
 
 We drop the chance constraint approach, by using
 
-- `\(\min_{(\theta,P)\in[0,(1+\epsilon)CAP]\times[0,1]}-\theta\pi^aP+c(P-d)^2\)` profit oriented
+- `\(\min_{(\theta,Perf)\in[0,(1+\epsilon)CAP]\times[0,1]}-\theta\pi^aPerf+c(Perf-d)^2\)` profit oriented
 - `\(\min_{\theta\in[0,CAP]}-\theta\pi^a+c\left(1-\frac{|\theta-CAP|}{CAP}-d\right)^2\)` welfare oriented
 ---
 name: results
 # Results: Profit oriented
-
+.pull-left[
 - Calibration wrt [Amigo, Cea-Echenique, and Feijoo (2021)](#bib-amigo_two_2021)
   - CAP: `\(100 MtCO_2\)`
   - `\(\pi^a=315.83\)`
   - `\(\epsilon=0.202\)` Andres et alii (2014)
 `$$\Rightarrow c=920M$$` 
+]
+.pull-right.center[
+`\(CAP=100\)`
+
+| Perf | `\(\theta\)`    | `\(\frac{\theta}{CAP}\)` | `\(\pi^a\)`  |
+|---------|-------------|----------------------|----------|
+| 0.798   | 120,200,000 | 1.20                 | 270.13 |
+| 0.8     | 120,200,000 | 1.20                 | 270.13 |
+| 0.85    | 113,654,321 | 1.14                 | 25.75  |
+| 0.9     | 113,568,965 | 1.14                 | 93.65  |
+| 0.95    | 118,470,479 | 1.18                 | 188.86 |
+| 0.99    | 114,916,396 | 1.15                 | 298.11 |
+| 1       | 118,332,486 | 1.18                 | 317.24 |
+]
 
 ---
+# Results: Profit oriented and multiple CAPs, `\(Perf=0.8\)`
+
+| CAP           | `\(\theta\)`    | `\(\frac{\theta}{CAP}\)` | `\(\pi^a\)`  |
+|---------------|-------------|----------------------|----------|
+| 100,000,000   | 120,200,000 | 1.20                 | 270.13 |
+| 200,000,000   | 240,400,000 | 1.20                 | 60.57  |
+| 300,000,000   | 360,600,000 | 1.20                 | 119.47 |
+| 400,000,000   | 454,798,037 | 1.14                 | 95.83  |
+| 500,000,000   | 601,000,000 | 1.20                 | 79.31  |
+| 600,000,000   | 605,279,899 | 1.01                 | 66.57  |
+| 700,000,000   | 605,279,899 | 0.86                 | 56.37  |
+| 800,000,000   | 961,600,000 | 1.20                 | 152.50 |
+| 900,000,000   | 605,279,899 | 0.67                 | 42.26  |
+| 1,000,000,000 | 605,279,899 | 0.61                 | 35.98  |
+---
+# Results: Profit oriented, allowances distributions
+
+.pull-left[
+&lt;img src="diststage1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+.pull-right[
+&lt;img src="diststage2.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+
+---
+name: resultsW
+# Results: Welfare oriented
+.pull-left[
+- Calibration wrt [Amigo, Cea-Echenique, and Feijoo (2021)](#bib-amigo_two_2021)
+  - CAP: `\(100 MtCO_2\)`
+  - `\(\pi^a=315.83\)`
+
+`$$\Rightarrow c=9920M$$` 
+]
+.pull-right.center[
+| CAP  (M)         | `\(\theta\)`    | Perf | `\(\frac{\theta}{CAP}\)` | `\(\pi^a\)`  |
+|---------------|-------------|---------|----------------------|----------|
+| 100   | 144,944,410 | 0.798   | 1.449                | 232.82 |
+| 200   | 289,888,820 | 0.798   | 1.449                | 141.56 |
+| 300   | 434,833,230 | 0.798   | 1.449                | 103.33 |
+| 400   | 579,777,640 | 0.798   | 1.449                |    |
+| 500   | 653,754,577 | 0.905   | 1.308                | 37.27  |
+| 600   | 619,939,821 | 0.999   | 1.033                | 40.43  |
+| 700   | 661,258,561 | 0.997   | 0.945                | 36.42  |
+| 800   | 610,913,181 | 0.944   | 0.764                | 31.28  |
+| 900   | 609,127,279 | 0.896   | 0.677                | 31.21  |
+| 1,000 | 698,676,376 | 0.909   | 0.699                | 30.00  |
+]
+---
+class: middle
 name: remarks
 # Final Remarks
 
+- Respect of aggregate demand law
+- Unclear relation of inattention
 - Multiple solutions and comparative statics
+
 
 ---
 name: references
@@ -236,83 +305,77 @@ name: references
 
 .pull-left[
 .small[
-&lt;a name=bib-abada_multiplicity_2017&gt;&lt;/a&gt;[Abada, I., G.
-de Maere d ' Aertrycke, and Y.
-Smeers](#cite-abada_multiplicity_2017) (2017). "On the
-multiplicity of solutions in generation capacity
-investment models with incomplete markets: a
-risk-averse stochastic equilibrium approach". En. In:
-_Mathematical Programming_ 165.1, pp. 5-69. ISSN:
-1436-4646. DOI:
+&lt;a name=bib-abada_multiplicity_2017&gt;&lt;/a&gt;[Abada, I., G. de Maere d '
+Aertrycke, and Y. Smeers](#cite-abada_multiplicity_2017) (2017). "On the
+multiplicity of solutions in generation capacity investment models with
+incomplete markets: a risk-averse stochastic equilibrium approach". En. In:
+_Mathematical Programming_ 165.1, pp. 5-69. ISSN: 1436-4646. DOI:
 [10.1007/s10107-017-1185-9](https://doi.org/10.1007%2Fs10107-017-1185-9).
 URL:
 [https://doi.org/10.1007/s10107-017-1185-9](https://doi.org/10.1007/s10107-017-1185-9)
 (visited on May. 26, 2020).
 
-&lt;a name=bib-amigo_two_2021&gt;&lt;/a&gt;[Amigo, P., S.
-Cea-Echenique, and F. Feijoo](#cite-amigo_two_2021)
-(2021). "A two stage cap-and-trade model with
-allowance re-trading and capacity investment: The case
-of the Chilean NDC targets". En. In: _Energy_ 224, p.
-120129. ISSN: 03605442. DOI:
+&lt;a name=bib-amigo_two_2021&gt;&lt;/a&gt;[Amigo, P., S. Cea-Echenique, and F.
+Feijoo](#cite-amigo_two_2021) (2021). "A two stage cap-and-trade model with
+allowance re-trading and capacity investment: The case of the Chilean NDC
+targets". En. In: _Energy_ 224, p. 120129. ISSN: 03605442. DOI:
 [10.1016/j.energy.2021.120129](https://doi.org/10.1016%2Fj.energy.2021.120129).
 URL:
 [https://linkinghub.elsevier.com/retrieve/pii/S0360544221003789](https://linkinghub.elsevier.com/retrieve/pii/S0360544221003789)
 (visited on Mar. 10, 2021).
-
-&lt;a
-name=bib-cea-echenique_general_2018&gt;&lt;/a&gt;[Cea-Echenique,
-S. and J. P.
-Torres-Martínez](#cite-cea-echenique_general_2018)
-(2018). "General equilibrium with endogenous trading
-constraints". In: _PLoS ONE_ 13.9. ISSN: 1932-6203.
-DOI:
-[10.1371/journal.pone.0203814](https://doi.org/10.1371%2Fjournal.pone.0203814).
-URL:
-[https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6141088/](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6141088/)
-(visited on Mar. 09, 2020).
 ]
 ]
 
 .pull-right[
 .small[
 
-&lt;a name=bib-de_maere_d__aertrycke_risk_2017&gt;&lt;/a&gt;[de
-Maere d ' Aertrycke, G., A. Ehrenmann, D. Ralph, et
-al.](#cite-de_maere_d__aertrycke_risk_2017) (2017).
-_Risk trading in capacity equilibrium models_. En.
-Working Paper. University of Cambridge. DOI:
-[10.17863/CAM.17552](https://doi.org/10.17863%2FCAM.17552).
+&lt;a name=bib-cea-echenique_general_2018&gt;&lt;/a&gt;[Cea-Echenique, S. and J. P.
+Torres-Martínez](#cite-cea-echenique_general_2018) (2018). "General
+equilibrium with endogenous trading constraints". In: _PLoS ONE_ 13.9. ISSN:
+1932-6203. DOI:
+[10.1371/journal.pone.0203814](https://doi.org/10.1371%2Fjournal.pone.0203814).
 URL:
+[https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6141088/](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6141088/)
+(visited on Mar. 09, 2020).
+
+&lt;a name=bib-de_maere_d__aertrycke_risk_2017&gt;&lt;/a&gt;[de Maere d ' Aertrycke, G.,
+A. Ehrenmann, D. Ralph, et al.](#cite-de_maere_d__aertrycke_risk_2017)
+(2017). _Risk trading in capacity equilibrium models_. En. Working Paper.
+University of Cambridge. DOI:
+[10.17863/CAM.17552](https://doi.org/10.17863%2FCAM.17552). URL:
 [https://www.repository.cam.ac.uk/handle/1810/270625](https://www.repository.cam.ac.uk/handle/1810/270625)
 (visited on May. 27, 2020).
 
-&lt;a name=bib-dewan_estimating_2020&gt;&lt;/a&gt;[Dewan, A. and
-N. Neligh](#cite-dewan_estimating_2020) (2020).
-"Estimating information cost functions in models of
-rational inattention". En. In: _Journal of Economic
+&lt;a name=bib-dewan_estimating_2020&gt;&lt;/a&gt;[Dewan, A. and N.
+Neligh](#cite-dewan_estimating_2020) (2020). "Estimating information cost
+functions in models of rational inattention". En. In: _Journal of Economic
 Theory_ 187, p. 105011. ISSN: 00220531. DOI:
 [10.1016/j.jet.2020.105011](https://doi.org/10.1016%2Fj.jet.2020.105011).
 URL:
 [https://linkinghub.elsevier.com/retrieve/pii/S002205311830396X](https://linkinghub.elsevier.com/retrieve/pii/S002205311830396X)
 (visited on Mar. 23, 2021).
+]
+]
 
-&lt;a name=bib-ehrenmann_stochastic_2011&gt;&lt;/a&gt;[Ehrenmann,
-A. and Y. Smeers](#cite-ehrenmann_stochastic_2011)
-(2011b). "Stochastic Equilibrium Models for Generation
-Capacity Expansion". En. In: _Stochastic Optimization
-Methods in Finance and Energy: New Financial Products
-and Energy Market Strategies_. Ed. by M. Bertocchi, G.
-Consigli and M. A. H. Dempster. International Series
-in Operations Research &amp; Management Science. New York,
-NY: Springer, pp. 273-310. ISBN: 978-1-4419-9586-5.
-DOI:
+
+---
+name: references2
+# References II
+
+
+&lt;a name=bib-ehrenmann_stochastic_2011&gt;&lt;/a&gt;[Ehrenmann, A. and Y.
+Smeers](#cite-ehrenmann_stochastic_2011) (2011b). "Stochastic Equilibrium
+Models for Generation Capacity Expansion". En. In: _Stochastic Optimization
+Methods in Finance and Energy: New Financial Products and Energy Market
+Strategies_. Ed. by M. Bertocchi, G. Consigli and M. A. H. Dempster.
+International Series in Operations Research &amp; Management Science. New York,
+NY: Springer, pp. 273-310. ISBN: 978-1-4419-9586-5. DOI:
 [10.1007/978-1-4419-9586-5_13](https://doi.org/10.1007%2F978-1-4419-9586-5_13).
 URL:
 [https://doi.org/10.1007/978-1-4419-9586-5_13](https://doi.org/10.1007/978-1-4419-9586-5_13)
 (visited on Apr. 11, 2020).
-]
-]
+
+
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
