@@ -1,3 +1,3 @@
-# Energy Markets and Segmentation
+# Energy Markets, Segmentation, Fossil Fuels demand
 
-Continuation of [Amigo et alii (2021)](https://doi.org/10.1016/j.energy.2021.120129) contribution.
+Continuation of [Cea-Echenique, Feijoo and Muñoz (2023)](https://github.com/ingUANDES/EnergySegmentation) contribution.
