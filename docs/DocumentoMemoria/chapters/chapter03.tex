@@ -202,7 +202,7 @@ Como consecuencia de lo anterior, el planificador debiera maximizar sus benefici
 \vspace{2.5mm}
 
 
-En el nuevo modelo, el objetivo principal del planificador social cambia a el grado de precisión con el que se cumple la restricción presupuestaria $\theta\leq CAP$. De esta forma, el planificador(subastador) maximizará:
+En el nuevo modelo, el objetivo principal del planificador social cambia al grado de precisión con el que se cumple la restricción presupuestaria $\theta\leq CAP$. De esta forma, el planificador(subastador) maximizará:
 
 \begin{align}
 P\cdot Pr(\theta\leq CAP)-\tilde{\mathcal{F}}(Pr(\theta\leq CAP)) \label{nuevafposible}    
@@ -243,7 +243,7 @@ Antes de incluir el rendimiento y atención racional con mayor profundidad, se r
 \end{array}
 \end{equation}
 
-En primer lugar, se modeló el problema del subastador únicamente con la función objetivo y la naturaleza de la variable $\theta$, sin incorporar otra restricción. Este, junto con el modelo del productor y las condiciones de mercado, fueron resueltas como un único problema MCP. Al observar los valores de las variables $\theta$(permisos de contaminación emitidos por el subastador) y $\pi^a$(valor de venta de cada permiso por parte del subastador) en la tabla \ref{tabla:sinrestr}, se observa que al no existir una restricción que acote los permisos, estos rápidamente aumentan, debido al exceso de oferta, sus precios tienden a 0.
+En primer lugar, se modeló el problema del subastador únicamente con la función objetivo y la naturaleza de la variable $\theta$, sin incorporar otra restricción. Este, junto con el modelo del productor y las condiciones de mercado, fueron resueltas como un único problema MCP. Al observar los valores de las variables $\theta$ (permisos de contaminación emitidos por el subastador) y $\pi^a$(valor de venta de cada permiso por parte del subastador) en la tabla \ref{tabla:sinrestr}, se observa que al no existir una restricción que acote los permisos, estos rápidamente aumentan, debido al exceso de oferta, sus precios tienden a 0.
 \vspace{2.5mm}
 
 En segundo lugar, se modeló la misma función objetivo incorporando la restricción \ref{res:sub1} del modelo original. Con el objetivo de acotar los permisos y observar cómo el rendimiento, sin incorporar una restricción de factibilidad de los costos, afecta el precio de venta de los permisos. De esto, se concluyó que el subastador ignora los costos de rendimiento, ya que los valores encontrados para $\theta$ y  $\pi^a$, con el rendimiento sobre 5\%, son iguales al caso donde no se considera un rendimiento. Sobre esto, se entendió que falta incorporar alguna restricción de factibilidad para que el subastador considere su efecto en la función objetivo.
@@ -330,7 +330,7 @@ En base al trabajo de \citeB{dewan_estimating_2020}, se aplica un perfil de desa
 
 \begin{equation}
 \begin{array}{rrclcl}
-\displaystyle \min_{\theta} & -\theta \pi^a + c(1-\frac{\abs{\theta - \hat{\theta}}}{\hat{\theta}}-d)^2 \\
+\displaystyle \min_{\theta} & -\theta \pi^a + c\left(1-\frac{\abs{\theta - \hat{\theta}}}{\hat{\theta}}-d\right)^2 \\
 \end{array}
 \end{equation}
 \vspace{2.5mm}
@@ -350,7 +350,7 @@ En esta nueva formulación, el rendimiento (\textit{performance P}) es calculado
 Debido a lo anterior, cuando se genera la cantidad de permisos eficiente, el rendimiento  $P = 1 - \frac{\abs{0}}{\hat{\theta}}= 1 - 0 = 1 =100\%$. De esta forma, se obtiene un rendimiento perfecto que minimiza los costos del subastador y que representan también los costos sociales de emisiones no eficientes.
 \vspace{2.5mm}
 
-La razón de por qué la diferencia entre permisos se encuentra en valor absoluto es que existe un costo social asociadocon la generación de los siguientes dos escenarios:
+La razón de por qué la diferencia entre permisos se encuentra en valor absoluto es que existe un costo social asociado con la generación de los siguientes dos escenarios:
 
 \begin{enumerate}
     \item[1.] $\theta - \hat{\theta} \geq 0$
@@ -368,7 +368,7 @@ En esta segunda versión de la reestructuración del problema del subastador, ex
 
 \begin{equation}
 \begin{array}{rrclcl}
-\displaystyle \theta \pi^a - c(1-\frac{\abs{\theta - \hat{\theta}}}{\hat{\theta}}-d)^2 \geq 0  \\
+\displaystyle \theta \pi^a - c\left(1-\frac{\abs{\theta - \hat{\theta}}}{\hat{\theta}}-d\right)^2 \geq 0  \\
 \end{array}
 \end{equation}
 
@@ -376,12 +376,12 @@ Con esto último, el modelo del subastador queda de la siguiente manera:
 
 \begin{equation}
 \begin{array}{rrclcl}
-\displaystyle \min_{\theta} & -\theta \pi^a + c(1-\frac{\abs{\theta - \hat{\theta}}}{\hat{\theta}}-d)^2 \\\textrm{s.a.} \label{fo:social}\\
+\displaystyle \min_{\theta} & -\theta \pi^a + c\left(1-\frac{\abs{\theta - \hat{\theta}}}{\hat{\theta}}-d\right)^2 \\\textrm{s.a.} \label{fo:social}\\
 \end{array}
 \end{equation}
 \begin{equation}
 \begin{array}{rrclcl}
-\displaystyle \theta \pi^a - c(1-\frac{\abs{\theta - \hat{\theta}}}{\hat{\theta}}-d)^2 \geq 0 \qquad (\eta)\label{social:r1}
+\displaystyle \theta \pi^a - c\left(1-\frac{\abs{\theta - \hat{\theta}}}{\hat{\theta}}-d\right)^2 \geq 0 \qquad (\eta)\label{social:r1}
 \end{array}
 \end{equation}
 \begin{equation}
