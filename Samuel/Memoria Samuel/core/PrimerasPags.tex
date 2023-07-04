@@ -1,0 +1,140 @@
+% Paginas de titulo, derechos de autor y otras mas.
+
+% Jaime Cisternas, julio 2004, agosto 2010
+
+% declaracion especifica de pdfLaTeX
+% permite incluir figuras con \includegraphics[...]{figurename}
+\DeclareGraphicsExtensions{.jpg,.pdf,.mps,.png}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+  \pagenumbering{roman}
+% \setcounter{page}{1}
+
+% Escribe la pagina de titulo, incluyendo el autor y la facultad
+
+  \thispagestyle{empty}
+  \textsc{
+  \vspace*{0cm}
+  \begin{center}
+    \Large
+     Universidad de los Andes \\
+     Facultad de Ingeniería y Ciencias Aplicadas\\
+  \end{center}
+     \vspace{1cm}
+  \begin{center}
+     \includegraphics[angle=0,height=5cm]{Samuel/Memoria Samuel/Imagenes/Logo-UANDES.png}
+  \end{center}
+     \vspace{1cm}
+  \begin{center}
+     \Large
+     \titulo
+  \end{center}
+  \vspace{0.5cm}
+  \begin{center}
+    \Large
+    \nombreautor
+  \end{center}
+  \vspace{0.5 cm}
+  \begin{center}
+    Memoria para optar al título de \\
+    Ingeniero Civil Industrial 
+    Mención Gestión de Operaciones\\
+    \vspace{1cm}
+    Profesor Guía: \nombreprofuno \\
+    \vspace{0.5cm}
+    \codigo \\
+    \vspace{0.5cm}
+    Santiago, \mes\ de \anio
+  \end{center}
+  }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Escribe la segunda pagina de titulo para ser firmada por la comision
+
+
+\thispagestyle{empty}
+
+\begin{center}
+
+\vspace*{2cm}
+\parbox{10cm}{
+\noindent
+Certifico que he leído esta memoria y que en mi opinión
+su alcance y calidad son completamente adecuados como para ser considerada
+una memoria conducente al título de Ingeniero.
+\vspace{1cm}
+
+\hfill
+\begin{tabular}{c}
+\hspace{8cm} \\
+\hline
+\nombreprofuno \\
+(Profesor Guía)
+\end{tabular}
+
+\vspace*{1.5cm}
+
+}
+
+\end{center}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Espaciado entre lineas
+  \onehalfspacing
+  %\doublespacing
+
+% Hace pagina de derechos de autor
+
+
+  \thispagestyle{empty}
+  %\vspace*{0in}
+  \begin{center}
+    \copyright\ \nombreautor\ \anio \\
+    Todos los derechos reservados.
+  \end{center}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Genera agradecimientos leyendo definicion de agradecimientos
+
+  \cleardoublepage \addcontentsline{toc}{section}{Agradecimientos}
+  \begin{center} \Large \textbf{Agradecimientos} \end{center}
+
+
+\vspace{2.5mm}
+
+
+
+
+% Genera resumen leyendo definicion de resumen
+
+
+
+  \refstepcounter{dummy} \addcontentsline{toc}{section}{Resumen}
+  \begin{center} \Large \textbf{Resumen} \end{center}
+
+\vspace{2.5mm}
+
+
+\vspace{2.5mm}
+
+
+
+
+
+% Genera dedicatoria
+
+ % \cleardoublepage \vspace*{1.5in}
+  %\begin{flushright} \dedicatoria %\end{flushright}
+
+% Produce indice general, listas de figuras y de tablas
+
+
+
+  \normalsize
+  \pagenumbering{arabic}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
