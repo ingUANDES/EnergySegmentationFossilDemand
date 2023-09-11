@@ -51,17 +51,18 @@ ok..
 
 \input{Samuel/Memoria Samuel/core/PrimerasPags}
 
+\tableofcontents
 %%%%%%%%%%%%%%%%Ingreso de capitulos%%%%%%%%%%%%%%%%%%%%%%
 
 \input{Samuel/Memoria Samuel/Capitulos/Intro}
 \input{Samuel/Memoria Samuel/Capitulos/Marco Teórico}
-
+\input{Samuel/Memoria Samuel/Capitulos/Desarrollo Metodológico}
 % Ingenieros prefieren la bibliografia antes que los anexos
 
 \cleardoublepage
 
 
-\addcontentsline{toc}{chapter}{Bibliografía}
+%\addcontentsline{toc}{Capitulos}{Bibliografía}
 
 \bibliographystyle{newapa}
 \bibliography{referencias}
@@ -71,9 +72,9 @@ ok..
 \cleardoublepage
 
 % Escribe 'Anexos' en el Indice General
-\addcontentsline{toc}{chapter}{Anexos}
+% \addcontentsline{toc}{Capitulos}{Anexos}
 
-%\input{attachments/anexo_a.tex}    % archivo de apendice
+\input{Samuel/Memoria Samuel/Capitulos/Anexos}    % archivo de apendice
 
 %\input{apendice_b}    % otro archivo de apendice
 

@@ -1,0 +1,104 @@
+% anexo_a.tex
+
+\chapter{Anexos}
+\label{}
+
+\section{Códigos Resolución Maere 3.3.1}
+
+\subsection{Código Resolución con Python}\label{codigoPhyton}
+\begin{footnotesize}
+\begin{lstlisting}
+from gurobipy import Model, GRB, quicksum
+
+def modeloRNcompetitivecapacityequilibrium(cant_esce, a, theta, B, tau, c, I):
+    m = Model()
+
+    # Decision variables x, Y, Q
+    x = m.addVar(lb=0, vtype=GRB.CONTINUOUS, name='x')  # Capacidad
+    Y = {}  # Producción
+    Q = {}  # Demanda
+
+    # Definición de Producción y Demanda para cada estado de la naturaleza
+    for i in range(cant_esce):
+        Y[i] = m.addVar(vtype=GRB.INTEGER, name='Y{}'.format(i))
+        Q[i] = m.addVar(vtype=GRB.INTEGER, name='Q{}'.format(i))
+
+    # Restricciones
+    for i in range(cant_esce):
+        # Production equals demand
+        m.addConstr(Y[i] == Q[i])
+        # Production bounded by installed capacity
+        m.addConstr(Y[i] <= x)
+
+    # F.O
+    obj_expr = I * 1000 * x + tau * quicksum(theta[i] * (c * Y[i] - a[i] * Q[i] 
+    + (B / 2) * (Q[i] * Q[i])) for i in range(cant_esce))
+    m.setObjective(obj_expr, GRB.MINIMIZE)
+
+    m.optimize()
+
+    P = []
+    IM = []
+
+    for i in range(cant_esce):
+        P.append(a[i] - B * Q[i].x)
+        IM.append((tau * (P[i] - c) * Y[i].x - I * x.x) / x.x)
+
+    Qprom = sum(Q[i].x for i in range(cant_esce))
+
+    print("Q Promedio =", Qprom / cant_esce)
+    print("x =", x.x)
+    print("Valor función objetivo =", m.objVal)
+
+    print(cant_esce, a, theta, B, tau, c, I)
+
+    print("\nQ, Y, P and Investment Margin values:")
+    for i in range(cant_esce):
+        print("Q({}) = {:.1f}    Y({}) = {:.1f}    P({}) = {:.1f}    
+        Investment Margin = {:.1f}"
+          .format(i + 1, Q[i].x, i + 1, Y[i].x, i + 1, P[i], IM[i]))
+\end{lstlisting}
+\end{footnotesize}
+
+\subsection{Código Resolución con Julia}\label{codigoJulia}
+\begin{footnotesize}
+\begin{lstlisting}
+using JuMP, Ipopt
+A = [300, 350, 400, 450, 500]
+theta = [0.2, 0.2, 0.2, 0.2, 0.2]
+B = 1
+I = 90
+C = 60
+tau = 8760
+
+model = Model(Ipopt.Optimizer)
+
+# Variables
+@variable(model, x >= 0)  # Capacidad
+@variable(model, Y[1:5] >= 0) # Producción en escenario w
+@variable(model, Q[1:5] >= 0) # Demanda en escenario w
+
+# Restricciones
+@constraint(model, demanda[i = 1:5], Y[i] == Q[i])
+@constraint(model, capacidad[i = 1:5], Y[i] - x <= 0)
+
+# Función Objetivo
+@objective(model, Min, I*1000*x + tau * sum(theta[i] * (C * Y[i] - A[i] * 
+Q[i] + B * 0.5 * Q[i]^2) for i = 1:5))
+optimize!(model)
+
+# Resultados
+println("Q = ", value.(Q))
+Qlist = value.(Q)
+
+j = 1
+P = []
+while j < 6
+    Pi = A[j] - B * Qlist[j]
+    append!(P, Pi)
+    j = j + 1
+end
+println("P = ", P)
+println("x = ", value(x))
+\end{lstlisting}
+\end{footnotesize}

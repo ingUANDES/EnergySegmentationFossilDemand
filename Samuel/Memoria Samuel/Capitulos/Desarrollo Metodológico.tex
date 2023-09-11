@@ -1,0 +1,327 @@
+% Desarrollo Metodológico.tex
+
+\chapter{Desarrollo Metodológico}
+\label{c3} % la etiqueta para referencias
+
+\section{Incorporación de parámetros de transición a energías renovables en la nueva función del productor}\label{c31}
+
+Habiendo establecido el contexto teórico y explorado los fundamentos relevantes en el marco teórico, ahora vamos a ver el desarrollo de un marco analítico que nos permitirá examinar la viabilidad económica de la transición hacia combustibles renovables en Chile, que es el objetivo central de esta tesis.\vspace{2.5mm}
+
+Los productores de energía en una economía en transición hacia fuentes de energía más limpias se enfrentan a varios nuevos parámetros estratégicas. Estas decisiones están influenciadas por una variedad de factores, incluyendo los costos asociados con la transición a fuentes de energía renovables, los incentivos y subsidios disponibles, los precios de los combustibles fósiles y renovables, la capacidad de producción de energía renovable y las emisiones de carbono asociadas con la producción de energía.\vspace{2.5mm}
+
+Para capturar la complejidad de estas decisiones en nuestro modelo de estudio \citeB{amigo_two_2021}, proponemos incorporar una serie de nuevas variables y parámetros en la función del productor. Estos representan los costos e incentivos asociados con la transición a energías renovables, así como las limitaciones físicas y tecnológicas que pueden afectar la capacidad de los productores para generar energía renovable.\vspace{2.5mm}
+
+\subsection{Variable de Transición}\label{c32}
+
+Para reflejar el proceso gradual de transición a las energías renovables, introducimos la variable \( T_i(t) \). Esta variable va a representar el porcentaje de transición a las energías renovables para cada productor \( i \) en el tiempo \( t \). La variable varía entre 0 y 1, donde \( T_i(t) = 0 \) indica que el productor \( i \) no ha hecho ninguna transición a las energías renovables, y \( T_i(t) = 1 \) indica que el productor \( i \) ha completado totalmente la transición a las energías renovables. \vspace{2.5mm}
+
+\subsection{Nuevo Factor de Emisión}\label{c33}
+
+Además, proponemos modificar el factor de emisión de la tecnología \( i \), \( \varepsilon_i \) previamente definido en la función original \ref{fig:Tabla1}, para que sea una función del porcentaje de transición \( T_i(t) \). En particular, el factor de emisión de la tecnología \( i \) después de la transición a las energías renovables, \( E_i(t) \), podría ser representado como:\vspace{2.5mm}
+
+\begin{equation}
+E_i(t) = \varepsilon_i \cdot (1 - T_i(t)) \quad \forall i 
+ \label{3.3.1}
+\end{equation}
+\vspace{2.5mm}
+
+En esta ecuación, a medida que \( T_i(t) \) aumenta, el factor de emisión \( E_i(t) \) disminuye, reflejando la reducción en las emisiones de carbono a medida que el productor \( i \) transita hacia las energías renovables en el tiempo \( t \). Esta modificación permite que nuestro modelo capture el impacto ambiental de la transición a las energías renovables de una manera más precisa y realista.\vspace{2.5mm}
+
+\subsection{Subsidio}\label{c34}
+
+En paralelo, consideramos que los subsidios recibidos por cada productor \( i \), representados por \( S_i(t) \), son una función del porcentaje de transición \( T_i(t) \). Esto refleja los incentivos financieros disponibles para los productores que hacen la transición a las energías renovables. Estos subsidios, que pueden tomar la forma de créditos fiscales, subvenciones, tarifas de alimentación preferenciales y otros incentivos, se incrementan a medida que el productor se compromete más con las energías renovables. Por lo tanto, el subsidio \( S_i(t) \) podría ser representado como:
+
+\begin{equation}
+S_i(t) = s_i \cdot T_i(t) \quad \forall i 
+\label{3.4.1}
+\end{equation}
+
+
+En esta ecuación, \( s_i \) representa el subsidio máximo disponible para el productor \( i \), y se asume que este subsidio se otorga en su totalidad cuando el productor ha completado totalmente la transición a las energías renovables (\( T_i(t) = 1 \)). Por el contrario, si el productor no ha iniciado la transición a las energías renovables en el tiempo \( t \) (\( T_i(t) = 0 \)), no recibe ningún subsidio (\( S_i(t) = 0 \)). Esta formulación permite que nuestro modelo capture la influencia de los incentivos financieros en las decisiones de los productores sobre la transición a las energías renovables.\vspace{2.5mm}
+
+\subsection{Costo de Transición y su Factor de Adaptabilidad}
+
+La transición hacia energías renovables conlleva costos asociados que varían según la tecnología y la infraestructura existente. Para modelar estos costos, introducimos el parámetro de costo de transición \( CT_i(t) \), que depende tanto del grado de transición \( T_i(t) \) como de la adaptabilidad de la tecnología, representada por el parámetro \( \alpha_i \).\vspace{2.5mm}
+
+El factor de adaptabilidad \( \alpha_i \) para cada productor \( i \) refleja la facilidad con la que una tecnología convencional puede adaptarse a las energías renovables. Un valor de \( \alpha_i \) cercano a 1 indica una alta adaptabilidad, mientras que un valor cercano a 0 sugiere una baja adaptabilidad. Este factor tiene en cuenta aspectos como la infraestructura existente, la tecnología y la formación requerida.\vspace{2.5mm}
+
+El parámetro \( c_i \) representa el costo máximo asociado con la transición hacia energías renovables para el productor \( i \). Así, el costo de transición \( CT_i(t) \) para el productor \( i \) en el tiempo \( t \) se define como:
+
+\begin{equation}
+CT_i(t) = c_i \cdot T_i(t) \cdot (1 - \alpha_i) \quad \forall i
+\label{3.3}
+\end{equation}
+
+
+Aca vamos a tener que las tecnologías con alta adaptabilidad (\( \alpha_i \) cercano a 1) tendrán costos de transición reducidos, mientras que aquellas con baja adaptabilidad enfrentarán costos más elevados.
+
+
+\subsection{Nueva Función del Productor}\label{c36}
+
+Estos nuevos parámetros y variable permiten a nuestro modelo capturar la gama de decisiones estratégicas que los productores de energía deben tomar al considerar la transición a las energías renovables, y proporcionan una base para analizar cómo estas decisiones pueden influir en la viabilidad económica de la transición a las energías renovables en Chile.\vspace{2.5mm}
+
+Con estos nuevos parámetros y variable en mente, podemos reformular la función del productor para incorporar las decisiones de transición a las energías renovables. La nueva función del productor se convierte en:\vspace{2.5mm}
+
+\begin{align}
+\min_{(x_i,Q_i,A_i(t),P_i,V_i)\in \mathbb{X}} & f_i \big( \pi^d(0),Q_i(0)\big)+ A_i\pi^{a} + I_i x_i(0) - S_i(0) \nonumber \\
+& + \sum_{\omega} Pr(\omega) \Bigg[ \sum_{t>0} \frac{1}{(1+R)^t} \Big[ TC_i(t,\omega)\cdot f_i \big( \pi^d(t,\omega),Q_i(t,\omega) \big) \nonumber \\
+& + TCR_i(t,\omega) \cdot I_i\cdot x_i(t,\omega) \nonumber \\
+& + CT_i(t)  - S_i(t) \Big] \nonumber \\
+& + \pi^v(\omega)\cdot \big(P_i(\omega)-V_i(\omega)\big) \Bigg] \label{3.6.1}
+\end{align}
+
+Estos términos adicionales enriquecen nuestro modelo, permitiendo capturar la variedad de decisiones estratégicas que los productores de energía enfrentan al considerar la transición a las energías renovables. Asimismo, ofrecen una base sólida para analizar cómo estas decisiones pueden afectar la viabilidad económica de la transición a las energías renovables en Chile.\vspace{2.5mm}
+
+Siguiendo la línea de la función original, es esencial diferenciar entre la variable y los parámetros introducidos en nuestro modelo:
+
+\textbf{Variable}:
+\begin{itemize}
+    \item \( T_i(t) \): Representa el porcentaje de transición a las energías renovables para cada productor \( i \) en el tiempo \( t \).
+
+\end{itemize}
+
+\textbf{Parámetros}:
+\begin{itemize}
+    \item \( \alpha_i \): Factor de adaptabilidad para cada productor \( i \), reflejando la facilidad con la que una tecnología convencional puede adaptarse a las energías renovables.
+    \item \( E_i(t) \): Factor de emisión de la tecnología \( i \) después de la transición a las energías renovables.
+     \( T_i(t) \).
+    \item \( CT_i(t) \): Costo de transición hacia las energías renovables para el productor \( i \) en el tiempo \( t \),con \( c_i \) como el costo máximo asociado con la transición hacia energías renovables.
+    \item \( S_i(t) \): Subsidios recibidos por cada productor \( i \) en función del porcentaje de transición, con \( s_i \) como el subsidio máximo disponible para el productor \( i \).
+\end{itemize}
+
+\subsection{Restricciones del Nuevo Modelo}\label{c37}
+
+Continuando con el desarrollo de nuestro modelo, es necesario considerar las restricciones que se deben cumplir. En el modelo original, se establecen varias restricciones que los productores de energía deben cumplir. Estas restricciones, que se describen en detalle en las Ecuaciones \ref{res:1} a \ref{res:capt}, incluyen limitaciones en la capacidad de producción, la capacidad de reserva, las emisiones de carbono y la no negatividad de ciertas variable del modelo.\vspace{2.5mm}
+
+En nuestro nuevo modelo, que incorpora la transición a las energías renovables, estas restricciones se mantienen en su mayoría sin cambios. Sin embargo, la restricción de emisiones de carbono, que en el modelo original se describe en la Ecuación \ref{res:5}, se ha modificado para incorporar el parámetro de transición \( T_i(t) \) donde nos queda la nueva restricción \ref{3.7.1}. Ahora, las emisiones de carbono de cada productor son una función del parámetro de transición \( T_i(t) \), tal como se ilustra en la Ecuación \ref{3.3.1}. La restricción de emisiones de carbono actualizada es:
+
+\begin{equation}
+A_{i} + (P_i(\omega) - V_i(\omega))-\sum_{t>0}Q_i(t, \omega)\cdot E_{i}-Q_i(0)E_{i} \geq 0 \quad \forall \quad \omega \quad (\gamma_{i,\omega})\label{3.7.1}
+\end{equation}
+
+Esta restricción garantiza que las emisiones de carbono de cada productor, que ahora dependen del parámetro de transición \( T_i(t) \), no superen el límite permitido de emisiones de carbono.\vspace{2.5mm}
+
+Además de estas restricciones, el nuevo modelo introduce una restricción adicional \ref{3.7.2} para el nuevo parámetro.
+
+\begin{itemize}
+\item \textbf{Restricción de transición a energías renovables:} Esta restricción asegura que el parámetro de transición $T_i$ de cada productor esté entre 0 y 1. Esta restricción se puede expresar como:
+
+\begin{equation}
+0 \leq T_i(t) \leq 1 \quad \forall i\label{3.7.2}
+\end{equation}
+\end{itemize}
+
+\vspace{2.5mm}
+\subsection{Modelo Ampliado de Transición a Energías Renovables\label{c38}}
+
+Como puede resultar complicado analizar y ampliar el modelo de \citeB{amigo_two_2021}, vamos a ver primero el contexto anteriormente presentado en \ref{c273}, y con este, añadimos al modelo de \citeB{daertrycke_risk_2017} la variable que contempla la transición a energías renovables, incentivando esta transición a través de subsidios y considerando un factor de adaptabilidad de la tecnología.
+
+\vspace{2.5mm}
+\subsubsection{Variable Adicional}
+
+\begin{enumerate}
+    \item \textbf{Variable de Transición \( T_w \)}: Indica el grado de transición en el escenario \( w \) hacia las energías renovables.
+\end{enumerate}
+
+\vspace{2.5mm}
+\subsubsection{Parámetros Adicionales}
+
+\begin{enumerate}
+    \item \textbf{Subsidio \( S_w \)}: Representa los incentivos financieros asociados a la transición en el escenario \( w \), con \( s \) como Subsidio máximo otorgable.
+    
+    \begin{align}
+    \begin{array}{rrclcl}
+        S_w &= s \cdot T_w \quad \forall w \label{c334}\\
+    \end{array}
+    \end{align}
+
+    \item \textbf{Costo de Transición \( CT_w \) y su  Factor de Adaptabilidad \( \alpha \)}: Asocia los gastos de transición en el escenario \( w \), ponderados por el grado de transición y con \( c \) como costo máximo vinculado a la transición. Además del factor \( \alpha \) que mide cuán fácilmente una tecnología convencional se adapta a las energías renovables.
+
+    \begin{align}
+    \begin{array}{rrclcl}
+      CT_w &= c \cdot T_w \cdot (1 - \alpha) \quad \forall w \label{c335}\\
+    \end{array}
+    \end{align}
+    
+\end{enumerate}
+
+\vspace{2.5mm}
+\subsubsection{Formulación Matemática del Modelo Ampliado}
+
+Siguiendo con el modelo de equilibrio de capacidad \ref{C210} en el que podemos identificar en este caso a \(x_1\) y \(x_2\) como las variables de decisión de capacidad de las dos tecnologías en la fase inicial, donde se entiende que la generadora se encuentra en transición a producir energia de manera mas renovable. La optimización se plantea como:
+
+\begin{equation}
+\begin{array}{rrclcl}
+    \displaystyle \min_{Q,Y,x1,x2,T} & I_1(x_1) + I_2(x_2) + \tau E_{\Theta}\left[((C+CT_w - S_w)Y_w - A_wQ_w + \frac{B}{2}Q_w^2 \right]  \\\textrm{s.a.} \label{c331}
+\end{array}
+\end{equation}
+
+
+
+\begin{align}
+    Q_w &= Y_w \quad \forall w \label{c332} \\
+    0 &\leq Y_w \leq x_1 + x_2 \quad \forall w \label{c333} \\
+   0 &\leq T_w \leq T_{w+1} \quad \text{con } w = 1, 2, \ldots, 5 \label{c336} \\
+   0 &\leq \alpha \leq 1 \quad \label{c313}
+\end{align}
+
+\subsubsection{Explicación de la Ampliación en el Problema}
+
+La ampliación del modelo busca adaptar el problema original a un contexto donde la transición hacia energías renovables es una prioridad. La nueva función busca considerar los subsidios y costos de transición hacia energías renovables. Específicamente, la función ahora incorpora términos relacionados con el subsidio \( S_w \) y el costo de transición \( CT_w \) ambos coeficientes en función de la nueva variable de transición \( T \), lo que modifica el comportamiento óptimo esperado de la solución.
+
+\vspace{2.5mm}
+Las nuevas restricciones introducidas en el modelo ampliado son esenciales para guiar la solución hacia escenarios realistas y deseables.Primero vamos a tener que editamos la restricción \ref{c229} del modelo original, ya que ahora vamos a tener dos tecnologías en la que la capacidad de generación de ambas en la fase inicial debe ser mayor a la producida en el escenario \( w\), resultando la restricción \ref{c229}.
+Luego tenemos \ref{c336} la cual garantiza una transición gradual hacia las energías renovables. En el que la transición en un escenario \( w\) no sea mayor a \( w+1\).
+Por ultimo, la restricción \ref{c313} establece límites en el factor de adaptabilidad \( \alpha \), garantizando que este se mantenga entre 0 y 1. 
+
+\vspace{2.5mm}
+Mientras que el modelo original se centraba únicamente en equilibrar la inversión y operación de la planta con la demanda energética, el modelo ampliado introduce una dimensión adicional: la transición hacia fuentes de energía más limpias.
+
+\vspace{2.5mm}
+Se van a mantener los valores de los coeficientes propuestos por \citeB{daertrycke_risk_2017}, que se pueden encontrar en el punto \ref{c273}. , siguiendo con la linea de los valores de estos, se les asigno valores también a los nuevos parámetros propuestos. Vamos a tener que el gasto de capital anual de  para la tecnología 1 y 2 van a ser de \(I_1=90 \frac{\textup{\euro}}{kW}\) y \(I_2=100 \frac{\textup{\euro}}{kW}\) respectivamente, imaginando que la tecnología 2 es de tipo renovable por lo que su inversión va a resultar mayor. Luego, vamos a tener el subsidio máximo otorgadle \(s=60 \frac{\textup{\euro}}{kW}\) y el costo máximo de transición \(c=80 \frac{\textup{\euro}}{kW}\). Por ultimo, el factor de adaptabilidad 
+\(\alpha=0.1 \frac{\textup{\euro}}{kW}\).
+
+\subsubsection{Resolución del Problema}
+
+Se resolvió en problema utilizando el lenguaje de Julia con el solver de Gurobi. Los resultados se pueden encontrar en la siguiente tabla:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|l|l|}
+\hline
+w & \( Q \) [MWh] & \( P \) & \( T \) \\ \hline
+1 & 240.0 & 60 & 0.0 \\ \hline
+2 & 296.5 & 53.5 & 0.25 \\ \hline
+3 & 353.0 & 47 & 0.5 \\ \hline
+4 & 409.5 & 40.5 & 0.75 \\ \hline
+5 & 465.95 & 34.05 & 1.0 \\ \hline
+Promedio & 332.99 & 47.01 & -\\ \hline
+ &  &  &     \\ \hline
+\( x_1 \) [MW] & 465.95 & \( x_2 \) [MW]& 0 \\ \hline
+\end{tabular}
+\caption{Resultados del modelo ampliado}
+\label{tabla:modelo_ampliado_T}
+\textit{Fuente: realización propia}
+\end{table}
+
+
+\subsection{Ejemplo 3.3.1 D’Aertrycke et al. (2017) a MCP}\label{c37.1}
+
+Teniendo entonces el modelo definido en \ref{c273}, se va a transformar este en un modelo de MCP siguiendo con los pasos mencionados en \ref{c27.1}.
+
+\vspace{2.5mm}
+Vemos la restricción \ref{c228} que menciona que la generación debe ser igual a la demanda, vamos reemplazamos esta igualdad en la función y nos queda:
+
+\begin{equation}
+\begin{array}{rrclcl}
+    \displaystyle \min_{Q,x} & Ix+\tau E_{\Theta}[CQ_w-A_wQ_w+\frac{B}{2}Q_w^2] \quad \forall w \\\label{c372}
+\end{array}
+\end{equation}
+Siguiendo con lo mismo vamos a tener que las restricciones quedan ajustadas como:
+\begin{equation}
+\begin{array}{cl}
+    Q_w \leq x \Rightarrow 0 \leq x - Q_w \quad \forall w \label{c314}
+\end{array}
+\end{equation}
+\begin{equation}
+\begin{array}{cl}
+   0\leq x \label{c315}
+\end{array}
+\end{equation}
+\begin{equation}
+\begin{array}{cl}
+   0\leq Q_w   \quad \forall w  \label{c316}
+\end{array}
+\end{equation}
+
+
+
+Vamos a tener que las duales de las restricciones van a ser $\alpha_w$, $\beta$ y $\gamma_w$ respectivamente.
+\vspace{2.5mm}
+
+Entonces este problema se pueden pasar a un tipo MCP siguiendo que se cumplan las condiciones de KKT explicadas en \ref{c27.1}. Se encuentra el lagrangeano  del problema junto con las variables duales de las restricciones:
+
+\begin{eqnarray}
+\mathcal{L}(Q_w,x) = Ix+\tau E_{\Theta}[CQ_w-A_wQ_w+\frac{B}{2}Q_w^2] - \alpha_w(x - Q_w) - \beta(x)- \gamma_w(Q_w) \label{c317}
+\end{eqnarray}
+
+Primero, vamos a realizamos la derivada parcial de primer orden de la variable x, obteniendo lo siguiente:
+
+\begin{equation}
+\begin{array}{rrclcl}
+    \frac{\partial \mathcal{L}(Q_w,x)}{\partial x} = 0 = I - \alpha_w - \beta \\
+    \Rightarrow \beta = I - \alpha_w
+   \label{c318}
+\end{array}
+\end{equation}
+
+En donde $\beta$ es la variable de la naturaleza de x. Entonces se obtiene la siguiente complementariedad:
+
+\begin{equation}
+\begin{array}{rrclcl}
+   0\leq x \label{c319}
+\end{array}
+\end{equation}
+\begin{equation}
+\begin{array}{cl}
+   0\leq I - \alpha_w \quad \forall w 
+   \label{c320}
+\end{array}
+\end{equation}
+\begin{equation}
+\begin{array}{cl}
+   0 = x(I - \alpha_w) \quad \forall w 
+   \label{c321}
+\end{array}
+\end{equation}
+
+Luego, vamos a realizamos la derivada parcial de primer orden para la variable $Q_w$, obteniendo lo siguiente:
+
+\begin{equation}
+\begin{array}{rrclcl}
+    \frac{\partial \mathcal{L}(Q_w,x)}{\partial Q_w} = 0 = \tau E_{\Theta}[C-A_w+\frac{B}Q_w]+\alpha_w-\gamma_w\\
+    \Rightarrow \gamma_w= \tau E_{\Theta}[C-A_w+\frac{B}Q_w]+\alpha_w
+   \label{c322}
+\end{array}
+\end{equation}
+
+En donde $\gamma_w$ es la variable de la naturaleza de $Q_w$. Entonces se obtiene la siguiente complementariedad:
+
+\begin{equation}
+\begin{array}{rrclcl}
+   0\leq Q_w \quad \forall w
+   \label{c323}
+\end{array}
+\end{equation}
+\begin{equation}
+\begin{array}{cl}
+   0\leq \tau E_{\Theta}[C-A_w+\frac{B}Q_w]+\alpha_w \quad \forall w 
+   \label{c324}
+\end{array}
+\end{equation}
+\begin{equation}
+\begin{array}{cl}
+   0 = Q_w(\tau E_{\Theta}[C-A_w+BQ_w]+\alpha_w) \quad \forall w 
+   \label{c325}
+\end{array}
+\end{equation}
+
+\vspace{2.5mm}
+Por ultimo, se calcula la tercera complementariedad del problema, la variable dual $\alpha_w$ que se complementa con la restricción \ref{c314}:
+
+\begin{equation}
+\begin{array}{rrclcl}
+   0\leq \alpha_w \quad \forall w
+   \label{c326}
+\end{array}
+\end{equation}
+\begin{equation}
+\begin{array}{cl}
+     0 \leq x - Q_w \quad \forall w \label{c327}
+\end{array}
+\end{equation}
+\begin{equation}
+\begin{array}{cl}
+     0 = \alpha_w\cdot(x - Q_w) \quad \forall w \label{c328}
+\end{array}
+\end{equation}
