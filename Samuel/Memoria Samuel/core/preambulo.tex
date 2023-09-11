@@ -57,7 +57,7 @@
 \usetikzlibrary{patterns}
 \usetikzlibrary{shadows.blur}
 \usetikzlibrary{shapes}
-
+\usepackage{comment} 
 
 % Libreria para ajustar espaciado entre lineas
 \usepackage{setspace}
@@ -165,12 +165,14 @@
 \renewcommand{\partname}{Parte}
 \renewcommand{\listfigurename}{Lista de Ilustraciones}
 \renewcommand{\listtablename}{Lista de Tablas}
+\AtBeginDocument{\RenewCommandCopy\qty\SI}
 
 % Para las enumeraciones usamos primero a,b,c,... y despues i, ii, iii,...
 \renewcommand{\labelenumi}{\alph{enumi})}
 \renewcommand{\labelenumii}{\roman{enumii})}
 \renewcommand{\labelenumiii}{-}
 \renewcommand{\labelenumiv}{-}
+\pgfplotsset{compat=1.18}
 
 % Para ser consistentes en el uso de abreviaciones!
 %\newcommand{\Chp}{Cap\'{\i}tulo}
