@@ -1,6 +1,12 @@
 ---
-jupyter: julia-1.9
+title: "Inversión en Capacidad"
+format: html
+engine: jupyter
+lang: es
+bibliography: "../Samuel/Memoria Samuel/referencias.bib"
 ---
+
+## Ejemplo 3.3.1
 
 Este apunte computa el ejemplo 3.3.1 de @daertrycke_risk_2017 donde se tiene un productor neutral al riesgo que resuelve
 
@@ -12,116 +18,68 @@ $$\min_Q\tau\mathbb{E}_\Theta\left[P_\omega\cdot Q_\omega-U_\omega(Q_\omega)\rig
 
 donde $U_\omega(Q_\omega)=A_\omega\cdot Q_\omega -\frac{B}{2}\cdot Q^2_\omega$
 
+Quedando la función como:
 
-Quedando la funcion como:
+$$\min_{Q,x} Ix+\tau E_{\Theta}\left[CY_w-A_wQ_w+\frac{B}{2}Q_w^2\right] \quad \forall w$$
 
-$$
-\min_{Q,x} Ix+\tau E_{\Theta}[CY_w-A_wQ_w+\frac{B}{2}Q_w^2] \quad \forall w
-$$
+Sujeto a: $$Q_w=Y_w$$
 
-Sujeto a:
-$$
- Q_w=Y_w
- $$
-$$
-0\leq Y_w \leq x
-$$
+$$0\leq Y_w \leq x$$
 
 ```{julia}
+#| eval: false
+#| echo: false
 #| id: h1CsEQa8ueY_
-#| id: h1CsEQa8ueY_
+
+# Instalamos paquetes necesarios (sólo primera vez)
 import Pkg
 Pkg.add("Gurobi")
-```
-
-```{julia}
-#| id: 2FafGl-Oxzzv
-#| id: 2FafGl-Oxzzv
 Pkg.add("JuMP")
 ```
 
+### Parametrización
+
+
 ```{julia}
 #| id: L37KhV-rtATN
-#| id: L37KhV-rtATN
-using JuMP,Gurobi
+#| echo: false
+using JuMP,Gurobi,DataFrames
+
 A=[300,350,400,450,500];
-theta=[0.2,0.2,0.2,0.2,0.2];
+θ=[0.2,0.2,0.2,0.2,0.2];
 B=1;
 I=90;
 C=60;
 tau=8760;
-
-
-model=Model(Gurobi.Optimizer)
-
-#Variables
-@variable(model, x>=0)  #Capacidad
-@variable(model, Y[i in 1:5]>=0) # Produccion en escenario w
-@variable(model,Q[i in 1:5]>=0) # Demanda en escenario w
-
-#Restricciones
-@constraint(model, demanda[i in 1:5], Y[i] == Q[i] )
-@constraint(model, capacidad[i in 1:5], Y[i]-x<=0.0)
-
-#FO
-@objective(model, Min, I*1000*x + tau*(sum(theta[i]*(C*Y[i] - A[i]*Q[i] + B*0.5*(Q[i]^2)) for i in 1:5) ))
-
-#Resolver
-JuMP.optimize!(model)
-
-
-
-println("Q = ", JuMP.value.(Q))
-Qlist=JuMP.value.(Q)
-
-j=1
-P=[]
-while j<6
-    Pi=A[j]-B*Qlist[j]
-    append!(P, Pi)
-    j=j+1
-end
-println("P = ",P)
-println("x = ", JuMP.value(x))
+# Crear un DataFrame
+df = DataFrame(Variable=["A", "θ"],
+               Escenario1=[A[1], θ[1]],
+               Escenario2=[A[2], θ[2]],
+               Escenario3=[A[3], θ[3]],
+               Escenario4=[A[4], θ[4]],
+               Escenario5=[A[5], θ[5]])
 ```
 
-Se tiene ahora el modelo adaptado hacia la transicion energetica.
-$$
-\min_{Q,Y,x1,x2,T} I_1(x_1) + I_2(x_2) + \tau E_{\Theta}\left[(C+CT_w - S_w)Y_w - A_wQ_w + \frac{B}{2}Q_w^2 \right]  \quad
-$$
+## Transición a nueva energía
 
-Sujeto a las siguientes restricciónes:
-$$
-Q_w = Y_w \quad \forall w
-$$
-$$
-0 \leq Y_w \leq x_1 + x_2 \quad \forall w
-$$
-$$
-0 \leq T_w \leq T_{w+1} \quad \text{con } w = 1, 2, \ldots, 5
-$$
-$$
-0 \leq \alpha \leq 1 \quad
-$$
+Se tiene ahora el modelo adaptado hacia la transición energética. 
+$$\min_{Q,Y,x1,x2,T} I_1(x_1) + I_2(x_2) + \tau E_{\Theta}\left[(C+CT_w - S_w)Y_w - A_wQ_w + \frac{B}{2}Q_w^2 \right]  \quad$$
 
+Sujeto a las siguientes restricciónes: $$Q_w = Y_w \quad \forall w$$ 
+$$0 \leq Y_w \leq x_1 + x_2 \quad \forall w$$ 
+$$0 \leq T_w \leq T_{w+1} \quad \text{con } w = 1, 2, \ldots, 5$$ 
+$$0 \leq \alpha \leq 1 \quad$$
 
 ```{julia}
-#| id: R5Jafpn73RwA
-#| id: R5Jafpn73RwA
-using JuMP, Gurobi
 
 # Parámetros iniciales
-A = [300, 350, 400, 450, 500]
-theta = [0.2, 0.2, 0.2, 0.2, 0.2]
-B = 1
-I = 90
-C = 60
-tau = 8760
+
 s = 80
 c = 60
 alpha = 0.7
+```
 
-# Modelo
+```{julia}
 model = Model(Gurobi.Optimizer)
 
 set_optimizer_attribute(model, "NonConvex", 2)
@@ -145,7 +103,7 @@ S = [s * T[i] for i in 1:5]
 CT = [c * T[i] * (1 - alpha) for i in 1:5]
 
 # Función objetivo
-@objective(model, Min, I*1000*x + tau*(sum(theta[i]*( (C + CT[i] - S[i]) * Y[i] - A[i]*Q[i] + B*0.5*(Q[i]^2)) for i in 1:5)))
+@objective(model, Min, I*1000*x + tau*(sum(θ[i]*( (C + CT[i] - S[i]) * Y[i] - A[i]*Q[i] + B*0.5*(Q[i]^2)) for i in 1:5)))
 
 # Resolver
 JuMP.optimize!(model)
@@ -156,3 +114,49 @@ println("T = ", JuMP.value.(T))
 println("x = ", JuMP.value(x))
 ```
 
+
+Los parámetros de demanda para cada escenario y su probabilidad están fijados como:
+
+```{julia}
+model=Model(Gurobi.Optimizer)
+
+#Variables
+@variable(model, x>=0)  #Capacidad
+@variable(model, Y[i in 1:5]>=0) # Produccion en escenario w
+@variable(model,Q[i in 1:5]>=0) # Demanda en escenario w
+
+#Restricciones
+@constraint(model, demanda[i in 1:5], Y[i] == Q[i] )
+@constraint(model, capacidad[i in 1:5], Y[i]-x<=0.0)
+
+#FO
+@objective(model, Min, I*1000*x + tau*(sum(θ[i]*(C*Y[i] - A[i]*Q[i] + B*0.5*(Q[i]^2)) for i in 1:5) ))
+
+#Resolver
+JuMP.optimize!(model)
+```
+
+```{julia}
+println("Q = ", JuMP.value.(Q))
+Qlist=JuMP.value.(Q)
+```
+
+```{julia}
+P = [A[j] - B * Qlist[j] for j in 1:5]
+println("P = ", P)
+println("x = ", JuMP.value(x))
+```
+
+
+```{julia}
+#| eval: false
+j=1
+P=[]
+while j<6
+    Pi=A[j]-B*Qlist[j]
+    append!(P, Pi)
+    j=j+1
+end
+println("P = ",P)
+println("x = ", JuMP.value(x))
+```
