@@ -1,7 +1,9 @@
 ---
 title: "Inversión en Capacidad"
-format: html
-engine: jupyter
+format: 
+  html:
+    html-math-method: katex
+jupyter: julia-1.9
 lang: es
 bibliography: "../Samuel/Memoria Samuel/referencias.bib"
 ---
@@ -16,15 +18,17 @@ y la demanda como resultado de resolver
 
 $$\min_Q\tau\mathbb{E}_\Theta\left[P_\omega\cdot Q_\omega-U_\omega(Q_\omega)\right]$$
 
-donde $U_\omega(Q_\omega)=A_\omega\cdot Q_\omega -\frac{B}{2}\cdot Q^2_\omega$
+donde $U_\omega(Q_\omega)=A_\omega\cdot Q_\omega -\frac{B}{2}\cdot Q^2_\omega$.
 
-Quedando la función como:
+Ambos problemas están ligados a través de la condición JJJ.
 
-$$\min_{Q,x} Ix+\tau E_{\Theta}\left[CY_w-A_wQ_w+\frac{B}{2}Q_w^2\right] \quad \forall w$$
+<font color="red">Como resultado de utilizar el XXX YYY, resolvar ambos problemas es equivalente a resolver el siguiente problema:</font>
 
-Sujeto a: $$Q_w=Y_w$$
+$$\min_{Q,x} Ix+\tau E_{\Theta}\left[CY_\omega-A_\omega Q_\omega+\frac{B}{2}Q_\omega^2\right] \quad \forall\omega$$
 
-$$0\leq Y_w \leq x$$
+Sujeto a: $$Q_\omega=Y_\omega,\forall\omega$$
+
+$$0\leq Y_\omega \leq x,\forall\omega$$
 
 ```{julia}
 #| eval: false
@@ -38,7 +42,6 @@ Pkg.add("JuMP")
 ```
 
 ### Parametrización
-
 
 ```{julia}
 #| id: L37KhV-rtATN
@@ -60,26 +63,92 @@ df = DataFrame(Variable=["A", "θ"],
                Escenario5=[A[5], θ[5]])
 ```
 
-## Transición a nueva energía
+```{julia}
+model=Model(Gurobi.Optimizer)
 
-Se tiene ahora el modelo adaptado hacia la transición energética. 
-$$\min_{Q,Y,x1,x2,T} I_1(x_1) + I_2(x_2) + \tau E_{\Theta}\left[(C+CT_w - S_w)Y_w - A_wQ_w + \frac{B}{2}Q_w^2 \right]  \quad$$
+#Variables
+@variable(model, x>=0)  #Capacidad
+@variable(model, Y[i in 1:5]>=0) # Produccion en escenario w
+@variable(model,Q[i in 1:5]>=0) # Demanda en escenario w
 
-Sujeto a las siguientes restricciónes: $$Q_w = Y_w \quad \forall w$$ 
-$$0 \leq Y_w \leq x_1 + x_2 \quad \forall w$$ 
-$$0 \leq T_w \leq T_{w+1} \quad \text{con } w = 1, 2, \ldots, 5$$ 
-$$0 \leq \alpha \leq 1 \quad$$
+#Restricciones
+@constraint(model, demanda[i in 1:5], Y[i] == Q[i] )
+@constraint(model, capacidad[i in 1:5], Y[i]-x<=0.0)
+
+#FO
+@objective(model, Min, I*1000*x + tau*(sum(θ[i]*(C*Y[i] - A[i]*Q[i] + B*0.5*(Q[i]^2)) for i in 1:5) ))
+```
+
+### Solución
+
+Ejecutamos el solver
 
 ```{julia}
-
-# Parámetros iniciales
-
-s = 80
-c = 60
-alpha = 0.7
+#| echo: true
+#| output: false
+JuMP.optimize!(model)
 ```
 
 ```{julia}
+#| echo: false
+x=JuMP.value(x)
+using Markdown
+Markdown.parse("""El valor de inversión en capacidad óptimo es $x. Adicionalmente, los valores de producción en cada escenario son:
+""")
+```
+
+```{julia}
+#| echo: false
+println("Q = ", JuMP.value.(Q))
+```
+
+Con esos valores podemos calcular el precio en cada escenario ya que sabemos que:
+
+$$
+P_\omega=A_\omega-B\cdot Q_\omega.
+$$
+
+Por lo que utilizando lo valores óptimos $Q^*_\omega$ obtenemos un cómputo de los precios $P^*_\omega$ en cada escenario $\omega$:
+
+```{julia}
+#| eval: true
+#| echo: false
+Qlist=JuMP.value.(Q)
+j=1
+P=[]
+while j<6
+    Pi=A[j]-B*Qlist[j]
+    append!(P, Pi)
+    j=j+1
+end
+println("P = ",P)
+```
+
+```{julia}
+using Plots
+plot(JuMP.value.(Q),P)
+```
+
+## Transición a nueva energía
+
+Se tiene ahora el modelo adaptado hacia la transición energética. ¿Cuántos productores o tecnologías hay?
+
+$$\min_{Q,Y,x1,x2,T} I_1(x_1) + I_2(x_2) + \tau E_{\Theta}\left[(C+CT_w - S_w)Y_w - A_wQ_w + \frac{B}{2}Q_w^2 \right]  \quad$$
+
+Sujeto a las siguientes restricciones: $$Q_w = Y_w \quad \forall w$$ $$0 \leq Y_w \leq x_1 + x_2 \quad \forall w$$ $$0 \leq T_w \leq T_{w+1} \quad \text{con } w = 1, 2, \ldots, 5$$ $$0 \leq \alpha \leq 1 \quad$$
+
+```{julia}
+#| eval: true
+# Parámetros iniciales
+
+s = 80;
+c = 60;
+alpha = 0.7;
+s,c,alpha
+```
+
+```{julia}
+#| eval: false
 model = Model(Gurobi.Optimizer)
 
 set_optimizer_attribute(model, "NonConvex", 2)
@@ -114,10 +183,10 @@ println("T = ", JuMP.value.(T))
 println("x = ", JuMP.value(x))
 ```
 
-
 Los parámetros de demanda para cada escenario y su probabilidad están fijados como:
 
 ```{julia}
+#| eval: false
 model=Model(Gurobi.Optimizer)
 
 #Variables
@@ -137,16 +206,17 @@ JuMP.optimize!(model)
 ```
 
 ```{julia}
+#| eval: true
 println("Q = ", JuMP.value.(Q))
 Qlist=JuMP.value.(Q)
 ```
 
 ```{julia}
+#| eval: false
 P = [A[j] - B * Qlist[j] for j in 1:5]
 println("P = ", P)
 println("x = ", JuMP.value(x))
 ```
-
 
 ```{julia}
 #| eval: false
