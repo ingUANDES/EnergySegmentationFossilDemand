@@ -1,0 +1,38 @@
+---
+title: "MCP"
+format: html
+editor: visual
+jupyter: julia-1.9
+---
+
+## Propósito
+
+Modelar y computar soluciones de un modelo de inversión en capacidad utilizando como lenguaje Julia y como librerías [JuMP](https://github.com/jump-dev/JuMP.jl), [Complementarity](https://github.com/chkwon/Complementarity.jl) y/o [BilevelJuMP](https://github.com/joaquimg/BilevelJuMP.jl).
+
+-   [ ] Incluir referencia/tutorial [PATHSolver](https://github.com/chkwon/PATHSolver.jl)
+
+## Equilibrio de mercados como introducción
+
+-   Tienes una cierta cantidad de productores, digamos $n$
+
+-   Cada productor define su oferta resolviendo un problema de optimización que típicamente mínimiza costos, $\phi$, o maximiza beneficios o utilidad, $\pi$.
+
+    -   Para un precio de venta dado, $p$, el problema a resolver por cada productor en función de una cantidad a ofrecer $q$ es $\min_{q\in[q_0,\bar q]}\phi(p,q)$.[^1]
+
+    -   Si el productor $i$ resuelve su problema tiene una oferta óptima denotada por $q_i^*(p)$
+
+-   Existe una demanda que asumiremos dada (fija) por el momento igual a $\bar D$
+
+-   Entonces en equilibrio de mercado, para el precio de equilibrio $p^*$, requerimos tener lo siguiente $$\sum_{i=1}^{n}q_i^*(p^*)=\bar D$$
+
+-   Subyacente a esto se agrega un $n+1$ problema de optimización de un agente ficticio "de mercado" que la literatura le llama subastador Walrasiano o "la mano invisible". Este agente es "alguien" que resuelve el equilbrio, es decir, iguala oferta con demanda eligiendo un precio. Eso en términos de optimización equivaldría a $$\min_{p\in\Delta}p\cdot\left(\bar D-\sum_{i=1}^nq_i^*(p)\right).$$
+
+[^1]: Para problemas de inversión en capacidad el $\bar q$ depende de la variable de inversión en capacidad que denotamos $x$. Esto implica que la función de costos depende de una nueva variable: $\phi_I(q,x)$
+
+## Problemas de Complementaridad Mixta (MCP)
+
+-   [ ] definir problema de complemntaridad mixta
+
+### Ejemplo de mercados
+
+Supongamos que $x=p$ y que $F(x)=\bar D-\sum_{i=1}^nq_i^*(x)$.

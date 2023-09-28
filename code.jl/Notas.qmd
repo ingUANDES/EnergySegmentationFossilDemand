@@ -149,15 +149,14 @@ s,c,alpha
 
 ```{julia}
 #| eval: false
-model = Model(Gurobi.Optimizer)
-
-set_optimizer_attribute(model, "NonConvex", 2)
+modeltrans = Model(Gurobi.Optimizer)
+set_optimizer_attribute(modeltrans, "NonConvex", 2)
 
 # Variables
-@variable(model, x >= 0)  # Capacidad
-@variable(model, Y[i in 1:5] >= 0) # Producción en escenario w
-@variable(model, Q[i in 1:5] >= 0) # Demanda en escenario w
-@variable(model, 0 <= T[i in 1:5] <= 1) # Transición en escenario w
+@variable(modeltrans, x >= 0)  # Capacidad
+@variable(modeltrans, Y[i in 1:5] >= 0) # Producción en escenario w
+@variable(modeltrans, Q[i in 1:5] >= 0) # Demanda en escenario w
+@variable(modeltrans, 0 <= T[i in 1:5] <= 1) # Transición en escenario w
 
 # Restricciones
 @constraint(model, demanda[i in 1:5], Y[i] == Q[i])
@@ -165,11 +164,16 @@ set_optimizer_attribute(model, "NonConvex", 2)
 @constraint(model, transicion[i in 2:5], T[i] >= T[i-1])
 @constraint(model, incremento[i in 2:5], T[i] - T[i-1] <= 0.2)
 @constraint(model, T[1] == 0)
+```
 
-
-
+```{julia}
+#| eval: false
 S = [s * T[i] for i in 1:5]
 CT = [c * T[i] * (1 - alpha) for i in 1:5]
+```
+
+```{julia}
+#| eval: false
 
 # Función objetivo
 @objective(model, Min, I*1000*x + tau*(sum(θ[i]*( (C + CT[i] - S[i]) * Y[i] - A[i]*Q[i] + B*0.5*(Q[i]^2)) for i in 1:5)))
