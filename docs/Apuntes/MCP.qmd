@@ -3,6 +3,7 @@ title: "MCP"
 format: html
 editor: visual
 jupyter: julia-1.9
+bibliography: references.bib
 ---
 
 ## Propósito
@@ -36,3 +37,74 @@ Modelar y computar soluciones de un modelo de inversión en capacidad utilizando
 ### Ejemplo de mercados
 
 Supongamos que $x=p$ y que $F(x)=\bar D-\sum_{i=1}^nq_i^*(x)$.
+
+### Ejemplo de transportes
+
+-   [ ] Explicar [transmcp.jl](https://github.com/chkwon/Complementarity.jl/blob/master/examples/mcp/transmcp.jl) en base a Capítulo 3.3 de @dantzig1991
+
+### Ejemplo de inversión en capacidad
+
+Esta es una resolución del ejemplo de equilibrio competitivo en capacidad con neutralidad al riesgo 3.3.1 de @demaeredaertrycke2017 siguiendo [el tutorial](https://jump.dev/JuMP.jl/stable/tutorials/nonlinear/complementarity/#Electricity-consumption) de [Oscar Dowson](https://github.com/odow). La parametrización del ejemplo es la siguiente:
+
+```{julia}
+using JuMP
+import PATHSolver
+I = 90_000                     # Annualized capital cost
+C = 60                         # Operation cost per MWh
+τ = 8_760                      # Hours per year
+θ = [0.2, 0.2, 0.2, 0.2, 0.2]  # Scenario probabilities
+A = [300, 350, 400, 450, 500]  # Utility function coefficients
+B = 1                          # Utility function coefficients
+```
+
+Iniciamos la configuración del problema con las variables:
+
+```{julia}
+model = Model(PATHSolver.Optimizer)
+set_silent(model)
+@variable(model, x >= 0, start = 1)           # Installed capacity
+@variable(model, Q[ω = 1:5] >= 0, start = 1)  # Consumption
+@variable(model, Y[ω = 1:5] >= 0, start = 1)  # Production
+@variable(model, P[ω = 1:5], start = 1)       # Electricity price
+@variable(model, μ[ω = 1:5] >= 0, start = 1)  # Capital scarcity margin
+```
+
+La variable $x$ no debería tener un índice por tecnología como si lo tiene [la propuesta](https://discourse.julialang.org/t/complementarity-jl-whit-path/103081/7) original de abordarlo de [Oscar Dowson](https://github.com/odow) que fue corregida en [el tutorial](https://jump.dev/JuMP.jl/stable/tutorials/nonlinear/complementarity/#Electricity-consumption).
+
+Luego definimos las restricciones:
+
+```{julia}
+# Unit investment cost equals annualized scarcity profit or investment is 0
+@constraint(model, I - τ * θ' * μ ⟂ x)
+# Difference between price and scarcity margin is equal to operation cost
+@constraint(model, [ω = 1:5], C - (P[ω] - μ[ω]) ⟂ Y[ω])
+# Price is equal to consumer's marginal utility
+@constraint(model, [ω = 1:5], P[ω] - (A[ω] - B * Q[ω]) ⟂ Q[ω])
+# Production is equal to consumption
+@constraint(model, [ω = 1:5], Y[ω] - Q[ω] ⟂ P[ω])
+# Production does not exceed capacity
+@constraint(model, [ω = 1:5], x - Y[ω] ⟂ μ[ω])
+```
+
+Invocamos la resolución del problema:
+
+```{julia}
+optimize!(model)
+solution_summary(model)
+```
+
+El valor óptimo para $x$ tiene valor para cada tecnología/escenario y no es igual al valor del ejemplo en el artículo que es $389$.
+
+```{julia}
+value(x)
+```
+
+De la misma forma el valor óptimo de cantidad encontrado es igual al valor esperado óptimo pero no refleja para cada escenario los valores óptimos que deberían ser: $(240,290,340,389,389)$:
+
+```{julia}
+value.(Q)
+```
+
+```{julia}
+value.(P)
+```
