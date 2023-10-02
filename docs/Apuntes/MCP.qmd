@@ -32,7 +32,35 @@ Modelar y computar soluciones de un modelo de inversión en capacidad utilizando
 
 ## Problemas de Complementaridad Mixta (MCP)
 
--   [ ] definir problema de complemntaridad mixta
+Los Problemas de Complementaridad Mixta (MCP, por sus siglas en inglés Mixed Complementarity Problem) son una generalización de los problemas de programación lineal y los problemas de complementaridad lineal. Estos problemas permiten modelar una amplia variedad de aplicaciones en economía, ingeniería y otras áreas.
+
+### Formulación matemática
+
+Dado un vector de funciones \( F: \mathbb{R}^n \to \mathbb{R}^n \) y dos vectores \( l, u \in \mathbb{R}^n \) que representan los límites inferior y superior, respectivamente, un MCP busca un vector \( x \) que cumpla:
+
+1. \( l \leq x \leq u \)
+2. \( 0 \leq F(x) \perp (x - l) \geq 0 \)
+3. \( 0 \leq (u - x) \perp F(x) \geq 0 \)
+
+La notación "⊥" representa la complementariedad entre dos vectores. Para cada componente \( i \):
+
+- Si \( F_i(x) > 0 \), entonces \( x_i = l_i \)
+- Si \( F_i(x) < 0 \), entonces \( x_i = u_i \)
+- Si \( F_i(x) = 0 \), entonces \( l_i \leq x_i \leq u_i \)
+
+### Interpretación
+
+La esencia de un MCP es la relación de complementariedad. En términos económicos, esto podría interpretarse como: si un mercado tiene exceso de oferta (por ejemplo, \( F(x) > 0 \)), entonces el precio está en su límite inferior (por ejemplo, un precio de cero). Si hay exceso de demanda (\( F(x) < 0 \)), el precio está en su límite superior. Si el mercado está en equilibrio (\( F(x) = 0 \)), el precio puede estar en cualquier lugar entre sus límites.
+
+Los MCPs son especialmente útiles porque permiten modelar equilibrios en sistemas con fricciones o restricciones de una manera más general que los modelos de programación lineal o no lineal tradicionales.
+
+### Aplicaciones
+
+Los MCPs se han utilizado en una variedad de aplicaciones, que incluyen:
+
+- Modelos de equilibrio general en economía.
+- Modelos de juegos con equilibrios de Nash.
+- Modelos de tráfico en redes de transporte.
 
 ### Ejemplo de mercados
 
