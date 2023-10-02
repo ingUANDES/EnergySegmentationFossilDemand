@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.251">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>MCP</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+
+<script src="MCP_files/libs/clipboard/clipboard.min.js"></script>
+<script src="MCP_files/libs/quarto-html/quarto.js"></script>
+<script src="MCP_files/libs/quarto-html/popper.min.js"></script>
+<script src="MCP_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="MCP_files/libs/quarto-html/anchor.min.js"></script>
+<link href="MCP_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="MCP_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="MCP_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="MCP_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="MCP_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">MCP</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<section id="propósito" class="level2">
+<h2 class="anchored" data-anchor-id="propósito">Propósito</h2>
+<p>Modelar y computar soluciones de un modelo de inversión en capacidad utilizando como lenguaje Julia y como librerías <a href="https://github.com/jump-dev/JuMP.jl">JuMP</a>, <a href="https://github.com/chkwon/Complementarity.jl">Complementarity</a> y/o <a href="https://github.com/joaquimg/BilevelJuMP.jl">BilevelJuMP</a>.</p>
+<ul class="task-list">
+<li><input type="checkbox" disabled="">Incluir referencia/tutorial <a href="https://github.com/chkwon/PATHSolver.jl">PATHSolver</a></li>
+</ul>
+</section>
+<section id="equilibrio-de-mercados-como-introducción" class="level2">
+<h2 class="anchored" data-anchor-id="equilibrio-de-mercados-como-introducción">Equilibrio de mercados como introducción</h2>
+<ul>
+<li><p>Tienes una cierta cantidad de productores, digamos <span class="math inline">\(n\)</span></p></li>
+<li><p>Cada productor define su oferta resolviendo un problema de optimización que típicamente mínimiza costos, <span class="math inline">\(\phi\)</span>, o maximiza beneficios o utilidad, <span class="math inline">\(\pi\)</span>.</p>
+<ul>
+<li><p>Para un precio de venta dado, <span class="math inline">\(p\)</span>, el problema a resolver por cada productor en función de una cantidad a ofrecer <span class="math inline">\(q\)</span> es <span class="math inline">\(\min_{q\in[q_0,\bar q]}\phi(p,q)\)</span>.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p></li>
+<li><p>Si el productor <span class="math inline">\(i\)</span> resuelve su problema tiene una oferta óptima denotada por <span class="math inline">\(q_i^*(p)\)</span></p></li>
+</ul></li>
+<li><p>Existe una demanda que asumiremos dada (fija) por el momento igual a <span class="math inline">\(\bar D\)</span></p></li>
+<li><p>Entonces en equilibrio de mercado, para el precio de equilibrio <span class="math inline">\(p^*\)</span>, requerimos tener lo siguiente <span class="math display">\[\sum_{i=1}^{n}q_i^*(p^*)=\bar D\]</span></p></li>
+<li><p>Subyacente a esto se agrega un <span class="math inline">\(n+1\)</span> problema de optimización de un agente ficticio “de mercado” que la literatura le llama subastador Walrasiano o “la mano invisible”. Este agente es “alguien” que resuelve el equilbrio, es decir, iguala oferta con demanda eligiendo un precio. Eso en términos de optimización equivaldría a <span class="math display">\[\min_{p\in\Delta}p\cdot\left(\bar D-\sum_{i=1}^nq_i^*(p)\right).\]</span></p></li>
+</ul>
+</section>
+<section id="problemas-de-complementaridad-mixta-mcp" class="level2">
+<h2 class="anchored" data-anchor-id="problemas-de-complementaridad-mixta-mcp">Problemas de Complementaridad Mixta (MCP)</h2>
+<ul class="task-list">
+<li><input type="checkbox" disabled="">definir problema de complemntaridad mixta</li>
+</ul>
+<section id="ejemplo-de-mercados" class="level3">
+<h3 class="anchored" data-anchor-id="ejemplo-de-mercados">Ejemplo de mercados</h3>
+<p>Supongamos que <span class="math inline">\(x=p\)</span> y que <span class="math inline">\(F(x)=\bar D-\sum_{i=1}^nq_i^*(x)\)</span>.</p>
+</section>
+<section id="ejemplo-de-transportes" class="level3">
+<h3 class="anchored" data-anchor-id="ejemplo-de-transportes">Ejemplo de transportes</h3>
+<ul class="task-list">
+<li><input type="checkbox" disabled="">Explicar <a href="https://github.com/chkwon/Complementarity.jl/blob/master/examples/mcp/transmcp.jl">transmcp.jl</a> en base a Capítulo 3.3 de <span class="citation" data-cites="dantzig1991">Dantzig (<a href="#ref-dantzig1991" role="doc-biblioref">1991</a>)</span></li>
+</ul>
+</section>
+<section id="ejemplo-de-inversión-en-capacidad" class="level3">
+<h3 class="anchored" data-anchor-id="ejemplo-de-inversión-en-capacidad">Ejemplo de inversión en capacidad</h3>
+<p>Esta es una resolución del ejemplo de equilibrio competitivo en capacidad con neutralidad al riesgo 3.3.1 de <span class="citation" data-cites="demaeredaertrycke2017">de Maere d ’ Aertrycke et al. (<a href="#ref-demaeredaertrycke2017" role="doc-biblioref">2017</a>)</span> siguiendo <a href="https://jump.dev/JuMP.jl/stable/tutorials/nonlinear/complementarity/#Electricity-consumption">el tutorial</a> de <a href="https://github.com/odow">Oscar Dowson</a>. La parametrización del ejemplo es la siguiente:</p>
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">JuMP</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> <span class="bu">PATHSolver</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>I <span class="op">=</span> <span class="fl">90_000</span>                     <span class="co"># Annualized capital cost</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>C <span class="op">=</span> <span class="fl">60</span>                         <span class="co"># Operation cost per MWh</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>τ <span class="op">=</span> <span class="fl">8_760</span>                      <span class="co"># Hours per year</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>θ <span class="op">=</span> [<span class="fl">0.2</span>, <span class="fl">0.2</span>, <span class="fl">0.2</span>, <span class="fl">0.2</span>, <span class="fl">0.2</span>]  <span class="co"># Scenario probabilities</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> [<span class="fl">300</span>, <span class="fl">350</span>, <span class="fl">400</span>, <span class="fl">450</span>, <span class="fl">500</span>]  <span class="co"># Utility function coefficients</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>B <span class="op">=</span> <span class="fl">1</span>                          <span class="co"># Utility function coefficients</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="2">
+<pre><code>1</code></pre>
+</div>
+</div>
+<p>Iniciamos la configuración del problema con las variables:</p>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> <span class="fu">Model</span>(PATHSolver.Optimizer)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set_silent</span>(model)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="pp">@variable</span>(model, x <span class="op">&gt;=</span> <span class="fl">0</span>, start <span class="op">=</span> <span class="fl">1</span>)           <span class="co"># Installed capacity</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="pp">@variable</span>(model, Q[ω <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span>] <span class="op">&gt;=</span> <span class="fl">0</span>, start <span class="op">=</span> <span class="fl">1</span>)  <span class="co"># Consumption</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="pp">@variable</span>(model, Y[ω <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span>] <span class="op">&gt;=</span> <span class="fl">0</span>, start <span class="op">=</span> <span class="fl">1</span>)  <span class="co"># Production</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="pp">@variable</span>(model, P[ω <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span>], start <span class="op">=</span> <span class="fl">1</span>)       <span class="co"># Electricity price</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="pp">@variable</span>(model, μ[ω <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span>] <span class="op">&gt;=</span> <span class="fl">0</span>, start <span class="op">=</span> <span class="fl">1</span>)  <span class="co"># Capital scarcity margin</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<pre><code>5-element Vector{VariableRef}:
+ μ[1]
+ μ[2]
+ μ[3]
+ μ[4]
+ μ[5]</code></pre>
+</div>
+</div>
+<p>La variable <span class="math inline">\(x\)</span> no debería tener un índice por tecnología como si lo tiene <a href="https://discourse.julialang.org/t/complementarity-jl-whit-path/103081/7">la propuesta</a> original de abordarlo de <a href="https://github.com/odow">Oscar Dowson</a> que fue corregida en <a href="https://jump.dev/JuMP.jl/stable/tutorials/nonlinear/complementarity/#Electricity-consumption">el tutorial</a>.</p>
+<p>Luego definimos las restricciones:</p>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Unit investment cost equals annualized scarcity profit or investment is 0</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="pp">@constraint</span>(model, I <span class="op">-</span> τ <span class="op">*</span> θ<span class="ch">' * μ ⟂ x)</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Difference between price and scarcity margin is equal to operation cost</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="pp">@constraint</span>(model, [ω <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span>], C <span class="op">-</span> (P[ω] <span class="op">-</span> μ[ω]) <span class="op">⟂</span> Y[ω])</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Price is equal to consumer's marginal utility</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="pp">@constraint</span>(model, [ω <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span>], P[ω] <span class="op">-</span> (A[ω] <span class="op">-</span> B <span class="op">*</span> Q[ω]) <span class="op">⟂</span> Q[ω])</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Production is equal to consumption</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="pp">@constraint</span>(model, [ω <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span>], Y[ω] <span class="op">-</span> Q[ω] <span class="op">⟂</span> P[ω])</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Production does not exceed capacity</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="pp">@constraint</span>(model, [ω <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span>], x <span class="op">-</span> Y[ω] <span class="op">⟂</span> μ[ω])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<pre><code>5-element Vector{ConstraintRef{Model, MathOptInterface.ConstraintIndex{MathOptInterface.VectorAffineFunction{Float64}, MathOptInterface.Complements}, VectorShape}}:
+ [x - Y[1], μ[1]] ∈ MathOptInterface.Complements(2)
+ [x - Y[2], μ[2]] ∈ MathOptInterface.Complements(2)
+ [x - Y[3], μ[3]] ∈ MathOptInterface.Complements(2)
+ [x - Y[4], μ[4]] ∈ MathOptInterface.Complements(2)
+ [x - Y[5], μ[5]] ∈ MathOptInterface.Complements(2)</code></pre>
+</div>
+</div>
+<p>Invocamos la resolución del problema:</p>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">optimize!</span>(model)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">solution_summary</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<pre><code>* Solver : Path 5.1.99
+
+* Status
+  Result count       : 1
+  Termination status : LOCALLY_SOLVED
+  Message from the solver:
+  "The problem was solved"
+
+* Candidate solution (result #1)
+  Primal status      : FEASIBLE_POINT
+  Dual status        : NO_SOLUTION
+  Objective value    : 0.00000e+00
+
+* Work counters
+  Solve time (sec)   : 6.72380e-02</code></pre>
+</div>
+</div>
+<p>El valor óptimo para <span class="math inline">\(x\)</span> tiene valor para cada tecnología/escenario y no es igual al valor del ejemplo en el artículo que es <span class="math inline">\(389\)</span>.</p>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">value</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<pre><code>389.31506849315065</code></pre>
+</div>
+</div>
+<p>De la misma forma el valor óptimo de cantidad encontrado es igual al valor esperado óptimo pero no refleja para cada escenario los valores óptimos que deberían ser: <span class="math inline">\((240,290,340,389,389)\)</span>:</p>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">value</span>.(Q)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<pre><code>5-element Vector{Float64}:
+ 240.0000000000001
+ 289.9999999999999
+ 340.0
+ 389.31506849315065
+ 389.31506849315065</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">value</span>.(P)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="8">
+<pre><code>5-element Vector{Float64}:
+  60.00000000000001
+  60.0
+  59.99999999999999
+  60.68493150684929
+ 110.68493150684935</code></pre>
+</div>
+</div>
+
+</section>
+</section>
+
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-dantzig1991" class="csl-entry" role="doc-biblioentry">
+Dantzig, George B. 1991. <em>Linear Programming and Extensions</em>. Princeton University Press. <a href="https://www.jstor.org/stable/j.ctt1cx3tvg">https://www.jstor.org/stable/j.ctt1cx3tvg</a>.
+</div>
+<div id="ref-demaeredaertrycke2017" class="csl-entry" role="doc-biblioentry">
+de Maere d ’ Aertrycke, G., A. Ehrenmann, D. Ralph, and Y. Smeers. 2017. <span>“Risk Trading in Capacity Equilibrium Models.”</span> <a href="https://doi.org/10.17863/CAM.17552">https://doi.org/10.17863/CAM.17552</a>.
+</div>
+</div></section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>Para problemas de inversión en capacidad el <span class="math inline">\(\bar q\)</span> depende de la variable de inversión en capacidad que denotamos <span class="math inline">\(x\)</span>. Esto implica que la función de costos depende de una nueva variable: <span class="math inline">\(\phi_I(q,x)\)</span><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
