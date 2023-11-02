@@ -159,14 +159,15 @@ div.csl-indent {
 <li><p>Si el productor <span class="math inline">\(i\)</span> resuelve su problema tiene una oferta óptima denotada por <span class="math inline">\(q_i^*(p)\)</span></p></li>
 </ul></li>
 <li><p>Existe una demanda que asumiremos dada (fija) por el momento igual a <span class="math inline">\(\bar D\)</span></p></li>
-<li><p>Entonces en equilibrio de mercado, para el precio de equilibrio <span class="math inline">\(p^*\)</span>, requerimos tener lo siguiente <span class="math display">\[\sum_{i=1}^{n}q_i^*(p^*)=\bar D\]</span></p></li>
+<li><p>Entonces en equilibrio de mercado, para el precio de equilibrio <span class="math inline">\(p^*\)</span>, requerimos que se cumple lo siguiente <span class="math display">\[\sum_{i=1}^{n}q_i^*(p^*)=\bar D\]</span></p></li>
 <li><p>Subyacente a esto se agrega un <span class="math inline">\(n+1\)</span> problema de optimización de un agente ficticio “de mercado” que la literatura le llama subastador Walrasiano o “la mano invisible”. Este agente es “alguien” que resuelve el equilbrio, es decir, iguala oferta con demanda eligiendo un precio. Eso en términos de optimización equivaldría a <span class="math display">\[\min_{p\in\Delta}p\cdot\left(\bar D-\sum_{i=1}^nq_i^*(p)\right).\]</span></p></li>
 </ul>
+<p>Entonces un equilibrio estará dado por un precio <span class="math inline">\(p^*\)</span> que resuelve el problema del agente ficticio y tal que se cumple <span class="math inline">\(\sum_{i=1}^{n}q_i^*(p^*)=\bar D\)</span>. Es decir, para el precio <span class="math inline">\(p^*\)</span> la suma de las ofertas que minimizan costos de los productores coincide con la demanda.</p>
 </section>
 <section id="problemas-de-complementaridad-mixta-mcp" class="level2">
 <h2 class="anchored" data-anchor-id="problemas-de-complementaridad-mixta-mcp">Problemas de Complementaridad Mixta (MCP)</h2>
 <ul class="task-list">
-<li><input type="checkbox" disabled="">definir problema de complemntaridad mixta</li>
+<li><input type="checkbox" disabled="">definir problema de complementaridad mixta siguiendo a <span class="citation" data-cites="chang2020">Chang et al. (<a href="#ref-chang2020" role="doc-biblioref">2020</a>)</span> (ver páginas 929 y 929)</li>
 </ul>
 <section id="ejemplo-de-mercados" class="level3">
 <h3 class="anchored" data-anchor-id="ejemplo-de-mercados">Ejemplo de mercados</h3>
@@ -253,7 +254,7 @@ div.csl-indent {
   Objective value    : 0.00000e+00
 
 * Work counters
-  Solve time (sec)   : 6.72380e-02</code></pre>
+  Solve time (sec)   : 7.23430e-02</code></pre>
 </div>
 </div>
 <p>El valor óptimo para <span class="math inline">\(x\)</span> tiene valor para cada tecnología/escenario y no es igual al valor del ejemplo en el artículo que es <span class="math inline">\(389\)</span>.</p>
@@ -292,6 +293,9 @@ div.csl-indent {
 
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-chang2020" class="csl-entry" role="doc-biblioentry">
+Chang, Wonjun, Michael C. Ferris, Youngdae Kim, and Thomas F. Rutherford. 2020. <span>“Solving Stochastic Dynamic Programming Problems: A Mixed Complementarity Approach.”</span> <em>Computational Economics</em> 55 (3): 925–55. <a href="https://doi.org/10.1007/s10614-019-09921-y">https://doi.org/10.1007/s10614-019-09921-y</a>.
+</div>
 <div id="ref-dantzig1991" class="csl-entry" role="doc-biblioentry">
 Dantzig, George B. 1991. <em>Linear Programming and Extensions</em>. Princeton University Press. <a href="https://www.jstor.org/stable/j.ctt1cx3tvg">https://www.jstor.org/stable/j.ctt1cx3tvg</a>.
 </div>
@@ -301,7 +305,7 @@ de Maere d ’ Aertrycke, G., A. Ehrenmann, D. Ralph, and Y. Smeers. 2017. <span
 </div></section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
 
 <ol>
-<li id="fn1"><p>Para problemas de inversión en capacidad el <span class="math inline">\(\bar q\)</span> depende de la variable de inversión en capacidad que denotamos <span class="math inline">\(x\)</span>. Esto implica que la función de costos depende de una nueva variable: <span class="math inline">\(\phi_I(q,x)\)</span><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>Para problemas de inversión en capacidad el <span class="math inline">\(\bar q\)</span> depende de la variable de inversión en capacidad que denotamos <span class="math inline">\(x\)</span>. Esto implica que la función de costos depende de una nueva variable: <span class="math inline">\(\phi_I(p,q,x)\)</span><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section></div></main>
 <!-- /main column -->

@@ -24,15 +24,17 @@ Modelar y computar soluciones de un modelo de inversión en capacidad utilizando
 
 -   Existe una demanda que asumiremos dada (fija) por el momento igual a $\bar D$
 
--   Entonces en equilibrio de mercado, para el precio de equilibrio $p^*$, requerimos tener lo siguiente $$\sum_{i=1}^{n}q_i^*(p^*)=\bar D$$
+-   Entonces en equilibrio de mercado, para el precio de equilibrio $p^*$, requerimos que se cumple lo siguiente $$\sum_{i=1}^{n}q_i^*(p^*)=\bar D$$
 
 -   Subyacente a esto se agrega un $n+1$ problema de optimización de un agente ficticio "de mercado" que la literatura le llama subastador Walrasiano o "la mano invisible". Este agente es "alguien" que resuelve el equilbrio, es decir, iguala oferta con demanda eligiendo un precio. Eso en términos de optimización equivaldría a $$\min_{p\in\Delta}p\cdot\left(\bar D-\sum_{i=1}^nq_i^*(p)\right).$$
 
-[^1]: Para problemas de inversión en capacidad el $\bar q$ depende de la variable de inversión en capacidad que denotamos $x$. Esto implica que la función de costos depende de una nueva variable: $\phi_I(q,x)$
+[^1]: Para problemas de inversión en capacidad el $\bar q$ depende de la variable de inversión en capacidad que denotamos $x$. Esto implica que la función de costos depende de una nueva variable: $\phi_I(p,q,x)$
+
+Entonces un equilibrio estará dado por un precio $p^*$ que resuelve el problema del agente ficticio y tal que se cumple $\sum_{i=1}^{n}q_i^*(p^*)=\bar D$. Es decir, para el precio $p^*$ la suma de las ofertas que minimizan costos de los productores coincide con la demanda.
 
 ## Problemas de Complementaridad Mixta (MCP)
 
--   [ ] definir problema de complemntaridad mixta
+-   [ ] definir problema de complementaridad mixta siguiendo a @chang2020 (ver páginas 929 y 929)
 
 ### Ejemplo de mercados
 
