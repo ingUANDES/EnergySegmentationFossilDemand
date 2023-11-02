@@ -152,26 +152,56 @@ div.csl-indent {
 <section id="equilibrio-de-mercados-como-introducción" class="level2">
 <h2 class="anchored" data-anchor-id="equilibrio-de-mercados-como-introducción">Equilibrio de mercados como introducción</h2>
 <ul>
-<li><p>Tienes una cierta cantidad de productores, digamos <span class="math inline">\(n\)</span></p></li>
-<li><p>Cada productor define su oferta resolviendo un problema de optimización que típicamente mínimiza costos, <span class="math inline">\(\phi\)</span>, o maximiza beneficios o utilidad, <span class="math inline">\(\pi\)</span>.</p>
+<li><p>Tienes una cierta cantidad de productores, digamos<span class="math inline">\(n\)</span></p></li>
+<li><p>Cada productor define su oferta resolviendo un problema de optimización que típicamente mínimiza costos,<span class="math inline">\(\phi\)</span>, o maximiza beneficios o utilidad,<span class="math inline">\(\pi\)</span>.</p>
 <ul>
-<li><p>Para un precio de venta dado, <span class="math inline">\(p\)</span>, el problema a resolver por cada productor en función de una cantidad a ofrecer <span class="math inline">\(q\)</span> es <span class="math inline">\(\min_{q\in[q_0,\bar q]}\phi(p,q)\)</span>.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p></li>
-<li><p>Si el productor <span class="math inline">\(i\)</span> resuelve su problema tiene una oferta óptima denotada por <span class="math inline">\(q_i^*(p)\)</span></p></li>
+<li><p>Para un precio de venta dado,<span class="math inline">\(p\)</span>, el problema a resolver por cada productor en función de una cantidad a ofrecer<span class="math inline">\(q\)</span>es<span class="math inline">\(\min_{q\in[q_0,\bar q]}\phi(p,q)\)</span>.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p></li>
+<li><p>Si el productor<span class="math inline">\(i\)</span>resuelve su problema tiene una oferta óptima denotada por<span class="math inline">\(q_i^*(p)\)</span></p></li>
 </ul></li>
-<li><p>Existe una demanda que asumiremos dada (fija) por el momento igual a <span class="math inline">\(\bar D\)</span></p></li>
-<li><p>Entonces en equilibrio de mercado, para el precio de equilibrio <span class="math inline">\(p^*\)</span>, requerimos que se cumple lo siguiente <span class="math display">\[\sum_{i=1}^{n}q_i^*(p^*)=\bar D\]</span></p></li>
-<li><p>Subyacente a esto se agrega un <span class="math inline">\(n+1\)</span> problema de optimización de un agente ficticio “de mercado” que la literatura le llama subastador Walrasiano o “la mano invisible”. Este agente es “alguien” que resuelve el equilbrio, es decir, iguala oferta con demanda eligiendo un precio. Eso en términos de optimización equivaldría a <span class="math display">\[\min_{p\in\Delta}p\cdot\left(\bar D-\sum_{i=1}^nq_i^*(p)\right).\]</span></p></li>
+<li><p>Existe una demanda que asumiremos dada (fija) por el momento igual a<span class="math inline">\(\bar D\)</span></p></li>
+<li><p>Entonces en equilibrio de mercado, para el precio de equilibrio<span class="math inline">\(p^*\)</span>, requerimos que se cumple lo siguiente<span class="math display">\[\sum_{i=1}^{n}q_i^*(p^*)=\bar D\]</span></p></li>
+<li><p>Subyacente a esto se agrega un<span class="math inline">\(n+1\)</span>problema de optimización de un agente ficticio “de mercado” que la literatura le llama subastador Walrasiano o “la mano invisible”. Este agente es “alguien” que resuelve el equilbrio, es decir, iguala oferta con demanda eligiendo un precio. Eso en términos de optimización equivaldría a<span class="math display">\[\min_{p\in\Delta}p\cdot\left(\bar D-\sum_{i=1}^nq_i^*(p)\right).\]</span></p></li>
 </ul>
-<p>Entonces un equilibrio estará dado por un precio <span class="math inline">\(p^*\)</span> que resuelve el problema del agente ficticio y tal que se cumple <span class="math inline">\(\sum_{i=1}^{n}q_i^*(p^*)=\bar D\)</span>. Es decir, para el precio <span class="math inline">\(p^*\)</span> la suma de las ofertas que minimizan costos de los productores coincide con la demanda.</p>
+<p>Entonces un equilibrio estará dado por un precio<span class="math inline">\(p^*\)</span>que resuelve el problema del agente ficticio y tal que se cumple<span class="math inline">\(\sum_{i=1}^{n}q_i^*(p^*)=\bar D\)</span>. Es decir, para el precio<span class="math inline">\(p^*\)</span>la suma de las ofertas que minimizan costos de los productores coincide con la demanda.</p>
 </section>
 <section id="problemas-de-complementaridad-mixta-mcp" class="level2">
 <h2 class="anchored" data-anchor-id="problemas-de-complementaridad-mixta-mcp">Problemas de Complementaridad Mixta (MCP)</h2>
 <ul class="task-list">
-<li><input type="checkbox" disabled="">definir problema de complementaridad mixta siguiendo a <span class="citation" data-cites="chang2020">Chang et al. (<a href="#ref-chang2020" role="doc-biblioref">2020</a>)</span> (ver páginas 929 y 929)</li>
+<li><input type="checkbox" disabled="">contrastar problema de complementaridad mixta siguiendo a <span class="citation" data-cites="chang2020">Chang et al. (<a href="#ref-chang2020" role="doc-biblioref">2020</a>)</span> (ver páginas 929 y 929)</li>
 </ul>
+<p>Los Problemas de Complementaridad Mixta (MCP, por sus siglas en inglés Mixed Complementarity Problem) son una generalización de los problemas de programación lineal y los problemas de complementaridad lineal. Estos problemas permiten modelar una amplia variedad de aplicaciones en economía, ingeniería y otras áreas.</p>
+<section id="formulación-matemática" class="level3">
+<h3 class="anchored" data-anchor-id="formulación-matemática">Formulación matemática</h3>
+<p>Dada una función <span class="math inline">\(F: \mathbb{R}^n \to \mathbb{R}^n\)</span>y dos vectores <span class="math inline">\(l, u \in \mathbb{R}^n\)</span> que representan límites inferior/superior, respectivamente, un MCP busca un vector <span class="math inline">\(x\)</span> que cumpla:</p>
+<ol type="1">
+<li><span class="math inline">\(l \leq x \leq u\)</span></li>
+<li><span class="math inline">\(0 \leq F(x) \perp (x - l) \geq 0\)</span></li>
+<li><span class="math inline">\(0 \leq (u - x) \perp F(x) \geq 0\)</span></li>
+</ol>
+<p>La notación “⊥” representa la complementariedad entre dos vectores. Para cada componente <span class="math inline">\(i\)</span>:</p>
+<ul>
+<li>Si <span class="math inline">\(F_i(x) &gt; 0\)</span>, entonces <span class="math inline">\(x_i = l_i\)</span></li>
+<li>Si <span class="math inline">\(F_i(x) &lt; 0\)</span>, entonces <span class="math inline">\(x_i = u_i\)</span></li>
+<li>Si <span class="math inline">\(F_i(x) = 0\)</span>, entonces <span class="math inline">\(l_i \leq x_i \leq u_i\)</span></li>
+</ul>
+</section>
+<section id="interpretación" class="level3">
+<h3 class="anchored" data-anchor-id="interpretación">Interpretación</h3>
+<p>La esencia de un MCP es la relación de complementariedad. En términos económicos, esto podría interpretarse como: si un mercado tiene exceso de oferta (por ejemplo,<span class="math inline">\(F(x) &gt; 0\)</span>), entonces el precio está en su límite inferior (por ejemplo, un precio de cero). Si hay exceso de demanda (<span class="math inline">\(F(x) &lt; 0\)</span>), el precio está en su límite superior. Si el mercado está en equilibrio (<span class="math inline">\(F(x) = 0\)</span>), el precio puede estar en cualquier lugar entre sus límites.</p>
+<p>Los MCPs son especialmente útiles porque permiten modelar equilibrios en sistemas con fricciones o restricciones de una manera más general que los modelos de programación lineal o no lineal tradicionales.</p>
+</section>
+<section id="aplicaciones" class="level3">
+<h3 class="anchored" data-anchor-id="aplicaciones">Aplicaciones</h3>
+<p>Los MCPs se han utilizado en una variedad de aplicaciones, que incluyen:</p>
+<ul>
+<li>Modelos de equilibrio general en economía.</li>
+<li>Modelos de juegos con equilibrios de Nash.</li>
+<li>Modelos de tráfico en redes de transporte.</li>
+</ul>
+</section>
 <section id="ejemplo-de-mercados" class="level3">
 <h3 class="anchored" data-anchor-id="ejemplo-de-mercados">Ejemplo de mercados</h3>
-<p>Supongamos que <span class="math inline">\(x=p\)</span> y que <span class="math inline">\(F(x)=\bar D-\sum_{i=1}^nq_i^*(x)\)</span>.</p>
+<p>Supongamos que<span class="math inline">\(x=p\)</span>y que<span class="math inline">\(F(x)=\bar D-\sum_{i=1}^nq_i^*(x)\)</span>.</p>
 </section>
 <section id="ejemplo-de-transportes" class="level3">
 <h3 class="anchored" data-anchor-id="ejemplo-de-transportes">Ejemplo de transportes</h3>
@@ -191,7 +221,7 @@ div.csl-indent {
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>θ <span class="op">=</span> [<span class="fl">0.2</span>, <span class="fl">0.2</span>, <span class="fl">0.2</span>, <span class="fl">0.2</span>, <span class="fl">0.2</span>]  <span class="co"># Scenario probabilities</span></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> [<span class="fl">300</span>, <span class="fl">350</span>, <span class="fl">400</span>, <span class="fl">450</span>, <span class="fl">500</span>]  <span class="co"># Utility function coefficients</span></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>B <span class="op">=</span> <span class="fl">1</span>                          <span class="co"># Utility function coefficients</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="2">
+<div class="cell-output cell-output-display" data-execution_count="38">
 <pre><code>1</code></pre>
 </div>
 </div>
@@ -204,7 +234,7 @@ div.csl-indent {
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="pp">@variable</span>(model, Y[ω <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span>] <span class="op">&gt;=</span> <span class="fl">0</span>, start <span class="op">=</span> <span class="fl">1</span>)  <span class="co"># Production</span></span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="pp">@variable</span>(model, P[ω <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span>], start <span class="op">=</span> <span class="fl">1</span>)       <span class="co"># Electricity price</span></span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="pp">@variable</span>(model, μ[ω <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span>] <span class="op">&gt;=</span> <span class="fl">0</span>, start <span class="op">=</span> <span class="fl">1</span>)  <span class="co"># Capital scarcity margin</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="3">
+<div class="cell-output cell-output-display" data-execution_count="39">
 <pre><code>5-element Vector{VariableRef}:
  μ[1]
  μ[2]
@@ -213,7 +243,7 @@ div.csl-indent {
  μ[5]</code></pre>
 </div>
 </div>
-<p>La variable <span class="math inline">\(x\)</span> no debería tener un índice por tecnología como si lo tiene <a href="https://discourse.julialang.org/t/complementarity-jl-whit-path/103081/7">la propuesta</a> original de abordarlo de <a href="https://github.com/odow">Oscar Dowson</a> que fue corregida en <a href="https://jump.dev/JuMP.jl/stable/tutorials/nonlinear/complementarity/#Electricity-consumption">el tutorial</a>.</p>
+<p>La variable<span class="math inline">\(x\)</span>no debería tener un índice por tecnología como si lo tiene <a href="https://discourse.julialang.org/t/complementarity-jl-whit-path/103081/7">la propuesta</a> original de abordarlo de <a href="https://github.com/odow">Oscar Dowson</a> que fue corregida en <a href="https://jump.dev/JuMP.jl/stable/tutorials/nonlinear/complementarity/#Electricity-consumption">el tutorial</a>.</p>
 <p>Luego definimos las restricciones:</p>
 <div class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Unit investment cost equals annualized scarcity profit or investment is 0</span></span>
@@ -226,7 +256,7 @@ div.csl-indent {
 <span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="pp">@constraint</span>(model, [ω <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span>], Y[ω] <span class="op">-</span> Q[ω] <span class="op">⟂</span> P[ω])</span>
 <span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Production does not exceed capacity</span></span>
 <span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="pp">@constraint</span>(model, [ω <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span>], x <span class="op">-</span> Y[ω] <span class="op">⟂</span> μ[ω])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="4">
+<div class="cell-output cell-output-display" data-execution_count="40">
 <pre><code>5-element Vector{ConstraintRef{Model, MathOptInterface.ConstraintIndex{MathOptInterface.VectorAffineFunction{Float64}, MathOptInterface.Complements}, VectorShape}}:
  [x - Y[1], μ[1]] ∈ MathOptInterface.Complements(2)
  [x - Y[2], μ[2]] ∈ MathOptInterface.Complements(2)
@@ -239,7 +269,7 @@ div.csl-indent {
 <div class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">optimize!</span>(model)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">solution_summary</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="5">
+<div class="cell-output cell-output-display" data-execution_count="41">
 <pre><code>* Solver : Path 5.1.99
 
 * Status
@@ -254,20 +284,20 @@ div.csl-indent {
   Objective value    : 0.00000e+00
 
 * Work counters
-  Solve time (sec)   : 7.23430e-02</code></pre>
+  Solve time (sec)   : 9.50000e-05</code></pre>
 </div>
 </div>
-<p>El valor óptimo para <span class="math inline">\(x\)</span> tiene valor para cada tecnología/escenario y no es igual al valor del ejemplo en el artículo que es <span class="math inline">\(389\)</span>.</p>
+<p>El valor óptimo para<span class="math inline">\(x\)</span>tiene valor para cada tecnología/escenario y no es igual al valor del ejemplo en el artículo que es<span class="math inline">\(389\)</span>.</p>
 <div class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">value</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="6">
+<div class="cell-output cell-output-display" data-execution_count="42">
 <pre><code>389.31506849315065</code></pre>
 </div>
 </div>
-<p>De la misma forma el valor óptimo de cantidad encontrado es igual al valor esperado óptimo pero no refleja para cada escenario los valores óptimos que deberían ser: <span class="math inline">\((240,290,340,389,389)\)</span>:</p>
+<p>De la misma forma el valor óptimo de cantidad encontrado es igual al valor esperado óptimo pero no refleja para cada escenario los valores óptimos que deberían ser:<span class="math inline">\((240,290,340,389,389)\)</span>:</p>
 <div class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">value</span>.(Q)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="7">
+<div class="cell-output cell-output-display" data-execution_count="43">
 <pre><code>5-element Vector{Float64}:
  240.0000000000001
  289.9999999999999
@@ -278,7 +308,7 @@ div.csl-indent {
 </div>
 <div class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">value</span>.(P)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="8">
+<div class="cell-output cell-output-display" data-execution_count="44">
 <pre><code>5-element Vector{Float64}:
   60.00000000000001
   60.0
@@ -305,7 +335,7 @@ de Maere d ’ Aertrycke, G., A. Ehrenmann, D. Ralph, and Y. Smeers. 2017. <span
 </div></section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
 
 <ol>
-<li id="fn1"><p>Para problemas de inversión en capacidad el <span class="math inline">\(\bar q\)</span> depende de la variable de inversión en capacidad que denotamos <span class="math inline">\(x\)</span>. Esto implica que la función de costos depende de una nueva variable: <span class="math inline">\(\phi_I(p,q,x)\)</span><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>Para problemas de inversión en capacidad el<span class="math inline">\(\bar q\)</span>depende de la variable de inversión en capacidad que denotamos<span class="math inline">\(x\)</span>. Esto implica que la función de costos depende de una nueva variable:<span class="math inline">\(\phi_I(p,q,x)\)</span><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section></div></main>
 <!-- /main column -->

@@ -14,31 +14,63 @@ Modelar y computar soluciones de un modelo de inversión en capacidad utilizando
 
 ## Equilibrio de mercados como introducción
 
--   Tienes una cierta cantidad de productores, digamos $n$
+-   Tienes una cierta cantidad de productores, digamos$n$
 
--   Cada productor define su oferta resolviendo un problema de optimización que típicamente mínimiza costos, $\phi$, o maximiza beneficios o utilidad, $\pi$.
+-   Cada productor define su oferta resolviendo un problema de optimización que típicamente mínimiza costos,$\phi$, o maximiza beneficios o utilidad,$\pi$.
 
-    -   Para un precio de venta dado, $p$, el problema a resolver por cada productor en función de una cantidad a ofrecer $q$ es $\min_{q\in[q_0,\bar q]}\phi(p,q)$.[^1]
+    -   Para un precio de venta dado,$p$, el problema a resolver por cada productor en función de una cantidad a ofrecer$q$es$\min_{q\in[q_0,\bar q]}\phi(p,q)$.[^1]
 
-    -   Si el productor $i$ resuelve su problema tiene una oferta óptima denotada por $q_i^*(p)$
+    -   Si el productor$i$resuelve su problema tiene una oferta óptima denotada por$q_i^*(p)$
 
--   Existe una demanda que asumiremos dada (fija) por el momento igual a $\bar D$
+-   Existe una demanda que asumiremos dada (fija) por el momento igual a$\bar D$
 
--   Entonces en equilibrio de mercado, para el precio de equilibrio $p^*$, requerimos que se cumple lo siguiente $$\sum_{i=1}^{n}q_i^*(p^*)=\bar D$$
+-   Entonces en equilibrio de mercado, para el precio de equilibrio$p^*$, requerimos que se cumple lo siguiente$$\sum_{i=1}^{n}q_i^*(p^*)=\bar D$$
 
--   Subyacente a esto se agrega un $n+1$ problema de optimización de un agente ficticio "de mercado" que la literatura le llama subastador Walrasiano o "la mano invisible". Este agente es "alguien" que resuelve el equilbrio, es decir, iguala oferta con demanda eligiendo un precio. Eso en términos de optimización equivaldría a $$\min_{p\in\Delta}p\cdot\left(\bar D-\sum_{i=1}^nq_i^*(p)\right).$$
+-   Subyacente a esto se agrega un$n+1$problema de optimización de un agente ficticio "de mercado" que la literatura le llama subastador Walrasiano o "la mano invisible". Este agente es "alguien" que resuelve el equilbrio, es decir, iguala oferta con demanda eligiendo un precio. Eso en términos de optimización equivaldría a$$\min_{p\in\Delta}p\cdot\left(\bar D-\sum_{i=1}^nq_i^*(p)\right).$$
 
-[^1]: Para problemas de inversión en capacidad el $\bar q$ depende de la variable de inversión en capacidad que denotamos $x$. Esto implica que la función de costos depende de una nueva variable: $\phi_I(p,q,x)$
+[^1]: Para problemas de inversión en capacidad el$\bar q$depende de la variable de inversión en capacidad que denotamos$x$. Esto implica que la función de costos depende de una nueva variable:$\phi_I(p,q,x)$
 
-Entonces un equilibrio estará dado por un precio $p^*$ que resuelve el problema del agente ficticio y tal que se cumple $\sum_{i=1}^{n}q_i^*(p^*)=\bar D$. Es decir, para el precio $p^*$ la suma de las ofertas que minimizan costos de los productores coincide con la demanda.
+Entonces un equilibrio estará dado por un precio$p^*$que resuelve el problema del agente ficticio y tal que se cumple$\sum_{i=1}^{n}q_i^*(p^*)=\bar D$. Es decir, para el precio$p^*$la suma de las ofertas que minimizan costos de los productores coincide con la demanda.
 
 ## Problemas de Complementaridad Mixta (MCP)
 
--   [ ] definir problema de complementaridad mixta siguiendo a @chang2020 (ver páginas 929 y 929)
+
+-   [ ] contrastar problema de complementaridad mixta siguiendo a @chang2020 (ver páginas 929 y 929)
+
+Los Problemas de Complementaridad Mixta (MCP, por sus siglas en inglés Mixed Complementarity Problem) son una generalización de los problemas de programación lineal y los problemas de complementaridad lineal. Estos problemas permiten modelar una amplia variedad de aplicaciones en economía, ingeniería y otras áreas.
+
+### Formulación matemática
+
+Dada una función $F: \mathbb{R}^n \to \mathbb{R}^n$y dos vectores $l, u \in \mathbb{R}^n$ que representan límites inferior/superior, respectivamente, un MCP busca un vector $x$ que cumpla:
+
+1. $l \leq x \leq u$
+2. $0 \leq F(x) \perp (x - l) \geq 0$
+3. $0 \leq (u - x) \perp F(x) \geq 0$
+
+La notación "⊥" representa la complementariedad entre dos vectores. Para cada componente $i$:
+
+- Si $F_i(x) > 0$, entonces $x_i = l_i$
+- Si $F_i(x) < 0$, entonces $x_i = u_i$
+- Si $F_i(x) = 0$, entonces $l_i \leq x_i \leq u_i$
+
+### Interpretación
+
+La esencia de un MCP es la relación de complementariedad. En términos económicos, esto podría interpretarse como: si un mercado tiene exceso de oferta (por ejemplo,$F(x) > 0$), entonces el precio está en su límite inferior (por ejemplo, un precio de cero). Si hay exceso de demanda ($F(x) < 0$), el precio está en su límite superior. Si el mercado está en equilibrio ($F(x) = 0$), el precio puede estar en cualquier lugar entre sus límites.
+
+Los MCPs son especialmente útiles porque permiten modelar equilibrios en sistemas con fricciones o restricciones de una manera más general que los modelos de programación lineal o no lineal tradicionales.
+
+### Aplicaciones
+
+Los MCPs se han utilizado en una variedad de aplicaciones, que incluyen:
+
+- Modelos de equilibrio general en economía.
+- Modelos de juegos con equilibrios de Nash.
+- Modelos de tráfico en redes de transporte.
+
 
 ### Ejemplo de mercados
 
-Supongamos que $x=p$ y que $F(x)=\bar D-\sum_{i=1}^nq_i^*(x)$.
+Supongamos que$x=p$y que$F(x)=\bar D-\sum_{i=1}^nq_i^*(x)$.
 
 ### Ejemplo de transportes
 
@@ -71,7 +103,7 @@ set_silent(model)
 @variable(model, μ[ω = 1:5] >= 0, start = 1)  # Capital scarcity margin
 ```
 
-La variable $x$ no debería tener un índice por tecnología como si lo tiene [la propuesta](https://discourse.julialang.org/t/complementarity-jl-whit-path/103081/7) original de abordarlo de [Oscar Dowson](https://github.com/odow) que fue corregida en [el tutorial](https://jump.dev/JuMP.jl/stable/tutorials/nonlinear/complementarity/#Electricity-consumption).
+La variable$x$no debería tener un índice por tecnología como si lo tiene [la propuesta](https://discourse.julialang.org/t/complementarity-jl-whit-path/103081/7) original de abordarlo de [Oscar Dowson](https://github.com/odow) que fue corregida en [el tutorial](https://jump.dev/JuMP.jl/stable/tutorials/nonlinear/complementarity/#Electricity-consumption).
 
 Luego definimos las restricciones:
 
@@ -95,13 +127,13 @@ optimize!(model)
 solution_summary(model)
 ```
 
-El valor óptimo para $x$ tiene valor para cada tecnología/escenario y no es igual al valor del ejemplo en el artículo que es $389$.
+El valor óptimo para$x$tiene valor para cada tecnología/escenario y no es igual al valor del ejemplo en el artículo que es$389$.
 
 ```{julia}
 value(x)
 ```
 
-De la misma forma el valor óptimo de cantidad encontrado es igual al valor esperado óptimo pero no refleja para cada escenario los valores óptimos que deberían ser: $(240,290,340,389,389)$:
+De la misma forma el valor óptimo de cantidad encontrado es igual al valor esperado óptimo pero no refleja para cada escenario los valores óptimos que deberían ser:$(240,290,340,389,389)$:
 
 ```{julia}
 value.(Q)
